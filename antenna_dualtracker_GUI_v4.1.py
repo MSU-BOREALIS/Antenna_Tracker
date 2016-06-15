@@ -112,7 +112,7 @@ panOffset = 0          # increase to turn right, decrease to turn left
 tiltOffset = 0          # increase to raise, decrease to lower
 trackTiltOffset = 0.0
 trackBearOffset = 0.0
-previousPan = 127       #Memory for last position (To account for backlash)
+#previousPan = 127       #Memory for last position (To account for backlash)
 # Pololu servo controller commands using Mini SSC Protocol, 
 #  see: http://www.pololu.com/docs/0J40/5.c  
 # Shouldn't need to change these usually
@@ -391,9 +391,12 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         else:
             manualOverride = True
         
+        #Updates the Incoming GPS Data field in the gui with most recent iridium packet
     def updateIncoming(self,row,column,value):
         self.incomingData.setItem(column,row,QtGui.QTableWidgetItem(str(value)))
         
+
+        #Updates the Ground Station Data field in the gui with the current ground station data
     def updateGround(self,row,column,value):
         self.groundData.setItem(column,row,QtGui.QTableWidgetItem(str(value)))
         
@@ -612,7 +615,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
             brush.setStyle(QtCore.Qt.SolidPattern)
             palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
             self.status.setPalette(palette)
-
+'''
 #    def cutdownEmail(self):             #Not functional (was a nice thought but all emails are blocked as spam when sent)
 #        self.abortStatus = False
 #        self.tminus = 10
@@ -648,7 +651,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
 #
 #    def dummy(self):
 #        pass   
-
+'''
 def getData():              #Where to get GPS data from, if not a simulation, default to iridium
         if useSim:
             getSimulation()
@@ -808,31 +811,33 @@ def setServoAccel():
         s.write(setAccel)
         setAccel = [accelCommand,panChannel,panAccel,0]
         s.write(setAccel)
+        '''
         #RFD setup
 #        setAccel = [accelCommand,rfd_tiltChannel,rfd_tiltAccel,0]
 #        s.write(setAccel)
 #        setAccel = [accelCommand,rfd_panChannel,rfd_panAccel,0]
 #        s.write(setAccel)
-        
+        '''
 def setServoSpeed():
         #Ubiquity Setup
         setSpeed = [speedCommand,tiltChannel,tiltSpeed,0]
         s.write(setSpeed)
         setSpeed = [speedCommand,panChannel,panSpeed,0]
         s.write(setSpeed)
+        '''
         #RFD setup
 #        setSpeed = [speedCommand,rfd_tiltChannel,rfd_tiltSpeed,0]
 #        s.write(setSpeed)
 #        setSpeed = [speedCommand,rfd_panChannel,rfd_panSpeed,0]
 #        s.write(setSpeed)
-
+        '''
 def moveTiltServo(position):
         global antennaEle
         if servoAttached:
             s = serial.Serial(str(servoCOM), baudrate = servoBaud, timeout = servoTimeout)
             #move tilt
-            if(position < 86):          #80 degrees upper limit
-                    moveTilt = [moveCommand,tiltChannel,chr(86)]
+            if(position < 70):          #80 degrees upper limit
+                    moveTilt = [moveCommand,tiltChannel,chr(70)]
             elif(position > 123):       #5 degrees lower limit
                     moveTilt = [moveCommand,tiltChannel,chr(123)]
             else:
@@ -849,12 +854,14 @@ def moveTiltServo(position):
         print "\t\tMove Tilt: ", float(position)
 
 def movePanServo(position):
-        global antennaBear,previousPan
+        global antennaBear,#previousPan
         if servoAttached:
             s = serial.Serial(str(servoCOM), baudrate = servoBaud, timeout = servoTimeout)
+            '''
             if previousPan > position:
                 position += 1
             previousPan = position
+            '''
             #move Ubiquity
             movePan = [moveCommand,panChannel,chr(255-position)]
             s.write(movePan)
@@ -881,6 +888,11 @@ def bearing(trackerLat, trackerLon, remoteLat, remoteLon):
                 tempBearing = tempBearing + 360
         return tempBearing
     
+
+    #############################
+    ## Returns Data in Nautical##
+    #############################
+
 # haversine formula, see: http://www.movable-type.co.uk/scripts/latlong.html    
 def haversine(trackerLat, trackerLon, remoteLat, remoteLon):
         R = 6371        # radius of earth in Km
@@ -902,7 +914,7 @@ def getIridium():
     # execute SQL query using execute() method.
     #try:
 
-    #SQL Access
+    #SQL Access to access iridium packet information
     db_local = MySQLdb.connect(host=db_host,user=db_user,passwd=db_passwd,db=db_name)
     #prepare a cursor object using cursor() method
     cursor = db_local.cursor()
@@ -977,7 +989,11 @@ def getIridium():
     cursor.close()
     db_local.close()
     
-    
+    #############################
+    ## Runs Tracker Simulation ##
+    #############################
+
+
 def getSimulation():
     global db, cursor
     global receivedTime, receivedLat, receivedLon, receivedAlt, bearingLog, elevationLog, losLog
