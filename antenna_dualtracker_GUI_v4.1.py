@@ -324,7 +324,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         bearingToTarget = bearing(groundLat,  groundLon, pointtoLat, pointtoLon)   
         elevationAngle = math.degrees(math.atan2(deltaAlt,distanceToTarget))
         moveToTarget(bearingToTarget,elevationAngle)
-        
+        '''
     def trackerAnimation(self):
         self.scene.addItem(self.balloon)
         self.scene.addItem(self.antenna)
@@ -366,7 +366,8 @@ class MainWindow(QMainWindow,Ui_MainWindow):
             self.antLoc.setPlainText("Antenna\nBear:{:.1f}\nEle:{:.1f}".format(antennaBear,antennaEle))
         self.tl.start()
         self.tl2.start()
-        
+        '''
+
     def setAutotrack(self):
         global autotrackOnline
         if autotrackOnline:
