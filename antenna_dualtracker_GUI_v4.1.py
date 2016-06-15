@@ -854,7 +854,7 @@ def moveTiltServo(position):
         print "\t\tMove Tilt: ", float(position)
 
 def movePanServo(position):
-        global antennaBear,#previousPan
+        global antennaBear
         if servoAttached:
             s = serial.Serial(str(servoCOM), baudrate = servoBaud, timeout = servoTimeout)
             '''
@@ -889,9 +889,9 @@ def bearing(trackerLat, trackerLon, remoteLat, remoteLon):
         return tempBearing
     
 
-    #############################
-    ## Returns Data in Nautical##
-    #############################
+    ##############################
+    ## Returns Data in Nautical ##
+    ##############################
 
 # haversine formula, see: http://www.movable-type.co.uk/scripts/latlong.html    
 def haversine(trackerLat, trackerLon, remoteLat, remoteLon):
