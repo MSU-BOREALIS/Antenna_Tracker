@@ -677,7 +677,8 @@ def arduinoGround():        #Gather data from arduino mounted on ground station
                         print temp_arduino
                         temp_arduino = temp_arduino.split(',')
                     try:
-                        calibration = int(temp_arduino[8])+int(temp_arduino[7])+int(temp_arduino[6])+int(temp_arduino[5])
+                        #+int(temp_arduino[5])
+                        calibration = int(temp_arduino[8])+int(temp_arduino[7])+int(temp_arduino[6])
                     finally:
                         print "Calibration: ",calibration, " // Goal of ", int(calibrationGoal) 
                         if (x > 191):
@@ -695,6 +696,7 @@ def arduinoGround():        #Gather data from arduino mounted on ground station
                 time.sleep(10)
                 temp_arduino = "0"
                 s2.flushInput()
+
                 while(temp_arduino[0] != '~'):
                     temp_arduino = s2.readline();
                     print temp_arduino
