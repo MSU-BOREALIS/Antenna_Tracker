@@ -171,7 +171,7 @@ db_user = "antenna"
 db_passwd = "tracker"
 db_name = "freemanproject"
 db = MySQLdb.connect(host="eclipse.rci.montana.edu",user="antenna",passwd="tracker",db="freemanproject")
-IMEI = "300234060252680"     #######   YOU MUST ENTER YOUR IMIE NUMBER HERE   ##########
+IMEI = "xxxxxxxxxxxxxxx"     #######   YOU MUST ENTER YOUR IMIE NUMBER HERE   ##########
     #prepare a cursor object using cursor() method
 cursor = db.cursor()
 
