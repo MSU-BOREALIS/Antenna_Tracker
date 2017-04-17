@@ -166,12 +166,12 @@ bearingLog = np.array([])
 
 #SQL Access
     #Open database connection
-db_host = "153.90.202.22"
-db_user = "scott"
-db_passwd = "Jewe1947"
+db_host = "eclipse.rci.montana.edu"
+db_user = "antenna"
+db_passwd = "tracker"
 db_name = "freemanproject"
-db = MySQLdb.connect(host="153.90.202.22",user="scott",passwd="Jewe1947",db="freemanproject")
-IMEI = "300234063047450"
+db = MySQLdb.connect(host="eclipse.rci.montana.edu",user="antenna",passwd="tracker",db="freemanproject")
+IMEI = "300234060252680"     #######   YOU MUST ENTER YOUR IMIE NUMBER HERE   ##########
     #prepare a cursor object using cursor() method
 cursor = db.cursor()
 
