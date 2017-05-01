@@ -1039,7 +1039,7 @@ def getSimulation():
         print ("Remote Lon: %.7f" %remoteLon)
         deltaAlt = remoteAlt-groundAlt   
         print ("Delta alt: %.0f" %deltaAlt)
-        distanceToTarget = 0.87 * haversine( groundLat,  groundLon, remoteLat, remoteLon)        
+        distanceToTarget = haversine( groundLat,  groundLon, remoteLat, remoteLon)        
         bearingToTarget = bearing( groundLat,  groundLon, remoteLat, remoteLon)   
         elevationAngle = math.degrees(math.atan2(deltaAlt,distanceToTarget))
         global iridiumAlt
