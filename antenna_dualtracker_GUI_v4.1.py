@@ -165,11 +165,11 @@ bearingLog = np.array([])
 
 #SQL Access
     #Open database connection
-db_host = "153.90.202.22"
-db_user = "scott"
-db_passwd = "Jewe1947"
+db_host = "eclipse.rci.montana.edu"
+db_user = "antenna"
+db_passwd = "tracker"
 db_name = "freemanproject"
-db = MySQLdb.connect(host="153.90.202.22",user="scott",passwd="Jewe1947",db="freemanproject")
+db = MySQLdb.connect(host="eclipse",user="antenna",passwd="tracker",db="freemanproject")
 IMEI = "300234063047450"
     #prepare a cursor object using cursor() method
 cursor = db.cursor()
@@ -320,7 +320,7 @@ class MainWindow(QMainWindow,Ui_MainWindow):
         else:
             pointtoLon = float(ast.literal_eval(self.pointLong.text()))
         deltaAlt = float(pointtoAlt) - groundAlt
-        distanceToTarget = 0.87*haversine( groundLat,  groundLon, pointtoLat, pointtoLon)
+        distanceToTarget = haversine( groundLat,  groundLon, pointtoLat, pointtoLon)
         bearingToTarget = bearing(groundLat,  groundLon, pointtoLat, pointtoLon)   
         elevationAngle = math.degrees(math.atan2(deltaAlt,distanceToTarget))
         moveToTarget(bearingToTarget,elevationAngle)
@@ -936,7 +936,7 @@ def getIridium():
     #print ("Remote Lon: %.7f" %remoteLon)
     deltaAlt = remoteAlt-groundAlt   
     #print ("Delta alt: %.0f" %deltaAlt)
-    distanceToTarget = 0.87 * haversine( groundLat,  groundLon, remoteLat, remoteLon)        
+    distanceToTarget = haversine( groundLat,  groundLon, remoteLat, remoteLon)        
     bearingToTarget = bearing( groundLat,  groundLon, remoteLat, remoteLon)   
     elevationAngle = math.degrees(math.atan2(deltaAlt,distanceToTarget))
     global iridiumAlt
@@ -1019,7 +1019,7 @@ def getSimulation():
         print ("Remote Lon: %.7f" %remoteLon)
         deltaAlt = remoteAlt-groundAlt   
         print ("Delta alt: %.0f" %deltaAlt)
-        distanceToTarget = 0.87 * haversine( groundLat,  groundLon, remoteLat, remoteLon)        
+        distanceToTarget = haversine( groundLat,  groundLon, remoteLat, remoteLon)        
         bearingToTarget = bearing( groundLat,  groundLon, remoteLat, remoteLon)   
         elevationAngle = math.degrees(math.atan2(deltaAlt,distanceToTarget))
         global iridiumAlt
@@ -1070,7 +1070,7 @@ def getSQLArray(retrieveDate):
             remoteLon = float(results[3])
             remoteAlt = float(results[4]) * 3.280839895  #(meters to feet conversion)
             deltaAlt = remoteAlt-groundAlt   
-            distanceToTarget = 0.87 * haversine( groundLat,  groundLon, remoteLat, remoteLon)        
+            distanceToTarget = haversine( groundLat,  groundLon, remoteLat, remoteLon)        
             bearingToTarget = bearing( groundLat,  groundLon, remoteLat, remoteLon)   
             elevationAngle = math.degrees(math.atan2(deltaAlt,distanceToTarget))
             global iridiumAlt
