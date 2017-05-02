@@ -170,7 +170,7 @@ db_user = "antenna"
 db_passwd = "tracker"
 db_name = "freemanproject"
 db = MySQLdb.connect(host="eclipse",user="antenna",passwd="tracker",db="freemanproject")
-IMEI = "300234063047450"
+IMEI = "xxxxxxxxxxxxxxx"     ## *********  YOU NEED TO ENTER YOUR IMEI NUMBER HERE  *********
     #prepare a cursor object using cursor() method
 cursor = db.cursor()
 
@@ -906,7 +906,7 @@ def getIridium():
     #prepare a cursor object using cursor() method
     cursor = db_local.cursor()
     #sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where pri_key = (select max(pri_key) from gps) and gps_IMEI = "+IMEI
-    sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where gps_IMEI = "+IMEI+" order by pri_key DESC"   
+    sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where gps_IMEI = '"+IMEI+"' order by pri_key DESC"   
     #sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps order by pri_key DESC"   
     #sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where gps_fltDate = '2015-01-17' order by gps_time"
     
