@@ -982,7 +982,7 @@ def getSimulation():
     global receivedTime, receivedLat, receivedLon, receivedAlt, bearingLog, elevationLog, losLog
     try:
         #sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where gps_fltDate = '{}' order by pri_key".format(simDate)
-        sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where gps_fltDate = '{}' and gps_alt >= {} order by pri_key".format(simDate,simStartAlt)
+        sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where gps_fltDate = '{}' and gps_alt >= {} order by pri_key LIMIT 1".format(simDate,simStartAlt)
         #sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where gps_fltDate = '2015-01-17' order by gps_time"
         cursor.execute(sql)
         # Fetch a single row using fetchone() method.
