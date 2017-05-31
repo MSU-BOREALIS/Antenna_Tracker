@@ -39,6 +39,14 @@ matplotlib.rcParams['backend.qt4']='PySide'
 #import matplotlib.pyplot as plt
 import ast
     
+#import for the web API
+import json
+try:
+    # For Python 3.0 and later
+    from urllib.request import urlopen
+except ImportError:
+    # Fall back to Python 2's urllib2
+    from urllib2 import urlopen
 
 #NOTE:  System was originally designed to operate using one servo controller and two antenna systems. One system ran Ubiquity
 #       and the other system ran RFD 900MHz. This has recently been changed to run both antenna systems using only one tripod.
@@ -894,40 +902,73 @@ def haversine(trackerLat, trackerLon, remoteLat, remoteLon):
         d = R*c
         
         return d*3280.839895 # multiply distance in Km by 3280 for feet
-  
+
+def getApiData(imei):
+    """
+    Retrieve the most recent IMEI data from the database API
+
+    Parameters
+    ----------
+    imei : str or int
+
+    Returns
+    -------
+    dict
+    """
+    url = "http://eclipse.rci.montana.edu/php/antennaTracker.php?imei=%s" % imei
+    try: 
+        # Timeout may be redundant, if port 80 is timing out, port 3306 will probably also
+        response = urlopen(url, timeout = 5)
+        data = response.read().decode("utf-8")
+        return json.loads(data)
+    except:
+        return {}
+
 def getIridium():
     global receivedTime, receivedLat, receivedLon, receivedAlt, bearingLog, elevationLog, losLog
     global db_host, db_user, db_passwd, db_name
     # execute SQL query using execute() method.
     #try:
 
-    #SQL Access
-    db_local = MySQLdb.connect(host=db_host,user=db_user,passwd=db_passwd,db=db_name)
-    #prepare a cursor object using cursor() method
-    cursor = db_local.cursor()
-    #sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where pri_key = (select max(pri_key) from gps) and gps_IMEI = "+IMEI
-    sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where gps_IMEI = '"+IMEI+"' order by pri_key DESC"   
-    #sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps order by pri_key DESC"   
-    #sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where gps_fltDate = '2015-01-17' order by gps_time"
-    
-    #print "Fetching from Iridium: \n\t " + sql + "\n"
-    cursor.execute(sql)
-    # Fetch a single row using fetchone() method.
-    try:
-        results = cursor.fetchone()
-        remoteTime = results[1].split(":")
-        remoteHours = int(remoteTime[0])
-        remoteMinutes = int(remoteTime[1])
-        remoteSeconds = int(remoteTime[2])
-        remoteTime = results[1]
-        remoteSeconds = remoteSeconds + (60*remoteMinutes) + (3600*remoteHours)
-        remoteLat = float(results[2])                   #http://stackoverflow.com/questions/379906/parse-string-to-float-or-int
-        remoteLon = float(results[3])
-        remoteAlt = float(results[4]) * 3.280839895  #(meters to feet conversion)
-    except:
-        print "ERROR PARSING DATA FROM DATABASE: Cannot parse data or data may not exist, please double check your IMEI number at the top of the code"
-        cursor.close()
-        return
+    get_data = getApiData(IMEI)
+    if get_data: 
+        dataMethod = "API"
+        remoteTime    = get_data['remoteTime']
+        remoteHours   = int(get_data['remoteHours'])
+        remoteMinutes = int(get_data['remoteMinutes'])
+        remoteSeconds = int(get_data['remoteSeconds']) + (60*remoteMinutes) + (3600*remoteHours)
+        remoteLat     = float(get_data['remoteLat'])
+        remoteLon     = float(get_data['remoteLon'])
+        remoteAlt     = float(get_data['remoteAlt'])
+    else:
+        #SQL Access
+        db_local = MySQLdb.connect(host=db_host,user=db_user,passwd=db_passwd,db=db_name)
+        #prepare a cursor object using cursor() method
+        cursor = db_local.cursor()
+        #sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where pri_key = (select max(pri_key) from gps) and gps_IMEI = "+IMEI
+        sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where gps_IMEI = '"+IMEI+"' order by pri_key DESC"   
+        #sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps order by pri_key DESC"   
+        #sql = "select gps_fltDate,gps_time,gps_lat,gps_long,gps_alt from gps where gps_fltDate = '2015-01-17' order by gps_time"
+        
+        #print "Fetching from Iridium: \n\t " + sql + "\n"
+        cursor.execute(sql)
+        # Fetch a single row using fetchone() method.
+        try:
+            results = cursor.fetchone()
+            remoteTime = results[1].split(":")
+            remoteHours = int(remoteTime[0])
+            remoteMinutes = int(remoteTime[1])
+            remoteSeconds = int(remoteTime[2])
+            remoteTime = results[1]
+            remoteSeconds = remoteSeconds + (60*remoteMinutes) + (3600*remoteHours)
+            remoteLat = float(results[2])                   #http://stackoverflow.com/questions/379906/parse-string-to-float-or-int
+            remoteLon = float(results[3])
+            remoteAlt = float(results[4]) * 3.280839895  #(meters to feet conversion)
+        except:
+            print "ERROR PARSING DATA FROM DATABASE: Cannot parse data or data may not exist, please double check your IMEI number at the top of the code"
+            cursor.close()
+            return
+
     #print "-----------------------------------------------"
     #print "\tGPS_TIME: \t\t",results[1]
     #print ("Local alt: %.0f" %groundAlt)
