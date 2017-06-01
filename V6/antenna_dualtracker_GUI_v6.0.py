@@ -885,7 +885,7 @@ def bearing(trackerLat, trackerLon, remoteLat, remoteLon):
         dLon = math.radians(remoteLon-trackerLon)       # delta longitude in radians
         
         y = math.sin(dLon)*math.cos(math.radians(remoteLat))
-        x = math.cos(math.radians(trackerLat))*math.sin(math.radians(remoteLat))-math.sin(math.radians(trackerLat))*math.cos(math.radians(remoteLat))*math.cos(dLat)
+        x = math.cos(math.radians(trackerLat))*math.sin(math.radians(remoteLat))-math.sin(math.radians(trackerLat))*math.cos(math.radians(remoteLat))*math.cos(dLon)
         tempBearing = math.degrees(math.atan2(y,x))     # returns the bearing from true north
         if (tempBearing < 0):
                 tempBearing = tempBearing + 360
