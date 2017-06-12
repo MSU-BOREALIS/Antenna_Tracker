@@ -67,7 +67,9 @@ void setup() {
   EEPROM.get(eeAddress, bnoID);                                            //Initialize EEPROM
   sensor_t sensor;                                                         //Create enum types for sensor and calibration offsets
   adafruit_bno055_offsets_t calibrationData;
-
+  uint8_t system, gyro, accel, mag;                         //Create local variables gyro, accel, mag
+  system = gyro = accel = mag = 0;                          //Initialize them to zeros
+  
   bno.getSensor(&sensor);                                                  //Check for previous calibration data
      if(bnoID != sensor.sensor_id)
      {
@@ -90,6 +92,7 @@ void setup() {
      bno.setExtCrystalUse(true);
      sensors_event_t event;
      bno.getEvent(&event);
+     bno.getCalibration(&system, &gyro, &accel, &mag);
      if (foundCalib){
          lcd.clear();
          lcd.setCursor(0,0);
@@ -99,6 +102,27 @@ void setup() {
          while (!bno.isFullyCalibrated())
          {
              bno.getEvent(&event);
+             Serial.print("~");
+             Serial.print(",");
+             Serial.print(GPS.latitudeDegrees,7);
+             Serial.print(",");
+             Serial.print(GPS.longitudeDegrees,7);
+             Serial.print(",");
+             Serial.print(GPS.altitude *3.2808);
+             Serial.print(",");
+             Serial.print(event.orientation.x,2);
+             Serial.print(",");
+             Serial.print(event.orientation.y,2);
+             Serial.print(",");
+             Serial.print(event.orientation.z,2);
+             Serial.print(",");
+             Serial.print(system);
+             Serial.print(",");
+             Serial.print(gyro);
+             Serial.print(",");
+             Serial.print(accel);
+             Serial.print(",");
+             Serial.println(mag);
              delay(BNO055_SAMPLERATE_DELAY_MS);
          }
      }
