@@ -8,7 +8,7 @@ import datetime
 import serial
 import threading
 import json
-from time import sleep
+import time
 
 try:
     # For Python 3.0 and later
