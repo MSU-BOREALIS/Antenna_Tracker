@@ -148,6 +148,28 @@ void setup() {
            //Serial.print(event.orientation.y, 4);
            //Serial.print("\tZ: ");
            //Serial.print(event.orientation.z, 4);
+
+             Serial.print("~");
+             Serial.print(",");
+             Serial.print(GPS.latitudeDegrees,7);
+             Serial.print(",");
+             Serial.print(GPS.longitudeDegrees,7);
+             Serial.print(",");
+             Serial.print(GPS.altitude *3.2808);
+             Serial.print(",");
+             Serial.print(event.orientation.x,2);
+             Serial.print(",");
+             Serial.print(event.orientation.y,2);
+             Serial.print(",");
+             Serial.print(event.orientation.z,2);
+             Serial.print(",");
+             Serial.print(system);
+             Serial.print(",");
+             Serial.print(gyro);
+             Serial.print(",");
+             Serial.print(accel);
+             Serial.print(",");
+             Serial.println(mag);
            lcd.setCursor(0,0);
            lcd.print("Calibrating...");                                           //Will continually read calibration values until "calibrated" is set to true
            lcd.setCursor(0,1);
