@@ -8,6 +8,8 @@ import datetime
 import serial
 import threading
 import json
+from time import sleep
+
 try:
     # For Python 3.0 and later
     from urllib.request import urlopen
