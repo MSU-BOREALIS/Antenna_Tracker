@@ -1764,7 +1764,34 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         panTo = 180 - panTo
         if panTo < 0:
             panTo = panTo + 360
-        panTo = int((panTo * 3.39 + 890) * 4)
+
+        if panTo > -1 and panTo < 46:
+            print "0-45"
+            panTo = int((panTo * 2.81 + 995) * 4)
+        elif panTo > 45 and panTo < 91:
+            print "45-90"
+            panTo = int((panTo * 2.44 + 1043.75) * 4)
+        elif panTo > 90 and panTo < 136:
+            print "90-135"
+            panTo = int((panTo * 2.47 + 1041.25) * 4)
+        elif panTo > 135 and panTo < 181:
+            print "135-180"
+            panTo = int((panTo * 2.833 + 1025) * 4)
+        elif panTo > 180 and panTo < 226:
+            print "180-225"
+            panTo = int((panTo * 2.62 + 1025) * 4)
+        elif panTo > 225 and panTo < 271:
+            print "225-270"
+            panTo = int((panTo * 2.53 + 1053.75) * 4)
+        elif panTo > 270 and panTo < 316:
+            print "270-315"
+            panTo = int((panTo * 2.53 + 1053.75) * 4)
+        elif panTo > 315 and panTo < 361:
+            print "315-360"
+            panTo = int((panTo * 2.72 + 1010) * 4)
+        else:
+            print "Default Mapping"
+            panTo = int((panTo * 2.639 + 1025) * 4)
 
         '''
         if bearing == 0:
