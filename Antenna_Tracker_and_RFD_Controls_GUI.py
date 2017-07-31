@@ -1787,25 +1787,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 panTo = panTo + 360
             print "135-180"
             panTo = int((panTo * 2.833 + 1025) * 4)
-        elif panTo > 180 and panTo < 226:
+        elif panTo < -135 and panTo > -181:
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
             print "180-225"
             panTo = int((panTo * 2.62 + 1025) * 4)
-        elif panTo > 225 and panTo < 271:
+        elif panTo <-90 and panTo > -136:
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
             print "225-270"
             panTo = int((panTo * 2.53 + 1053.75) * 4)
-        elif panTo > 270 and panTo < 316:
+        elif panTo <-45 and panTo > -90:
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
             print "270-315"
             panTo = int((panTo * 2.53 + 1053.75) * 4)
-        elif panTo > 315 and panTo < 361:
+        elif panTo < 0 and panTo > -46:
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
