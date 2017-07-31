@@ -1761,35 +1761,60 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         #panTo =(bearing - self.centerBear)-12
         panTo = (bearing - self.centerBear)
-        panTo = 180 - panTo
-        if panTo < 0:
-            panTo = panTo + 360
-
+        print "PanTo Value\n"
+        print panTo
         if panTo > -1 and panTo < 46:
+            panTo = 180 - panTo
+            if panTo < 0:
+                panTo = panTo + 360
             print "0-45"
             panTo = int((panTo * 2.81 + 995) * 4)
         elif panTo > 45 and panTo < 91:
+            panTo = 180 - panTo
+            if panTo < 0:
+                panTo = panTo + 360
             print "45-90"
             panTo = int((panTo * 2.44 + 1043.75) * 4)
         elif panTo > 90 and panTo < 136:
+            panTo = 180 - panTo
+            if panTo < 0:
+                panTo = panTo + 360
             print "90-135"
             panTo = int((panTo * 2.47 + 1041.25) * 4)
         elif panTo > 135 and panTo < 181:
+            panTo = 180 - panTo
+            if panTo < 0:
+                panTo = panTo + 360
             print "135-180"
             panTo = int((panTo * 2.833 + 1025) * 4)
         elif panTo > 180 and panTo < 226:
+            panTo = 180 - panTo
+            if panTo < 0:
+                panTo = panTo + 360
             print "180-225"
             panTo = int((panTo * 2.62 + 1025) * 4)
         elif panTo > 225 and panTo < 271:
+            panTo = 180 - panTo
+            if panTo < 0:
+                panTo = panTo + 360
             print "225-270"
             panTo = int((panTo * 2.53 + 1053.75) * 4)
         elif panTo > 270 and panTo < 316:
+            panTo = 180 - panTo
+            if panTo < 0:
+                panTo = panTo + 360
             print "270-315"
             panTo = int((panTo * 2.53 + 1053.75) * 4)
         elif panTo > 315 and panTo < 361:
+            panTo = 180 - panTo
+            if panTo < 0:
+                panTo = panTo + 360
             print "315-360"
             panTo = int((panTo * 2.72 + 1010) * 4)
         else:
+            panTo = 180 - panTo
+            if panTo < 0:
+                panTo = panTo + 360
             print "Default Mapping"
             panTo = int((panTo * 2.639 + 1025) * 4)
 
@@ -1811,7 +1836,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             panTo = 8424
         if panTo < 3576:
             panTo = 3576
-        print panTo
+        # print panTo
         print "\tServo Degrees:"
         if self.servosAttached:
             self.servoController.movePanServo(panTo)
@@ -1830,7 +1855,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             tiltTo = 6000		# Don't go over the max
         if tiltTo < 4348:
             tiltTo = 4348			# Don't go under the min
-        print tiltTo
+        # print tiltTo
         if self.servosAttached:		# Move the servos to the new locations if they're attacheed
             self.servoController.moveTiltServo(tiltTo)
         if temp != 0:
