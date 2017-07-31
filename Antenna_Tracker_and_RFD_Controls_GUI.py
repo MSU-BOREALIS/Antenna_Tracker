@@ -48,6 +48,7 @@ from BalloonUpdate import *				# Class to hold balloon info
 from GetData import *					# Module for tracking methods
 from Payloads import *					# Module for handling payloads
 from MapHTML import *						# Module for generating Google Maps HTML and JavaScript
+from CommandEmailer import *
 
 # Matplotlib setup
 from matplotlib.figure import Figure
@@ -180,6 +181,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.recalibrateCenterBearing.clicked.connect(self.calibrateIMU)
         self.checkComPorts.clicked.connect(self.searchComPorts)
 
+        # Command control button Links
+
+        self.cutdownButton.clicked.connect(self.sendCutdownCommand)
+        self.idleButton.clicked.connect(self.sendIdleCommand)
+
         # Manual Entry Button Links
         self.ManualEntryUpdateButton.clicked.connect(self.manualEntryUpdate)
         self.ManualAngleEntryButton.clicked.connect(
@@ -205,14 +211,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.requestStatusButton.clicked.connect(self.requestDeviceStatus)
 
         # Still Image Control Button Links
-        self.mostRecentImageButton.clicked.connect(lambda: self.stillImageButtonPress('mostRecent'))
-        self.imageDataTxtButton.clicked.connect(lambda: self.stillImageButtonPress('selectImage'))
+        self.mostRecentImageButton.clicked.connect(
+            lambda: self.stillImageButtonPress('mostRecent'))
+        self.imageDataTxtButton.clicked.connect(
+            lambda: self.stillImageButtonPress('selectImage'))
         self.picDefaultSettingsButton.clicked.connect(self.picDefaultSettings)
-        self.picSendNewSettingsButton.clicked.connect(lambda: self.stillImageButtonPress('sendNewSettings'))
-        self.picGetSettingsButton.clicked.connect(lambda: self.stillImageButtonPress('getPicSettings'))
-        self.connectionTestButton.clicked.connect(lambda: self.stillImageButtonPress('timeSync'))
-        self.picHorizontalFlipButton.clicked.connect(lambda: self.stillImageButtonPress('HFlip'))
-        self.picVerticalFlipButton.clicked.connect(lambda: self.stillImageButtonPress('VFlip'))
+        self.picSendNewSettingsButton.clicked.connect(
+            lambda: self.stillImageButtonPress('sendNewSettings'))
+        self.picGetSettingsButton.clicked.connect(
+            lambda: self.stillImageButtonPress('getPicSettings'))
+        self.connectionTestButton.clicked.connect(
+            lambda: self.stillImageButtonPress('timeSync'))
+        self.picHorizontalFlipButton.clicked.connect(
+            lambda: self.stillImageButtonPress('HFlip'))
+        self.picVerticalFlipButton.clicked.connect(
+            lambda: self.stillImageButtonPress('VFlip'))
 
         # Make sure the allowed combination of auto tracking checkboxes are
         # enabled
@@ -518,17 +531,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 timestamp = str(datetime.today().strftime("%m-%d-%Y %H-%M-%S"))
 
                 # Create the log files
+                if not os.path.exists("Logs/"):
+                    os.mkdir("Logs/")
                 self.rfdLog = "Logs/" + timestamp + ' ' + "RFDLOG.txt"
-                f = open(self.rfdLog, 'w')
+                f = open(self.rfdLog, 'w+')
                 f.close()
                 self.stillImageLog = "Logs/" + timestamp + ' ' + "STILLIMAGELOG.txt"
-                f = open(self.stillImageLog, 'w')
+                f = open(self.stillImageLog, 'w+')
                 f.close()
                 self.balloonLocationLog = "Logs/" + timestamp + ' ' + "BALLOONLOCATIONLOG.txt"
-                f = open(self.balloonLocationLog, 'w')
+                f = open(self.balloonLocationLog, 'w+')
                 f.close()
                 self.pointingLog = "Logs/" + timestamp + ' ' + "POINTINGLOG.txt"
-                f = open(self.pointingLog, 'w')
+                f = open(self.pointingLog, 'w+')
                 f.close()
         elif not self.saveDataCheckbox.isChecked():
             self.saveData = False
@@ -561,7 +576,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.servoController = ServoController(
                         self.servos.getDevice())
                     self.servoController.setServoAccel(1, 1)
-                    self.servoController.setServoSpeed(3, 1)
+                    self.servoController.setServoSpeed(1, 1)
                     self.servosStarted = True
 
         if self.rfdAttached.isChecked():
@@ -875,17 +890,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if arg == 'up':
             self.tiltOffset += 1
+            self.antennaEle += 1
             print("Tilt Trim: " + str(self.tiltOffset))
         elif arg == 'down':
             self.tiltOffset -= 1
+            self.antennaEle -= 1
             print("Tilt Trim: " + str(self.tiltOffset))
         elif arg == 'left':
             self.panOffset -= 1
+            self.antennaBear -= 1
             print("Pan Trim: " + str(self.panOffset))
         elif arg == 'right':
             self.panOffset += 1
+            self.antennaBear += 1
             print("Pan Trim: " + str(self.panOffset))
         elif arg == 'reset':
+            self.antennaEle -= self.tiltOffset
+            self.antennaBear -= self.panOffset
             self.tiltOffset = 0
             self.panOffset = 0
             print("Tilt Trim: " + str(self.tiltOffset))
@@ -949,7 +970,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if self.rfdListenOnline:
                 self.stillImageStall = True
                 self.rfdListenStop()
-            self.stillImageSystem.mostRecentImageStart.emit(self.requestedImageName.text())
+            self.stillImageSystem.mostRecentImageStart.emit(
+                self.requestedImageName.text())
 
         if arg == 'selectImage':
             self.stillImageStart()
@@ -1713,6 +1735,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def moveToTarget(self, bearing, elevation):
         """ Moves servos based on a bearing and elevation angle """
+        # Account for manual offset
+        bearing = bearing
+        #elevation += self.tiltOffset
 
         temp = 0
         # Uses the center bearing, and makes sure you don't do unnecessary
@@ -1725,21 +1750,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             temp = self.centerBear
             self.centerBear = 360 + temp
 
-        print ("\tBearing: %.0f" % (bearing + self.panOffset))
-        print ("\tElevation Angle: %.0f" % (elevation + self.tiltOffset))
+        print ("\tBearing: %.0f" % (bearing))
+        print ("\tElevation Angle: %.0f" % (elevation))
 
         # With new digital servos, can use map method as described here: http://arduino.cc/en/reference/map
         # Get the correct numerical value for the servo position by adjusting
         # based on offset, max and min
-        #panTo = ((bearing - (self.centerBear - 168)) * (self.servoController.servoMax - self.servoController.servoMin) /
+        # panTo = ((bearing - (self.centerBear - 168)) * (self.servoController.servoMax - self.servoController.servoMin) /
         #         ((self.centerBear + 168) - (self.centerBear - 168)) + self.servoController.servoMin) + (255 * self.panOffset / 360)
 
         #panTo =(bearing - self.centerBear)-12
-        panTo = (bearing -self.centerBear)
-        panTo = 180-panTo
+        panTo = (bearing - self.centerBear)
+        panTo = 180 - panTo
         if panTo < 0:
             panTo = panTo + 360
-        panTo = int((panTo*3.37 + 893.4)*4)
+        panTo = int((panTo * 3.39 + 890) * 4)
 
         '''
         if bearing == 0:
@@ -1754,28 +1779,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             bearing = 270
             '''
 
-
         #panTo = ((bearing*3.37)+894)*4
         if panTo > 8424:
             panTo = 8424
         if panTo < 3576:
             panTo = 3576
+        print panTo
         print "\tServo Degrees:"
         if self.servosAttached:
             self.servoController.movePanServo(panTo)
 
         # Get the correct numerical value for the servo position by adjusting
         # based on offset, max and min
-        #tiltTo = (((0 - elevation) - self.servoController.tiltAngleMin) * (self.servoController.servoMax - self.servoController.servoMin) /
+        # tiltTo = (((0 - elevation) - self.servoController.tiltAngleMin) * (self.servoController.servoMax - self.servoController.servoMin) /
         #          (self.servoController.tiltAngleMax - self.servoController.tiltAngleMin) + self.servoController.servoMin) + (255 * (-self.tiltOffset) / 360)
-        #print(tiltTo)
-        if elevation<180:
-            elevation = 180 - elevation
-        tiltTo = int((elevation*2.9)+1000)*4
+        # print(tiltTo)
+        tiltTo = elevation
+        tiltTo = 180 - tiltTo
+        if tiltTo < 0:
+            tiltTo = tiltTo + 360
+        tiltTo = int((tiltTo * 4.66) + 668.5) * 4
         if tiltTo > 6000:
             tiltTo = 6000		# Don't go over the max
-        if tiltTo < 4200:
-            tiltTo = 4200			# Don't go under the min
+        if tiltTo < 4348:
+            tiltTo = 4348			# Don't go under the min
+        print tiltTo
         if self.servosAttached:		# Move the servos to the new locations if they're attacheed
             self.servoController.moveTiltServo(tiltTo)
         if temp != 0:
@@ -1788,6 +1816,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.antennaBear = bearing
         self.antennaEle = elevation
         self.manualRefresh()
+
+    def sendCutdownCommand(self):
+        print "Sending cutdown"
+        self.commandEmailer = CommandEmailer(self.IMEI)
+        self.commandEmailer.sendCut()
+        print "Emailer Module Command Sent"
+
+    def sendIdleCommand(self):
+        print "Sending idle"
+        self.commandEmailer = CommandEmailer(self.IMEI)
+        self.commandEmailer.sendIdle()
+        print "Emailer Module Command Sent"
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication.instance()		# checks if QApplication already exists

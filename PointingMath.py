@@ -10,7 +10,7 @@ def bearing(trackerLat, trackerLon, remoteLat, remoteLon):
     y = math.sin(dLon) * math.cos(math.radians(remoteLat))
     x = math.cos(math.radians(trackerLat)) * math.sin(math.radians(remoteLat)) - \
         math.sin(math.radians(trackerLat)) * \
-        math.cos(math.radians(remoteLat)) * math.cos(dLon)
+        math.cos(math.radians(remoteLat)) * math.cos(dLat)
     # returns the bearing from true north
     tempBearing = math.degrees(math.atan2(y, x))
     while tempBearing < 0:		# Makes sure the bearing is between 0 and 360

@@ -5,23 +5,39 @@ from email import Encoders
 import time
 import os
 import smtplib
-import Antenna_Tracker_and_RFD_Controls_GUI
+# import Antenna_Tracker_and_RFD_Controls_GUI
 
 
-class ServoController:
+class CommandEmailer():
 
     # Initialization of IMEI number
-    def __init__(self):
+    def __init__(self, IMEI):
         # Pull from IMEI outlined in main window
-        self.IMEI = Antenna_Tracker_and_RFD_Controls_GUI.self.IMEI
+        print "Function called"
+        self.IMEI = IMEI
+        print IMEI
 
+    def sendCut(self):
+
+        command = 'cutdown'
+        self.send(command)
+        print "Cutdown command sent"
+
+        # print "Problem sending cutdown"
+
+    def sendIdle(self):
+
+        self.send('idle')
+        print "Idle command sent"
     # Method used to send an email.
-    def send(command):
+
+    def send(self, command):
         # Used to determine which file to send out
+
         if(command == 'cutdown'):
-            fileOut = 'cutdown.sbd'
-        if(menuSelect == 'idle'):
-            fileOut = 'idle.sbd'
+            fileOut = 'Command/cutdown.sbd'
+        if(command == 'idle'):
+            fileOut = 'Command/idle.sbd'
 
         # Builds and sends the email
         command = str(fileOut)

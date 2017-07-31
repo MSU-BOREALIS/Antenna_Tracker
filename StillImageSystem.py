@@ -63,7 +63,7 @@ class StillImageSystem(QtCore.QObject):
         print('entered')
 
         ### Write 1 until you get the acknowledge back ###
-        self.rfdSer.write('IMAGE;1!')
+        self.rfdSer.write('1!')
         timeCheck = time.time() + 1
         while self.rfdSer.read() != 'A':
             if timeCheck < time.time():			# Make sure you don't print out a huge stream if you get the wrong response
@@ -436,11 +436,13 @@ class StillImageSystem(QtCore.QObject):
         termtime = time.time() + 10
         timeCheck = time.time() + 1
         while self.rfdSer.read() != 'A':
+            # self.rfdSer.write('IMAGE;0!')
+            # time.sleep(1)
             if timeCheck < time.time():
                 print("Waiting for Acknowledge")
                 self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
                 timeCheck = time.time() + 1
-            self.rfdSer.write('IMAGE;0!')
+            # self.rfdSer.write('IMAGE;0!')
             if termtime < time.time():
                 print("No Acknowldeg Received, Connection Error")
                 self.mainWindow.stillNewText.emit(
@@ -467,7 +469,7 @@ class StillImageSystem(QtCore.QObject):
                 print("Waiting for Acknowledge")
                 self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
                 timeCheck = time.time() + 1
-            self.rfdSer.write('IMAGE;9!')
+            # self.rfdSer.write('IMAGE;9!')
             if termtime < time.time():
                 print("No Acknowldeg Received, Connection Error")
                 self.mainWindow.stillNewText.emit(
@@ -521,7 +523,7 @@ class StillImageSystem(QtCore.QObject):
 
     def receive_image(self, savepath, wordlength):
         """ Receive an Image through the RFD 900 """
-
+        successcount = 0
         # Notifies User we have entered the receiveimage() module
         print "Confirmed photo request"
         self.mainWindow.stillNewText.emit("Confirmed photo request")
@@ -569,6 +571,7 @@ class StillImageSystem(QtCore.QObject):
                 if trycnt < 7:		# This line sets the maximum number of checksum resends. Ex. trycnt = 5 will attempt to rereceive data 5 times before erroring out											  #I've found that the main cause of checksum errors is a bit drop or add desync, this adds a 2 second delay and resyncs both systems
                     self.rfdSer.write('N')
                     trycnt += 1
+                    successcount = 0
                     print "try number:", str(trycnt)
                     self.mainWindow.stillNewText.emit(
                         "try number: " + str(trycnt))
@@ -594,6 +597,11 @@ class StillImageSystem(QtCore.QObject):
                     break
             else:							# If everything goes well, reset the try counter, and add the word to the accumulating final wor
                 trycnt = 0
+                successcount += 1
+                if (successcount >= 3):
+                    if(wordlength < 7000):
+                        wordlength += 1000
+                        self.mainWindow.stillNewText.emit("wordlength Increased "+ str(wordlength))
                 self.rfdSer.write('Y')
                 finalstring += str(word)
                 stillProgress += wordlength

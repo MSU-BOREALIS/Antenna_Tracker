@@ -3,6 +3,7 @@ from PyQt4 import QtCore
 from PyQt4 import QtGui
 from PyQt4.QtCore import *
 from BalloonUpdate import *
+from time import sleep
 import MySQLdb
 import datetime
 import serial

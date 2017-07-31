@@ -46,7 +46,7 @@ def getMapHtml(lat, lon, apiKey):
 			    title: 'Hello World!'
 			  });
 			}
-		  
+
 		</script>
 		<script async defer
 		src="https://maps.googleapis.com/maps/api/js?key=""" + str(apiKey) + """&callback=initMap">

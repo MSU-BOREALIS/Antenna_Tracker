@@ -16,46 +16,37 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
-
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(1462, 798)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            MainWindow.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
         self.centralwidget = QtGui.QWidget(MainWindow)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.centralwidget.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
         self.centralwidget.setSizePolicy(sizePolicy)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.horizontalLayout_5 = QtGui.QHBoxLayout(self.centralwidget)
         self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
         self.dataDisplayVerticalLayout = QtGui.QVBoxLayout()
-        self.dataDisplayVerticalLayout.setObjectName(
-            _fromUtf8("dataDisplayVerticalLayout"))
+        self.dataDisplayVerticalLayout.setObjectName(_fromUtf8("dataDisplayVerticalLayout"))
         self.incomingGPSFrame = QtGui.QFrame(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Preferred)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.incomingGPSFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.incomingGPSFrame.sizePolicy().hasHeightForWidth())
         self.incomingGPSFrame.setSizePolicy(sizePolicy)
         self.incomingGPSFrame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.incomingGPSFrame.setFrameShadow(QtGui.QFrame.Raised)
@@ -71,16 +62,13 @@ class Ui_MainWindow(object):
         self.incomingDataLabel.setObjectName(_fromUtf8("incomingDataLabel"))
         self.gridLayout_9.addWidget(self.incomingDataLabel, 0, 0, 1, 1)
         self.incomingDataTable = QtGui.QTableWidget(self.incomingGPSFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.incomingDataTable.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.incomingDataTable.sizePolicy().hasHeightForWidth())
         self.incomingDataTable.setSizePolicy(sizePolicy)
         self.incomingDataTable.setAutoScroll(False)
-        self.incomingDataTable.setEditTriggers(
-            QtGui.QAbstractItemView.NoEditTriggers)
+        self.incomingDataTable.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.incomingDataTable.setTabKeyNavigation(False)
         self.incomingDataTable.setObjectName(_fromUtf8("incomingDataTable"))
         self.incomingDataTable.setColumnCount(1)
@@ -104,7 +92,7 @@ class Ui_MainWindow(object):
         item = QtGui.QTableWidgetItem()
         self.incomingDataTable.setVerticalHeaderItem(8, item)
         item = QtGui.QTableWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignCenter)
+        item.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.incomingDataTable.setHorizontalHeaderItem(0, item)
         self.incomingDataTable.horizontalHeader().setStretchLastSection(True)
         self.incomingDataTable.verticalHeader().setSortIndicatorShown(False)
@@ -112,12 +100,10 @@ class Ui_MainWindow(object):
         self.gridLayout_9.addWidget(self.incomingDataTable, 1, 0, 1, 1)
         self.dataDisplayVerticalLayout.addWidget(self.incomingGPSFrame)
         self.groundDataFrame = QtGui.QFrame(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Preferred)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.groundDataFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.groundDataFrame.sizePolicy().hasHeightForWidth())
         self.groundDataFrame.setSizePolicy(sizePolicy)
         self.groundDataFrame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.groundDataFrame.setFrameShadow(QtGui.QFrame.Raised)
@@ -134,8 +120,7 @@ class Ui_MainWindow(object):
         self.gridLayout_10.addWidget(self.groundDataLabel, 0, 0, 1, 1)
         self.groundDataTable = QtGui.QTableWidget(self.groundDataFrame)
         self.groundDataTable.setAutoScroll(False)
-        self.groundDataTable.setEditTriggers(
-            QtGui.QAbstractItemView.NoEditTriggers)
+        self.groundDataTable.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.groundDataTable.setTabKeyNavigation(False)
         self.groundDataTable.setObjectName(_fromUtf8("groundDataTable"))
         self.groundDataTable.setColumnCount(1)
@@ -157,7 +142,7 @@ class Ui_MainWindow(object):
         item = QtGui.QTableWidgetItem()
         self.groundDataTable.setVerticalHeaderItem(7, item)
         item = QtGui.QTableWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignCenter)
+        item.setTextAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.groundDataTable.setHorizontalHeaderItem(0, item)
         self.groundDataTable.horizontalHeader().setStretchLastSection(True)
         self.groundDataTable.verticalHeader().setStretchLastSection(True)
@@ -170,23 +155,19 @@ class Ui_MainWindow(object):
         self.mainDividerLine.setObjectName(_fromUtf8("mainDividerLine"))
         self.horizontalLayout_5.addWidget(self.mainDividerLine)
         self.settingsSplitter = QtGui.QSplitter(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.settingsSplitter.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.settingsSplitter.sizePolicy().hasHeightForWidth())
         self.settingsSplitter.setSizePolicy(sizePolicy)
         self.settingsSplitter.setOrientation(QtCore.Qt.Vertical)
         self.settingsSplitter.setObjectName(_fromUtf8("settingsSplitter"))
         self.tabs = QtGui.QTabWidget(self.settingsSplitter)
         self.tabs.setEnabled(True)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.tabs.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.tabs.sizePolicy().hasHeightForWidth())
         self.tabs.setSizePolicy(sizePolicy)
         self.tabs.setAutoFillBackground(True)
         self.tabs.setTabPosition(QtGui.QTabWidget.West)
@@ -196,12 +177,10 @@ class Ui_MainWindow(object):
         self.gridLayout_4 = QtGui.QGridLayout(self.Settings)
         self.gridLayout_4.setObjectName(_fromUtf8("gridLayout_4"))
         self.bearingFrame = QtGui.QFrame(self.Settings)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.bearingFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.bearingFrame.sizePolicy().hasHeightForWidth())
         self.bearingFrame.setSizePolicy(sizePolicy)
         self.bearingFrame.setFrameShape(QtGui.QFrame.WinPanel)
         self.bearingFrame.setFrameShadow(QtGui.QFrame.Raised)
@@ -209,49 +188,38 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QtGui.QHBoxLayout(self.bearingFrame)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.centerBearingSelectFrame = QtGui.QFrame(self.bearingFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.centerBearingSelectFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.centerBearingSelectFrame.sizePolicy().hasHeightForWidth())
         self.centerBearingSelectFrame.setSizePolicy(sizePolicy)
         self.centerBearingSelectFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.centerBearingSelectFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.centerBearingSelectFrame.setObjectName(
-            _fromUtf8("centerBearingSelectFrame"))
+        self.centerBearingSelectFrame.setObjectName(_fromUtf8("centerBearingSelectFrame"))
         self.verticalLayout = QtGui.QVBoxLayout(self.centerBearingSelectFrame)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.centerBearingSelectLabel = QtGui.QLabel(
-            self.centerBearingSelectFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
+        self.centerBearingSelectLabel = QtGui.QLabel(self.centerBearingSelectFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.centerBearingSelectLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.centerBearingSelectLabel.sizePolicy().hasHeightForWidth())
         self.centerBearingSelectLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
         self.centerBearingSelectLabel.setFont(font)
-        self.centerBearingSelectLabel.setObjectName(
-            _fromUtf8("centerBearingSelectLabel"))
+        self.centerBearingSelectLabel.setObjectName(_fromUtf8("centerBearingSelectLabel"))
         self.verticalLayout.addWidget(self.centerBearingSelectLabel)
-        self.centerBearingModeFrame = QtGui.QFrame(
-            self.centerBearingSelectFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        self.centerBearingModeFrame = QtGui.QFrame(self.centerBearingSelectFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.centerBearingModeFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.centerBearingModeFrame.sizePolicy().hasHeightForWidth())
         self.centerBearingModeFrame.setSizePolicy(sizePolicy)
         self.centerBearingModeFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.centerBearingModeFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.centerBearingModeFrame.setObjectName(
-            _fromUtf8("centerBearingModeFrame"))
+        self.centerBearingModeFrame.setObjectName(_fromUtf8("centerBearingModeFrame"))
         self.gridLayout_12 = QtGui.QGridLayout(self.centerBearingModeFrame)
         self.gridLayout_12.setObjectName(_fromUtf8("gridLayout_12"))
         self.getLocal = QtGui.QRadioButton(self.centerBearingModeFrame)
@@ -289,29 +257,23 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.centerBearingModeFrame)
         self.horizontalLayout.addWidget(self.centerBearingSelectFrame)
         self.manualCenterBearingEntryFrame = QtGui.QFrame(self.bearingFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.manualCenterBearingEntryFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.manualCenterBearingEntryFrame.sizePolicy().hasHeightForWidth())
         self.manualCenterBearingEntryFrame.setSizePolicy(sizePolicy)
         self.manualCenterBearingEntryFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.manualCenterBearingEntryFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.manualCenterBearingEntryFrame.setObjectName(
-            _fromUtf8("manualCenterBearingEntryFrame"))
-        self.gridLayout_3 = QtGui.QGridLayout(
-            self.manualCenterBearingEntryFrame)
+        self.manualCenterBearingEntryFrame.setObjectName(_fromUtf8("manualCenterBearingEntryFrame"))
+        self.gridLayout_3 = QtGui.QGridLayout(self.manualCenterBearingEntryFrame)
         self.gridLayout_3.setObjectName(_fromUtf8("gridLayout_3"))
-        self.manualSettingsEntryLabel = QtGui.QLabel(
-            self.manualCenterBearingEntryFrame)
+        self.manualSettingsEntryLabel = QtGui.QLabel(self.manualCenterBearingEntryFrame)
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
         self.manualSettingsEntryLabel.setFont(font)
-        self.manualSettingsEntryLabel.setObjectName(
-            _fromUtf8("manualSettingsEntryLabel"))
+        self.manualSettingsEntryLabel.setObjectName(_fromUtf8("manualSettingsEntryLabel"))
         self.gridLayout_3.addWidget(self.manualSettingsEntryLabel, 0, 0, 1, 1)
         self.manualLatLabel = QtGui.QLabel(self.manualCenterBearingEntryFrame)
         font = QtGui.QFont()
@@ -347,41 +309,32 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.manualCenterBearingEntryFrame)
         self.gridLayout_4.addWidget(self.bearingFrame, 0, 0, 1, 1)
         self.autotrackSimulationFrame = QtGui.QFrame(self.Settings)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.autotrackSimulationFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.autotrackSimulationFrame.sizePolicy().hasHeightForWidth())
         self.autotrackSimulationFrame.setSizePolicy(sizePolicy)
         self.autotrackSimulationFrame.setFrameShape(QtGui.QFrame.WinPanel)
         self.autotrackSimulationFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.autotrackSimulationFrame.setObjectName(
-            _fromUtf8("autotrackSimulationFrame"))
-        self.horizontalLayout_6 = QtGui.QHBoxLayout(
-            self.autotrackSimulationFrame)
+        self.autotrackSimulationFrame.setObjectName(_fromUtf8("autotrackSimulationFrame"))
+        self.horizontalLayout_6 = QtGui.QHBoxLayout(self.autotrackSimulationFrame)
         self.horizontalLayout_6.setObjectName(_fromUtf8("horizontalLayout_6"))
         self.autotrackSelectFrame = QtGui.QFrame(self.autotrackSimulationFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.autotrackSelectFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.autotrackSelectFrame.sizePolicy().hasHeightForWidth())
         self.autotrackSelectFrame.setSizePolicy(sizePolicy)
         self.autotrackSelectFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.autotrackSelectFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.autotrackSelectFrame.setObjectName(
-            _fromUtf8("autotrackSelectFrame"))
+        self.autotrackSelectFrame.setObjectName(_fromUtf8("autotrackSelectFrame"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.autotrackSelectFrame)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
         self.autotrackLabel = QtGui.QLabel(self.autotrackSelectFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.autotrackLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.autotrackLabel.sizePolicy().hasHeightForWidth())
         self.autotrackLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(14)
@@ -413,12 +366,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.addWidget(self.autotrackSelectFrame)
         self.gridLayout_4.addWidget(self.autotrackSimulationFrame, 0, 1, 1, 2)
         self.connectionFrame = QtGui.QFrame(self.Settings)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.connectionFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.connectionFrame.sizePolicy().hasHeightForWidth())
         self.connectionFrame.setSizePolicy(sizePolicy)
         self.connectionFrame.setFrameShape(QtGui.QFrame.WinPanel)
         self.connectionFrame.setFrameShadow(QtGui.QFrame.Raised)
@@ -432,12 +383,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_8 = QtGui.QHBoxLayout(self.frame_2)
         self.horizontalLayout_8.setObjectName(_fromUtf8("horizontalLayout_8"))
         self.connectionsLabel = QtGui.QLabel(self.frame_2)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.connectionsLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.connectionsLabel.sizePolicy().hasHeightForWidth())
         self.connectionsLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(14)
@@ -447,12 +396,10 @@ class Ui_MainWindow(object):
         self.connectionsLabel.setObjectName(_fromUtf8("connectionsLabel"))
         self.horizontalLayout_8.addWidget(self.connectionsLabel)
         self.checkComPorts = QtGui.QPushButton(self.frame_2)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.checkComPorts.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.checkComPorts.sizePolicy().hasHeightForWidth())
         self.checkComPorts.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -463,8 +410,7 @@ class Ui_MainWindow(object):
         self.connectionControlsFrame = QtGui.QFrame(self.connectionFrame)
         self.connectionControlsFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.connectionControlsFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.connectionControlsFrame.setObjectName(
-            _fromUtf8("connectionControlsFrame"))
+        self.connectionControlsFrame.setObjectName(_fromUtf8("connectionControlsFrame"))
         self.gridLayout_13 = QtGui.QGridLayout(self.connectionControlsFrame)
         self.gridLayout_13.setObjectName(_fromUtf8("gridLayout_13"))
         self.aprsCallsign = QtGui.QLineEdit(self.connectionControlsFrame)
@@ -520,12 +466,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.connectionControlsFrame)
         self.gridLayout_4.addWidget(self.connectionFrame, 1, 0, 1, 1)
         self.frame = QtGui.QFrame(self.Settings)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.frame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
         self.frame.setSizePolicy(sizePolicy)
         self.frame.setFrameShape(QtGui.QFrame.WinPanel)
         self.frame.setFrameShadow(QtGui.QFrame.Raised)
@@ -533,45 +477,36 @@ class Ui_MainWindow(object):
         self.gridLayout_2 = QtGui.QGridLayout(self.frame)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
         self.graphingLoggingFrame = QtGui.QFrame(self.frame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.graphingLoggingFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.graphingLoggingFrame.sizePolicy().hasHeightForWidth())
         self.graphingLoggingFrame.setSizePolicy(sizePolicy)
         self.graphingLoggingFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.graphingLoggingFrame.setFrameShadow(QtGui.QFrame.Plain)
-        self.graphingLoggingFrame.setObjectName(
-            _fromUtf8("graphingLoggingFrame"))
+        self.graphingLoggingFrame.setObjectName(_fromUtf8("graphingLoggingFrame"))
         self.verticalLayout_11 = QtGui.QVBoxLayout(self.graphingLoggingFrame)
         self.verticalLayout_11.setObjectName(_fromUtf8("verticalLayout_11"))
         self.graphingLoggingLabel = QtGui.QLabel(self.graphingLoggingFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.graphingLoggingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.graphingLoggingLabel.sizePolicy().hasHeightForWidth())
         self.graphingLoggingLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
         self.graphingLoggingLabel.setFont(font)
-        self.graphingLoggingLabel.setObjectName(
-            _fromUtf8("graphingLoggingLabel"))
+        self.graphingLoggingLabel.setObjectName(_fromUtf8("graphingLoggingLabel"))
         self.verticalLayout_11.addWidget(self.graphingLoggingLabel)
-        self.graphingLoggingSelectFrame = QtGui.QFrame(
-            self.graphingLoggingFrame)
+        self.graphingLoggingSelectFrame = QtGui.QFrame(self.graphingLoggingFrame)
         self.graphingLoggingSelectFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.graphingLoggingSelectFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.graphingLoggingSelectFrame.setObjectName(
-            _fromUtf8("graphingLoggingSelectFrame"))
+        self.graphingLoggingSelectFrame.setObjectName(_fromUtf8("graphingLoggingSelectFrame"))
         self.gridLayout_11 = QtGui.QGridLayout(self.graphingLoggingSelectFrame)
         self.gridLayout_11.setObjectName(_fromUtf8("gridLayout_11"))
-        self.saveDataCheckbox = QtGui.QCheckBox(
-            self.graphingLoggingSelectFrame)
+        self.saveDataCheckbox = QtGui.QCheckBox(self.graphingLoggingSelectFrame)
         self.saveDataCheckbox.setEnabled(True)
         self.saveDataCheckbox.setChecked(True)
         self.saveDataCheckbox.setObjectName(_fromUtf8("saveDataCheckbox"))
@@ -580,8 +515,7 @@ class Ui_MainWindow(object):
         self.graphReal.setChecked(True)
         self.graphReal.setObjectName(_fromUtf8("graphReal"))
         self.gridLayout_11.addWidget(self.graphReal, 0, 0, 1, 1)
-        self.internetCheckBox = QtGui.QCheckBox(
-            self.graphingLoggingSelectFrame)
+        self.internetCheckBox = QtGui.QCheckBox(self.graphingLoggingSelectFrame)
         self.internetCheckBox.setChecked(True)
         self.internetCheckBox.setObjectName(_fromUtf8("internetCheckBox"))
         self.gridLayout_11.addWidget(self.internetCheckBox, 2, 0, 1, 1)
@@ -589,12 +523,10 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.graphingLoggingFrame, 0, 0, 1, 1)
         self.gridLayout_4.addWidget(self.frame, 0, 3, 1, 1)
         self.launchFrame = QtGui.QFrame(self.Settings)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.launchFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.launchFrame.sizePolicy().hasHeightForWidth())
         self.launchFrame.setSizePolicy(sizePolicy)
         self.launchFrame.setFrameShape(QtGui.QFrame.WinPanel)
         self.launchFrame.setFrameShadow(QtGui.QFrame.Raised)
@@ -629,14 +561,12 @@ class Ui_MainWindow(object):
         self.updateSettings.setFont(font)
         self.updateSettings.setObjectName(_fromUtf8("updateSettings"))
         self.gridLayout_5.addWidget(self.updateSettings, 1, 0, 1, 1)
-        self.recalibrateCenterBearing = QtGui.QCommandLinkButton(
-            self.launchFrame)
+        self.recalibrateCenterBearing = QtGui.QCommandLinkButton(self.launchFrame)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Segoe UI"))
         font.setPointSize(14)
         self.recalibrateCenterBearing.setFont(font)
-        self.recalibrateCenterBearing.setObjectName(
-            _fromUtf8("recalibrateCenterBearing"))
+        self.recalibrateCenterBearing.setObjectName(_fromUtf8("recalibrateCenterBearing"))
         self.gridLayout_5.addWidget(self.recalibrateCenterBearing, 2, 0, 1, 1)
         self.gridLayout_4.addWidget(self.launchFrame, 1, 1, 1, 3)
         self.launchFrame.raise_()
@@ -694,51 +624,38 @@ class Ui_MainWindow(object):
         self.verticalLayout_10 = QtGui.QVBoxLayout(self.RFDCommands)
         self.verticalLayout_10.setObjectName(_fromUtf8("verticalLayout_10"))
         self.rfdCommandIdButtonFrame = QtGui.QFrame(self.RFDCommands)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.rfdCommandIdButtonFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.rfdCommandIdButtonFrame.sizePolicy().hasHeightForWidth())
         self.rfdCommandIdButtonFrame.setSizePolicy(sizePolicy)
         self.rfdCommandIdButtonFrame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.rfdCommandIdButtonFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.rfdCommandIdButtonFrame.setObjectName(
-            _fromUtf8("rfdCommandIdButtonFrame"))
-        self.horizontalLayout_2 = QtGui.QHBoxLayout(
-            self.rfdCommandIdButtonFrame)
+        self.rfdCommandIdButtonFrame.setObjectName(_fromUtf8("rfdCommandIdButtonFrame"))
+        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.rfdCommandIdButtonFrame)
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
-        self.rfdIdentifierCommandFrame = QtGui.QFrame(
-            self.rfdCommandIdButtonFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        self.rfdIdentifierCommandFrame = QtGui.QFrame(self.rfdCommandIdButtonFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.rfdIdentifierCommandFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.rfdIdentifierCommandFrame.sizePolicy().hasHeightForWidth())
         self.rfdIdentifierCommandFrame.setSizePolicy(sizePolicy)
         self.rfdIdentifierCommandFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.rfdIdentifierCommandFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.rfdIdentifierCommandFrame.setObjectName(
-            _fromUtf8("rfdIdentifierCommandFrame"))
-        self.horizontalLayout_7 = QtGui.QHBoxLayout(
-            self.rfdIdentifierCommandFrame)
+        self.rfdIdentifierCommandFrame.setObjectName(_fromUtf8("rfdIdentifierCommandFrame"))
+        self.horizontalLayout_7 = QtGui.QHBoxLayout(self.rfdIdentifierCommandFrame)
         self.horizontalLayout_7.setObjectName(_fromUtf8("horizontalLayout_7"))
-        self.rfdIdentifierEntryFrame = QtGui.QFrame(
-            self.rfdIdentifierCommandFrame)
+        self.rfdIdentifierEntryFrame = QtGui.QFrame(self.rfdIdentifierCommandFrame)
         self.rfdIdentifierEntryFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.rfdIdentifierEntryFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.rfdIdentifierEntryFrame.setObjectName(
-            _fromUtf8("rfdIdentifierEntryFrame"))
+        self.rfdIdentifierEntryFrame.setObjectName(_fromUtf8("rfdIdentifierEntryFrame"))
         self.verticalLayout_4 = QtGui.QVBoxLayout(self.rfdIdentifierEntryFrame)
         self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
         self.rfdIDLabel = QtGui.QLabel(self.rfdIdentifierEntryFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.rfdIDLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.rfdIDLabel.sizePolicy().hasHeightForWidth())
         self.rfdIDLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(20)
@@ -752,27 +669,22 @@ class Ui_MainWindow(object):
         self.rfdIDEntry.setObjectName(_fromUtf8("rfdIDEntry"))
         self.verticalLayout_4.addWidget(self.rfdIDEntry)
         self.horizontalLayout_7.addWidget(self.rfdIdentifierEntryFrame)
-        self.rfdCommandEntryFrame = QtGui.QFrame(
-            self.rfdIdentifierCommandFrame)
+        self.rfdCommandEntryFrame = QtGui.QFrame(self.rfdIdentifierCommandFrame)
         self.rfdCommandEntryFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.rfdCommandEntryFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.rfdCommandEntryFrame.setObjectName(
-            _fromUtf8("rfdCommandEntryFrame"))
+        self.rfdCommandEntryFrame.setObjectName(_fromUtf8("rfdCommandEntryFrame"))
         self.verticalLayout_9 = QtGui.QVBoxLayout(self.rfdCommandEntryFrame)
         self.verticalLayout_9.setObjectName(_fromUtf8("verticalLayout_9"))
         self.rfdCommandEntryLabel = QtGui.QLabel(self.rfdCommandEntryFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.rfdCommandEntryLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.rfdCommandEntryLabel.sizePolicy().hasHeightForWidth())
         self.rfdCommandEntryLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(20)
         self.rfdCommandEntryLabel.setFont(font)
-        self.rfdCommandEntryLabel.setObjectName(
-            _fromUtf8("rfdCommandEntryLabel"))
+        self.rfdCommandEntryLabel.setObjectName(_fromUtf8("rfdCommandEntryLabel"))
         self.verticalLayout_9.addWidget(self.rfdCommandEntryLabel)
         self.rfdCommandEntry = QtGui.QLineEdit(self.rfdCommandEntryFrame)
         font = QtGui.QFont()
@@ -785,17 +697,14 @@ class Ui_MainWindow(object):
         self.rfdCommandButtonFrame = QtGui.QFrame(self.rfdCommandIdButtonFrame)
         self.rfdCommandButtonFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.rfdCommandButtonFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.rfdCommandButtonFrame.setObjectName(
-            _fromUtf8("rfdCommandButtonFrame"))
+        self.rfdCommandButtonFrame.setObjectName(_fromUtf8("rfdCommandButtonFrame"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.rfdCommandButtonFrame)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
         self.rfdCommandButton = QtGui.QPushButton(self.rfdCommandButtonFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.rfdCommandButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.rfdCommandButton.sizePolicy().hasHeightForWidth())
         self.rfdCommandButton.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(20)
@@ -803,26 +712,21 @@ class Ui_MainWindow(object):
         self.rfdCommandButton.setObjectName(_fromUtf8("rfdCommandButton"))
         self.verticalLayout_6.addWidget(self.rfdCommandButton)
         self.rfdCommandsOnlineLabel = QtGui.QLabel(self.rfdCommandButtonFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.rfdCommandsOnlineLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.rfdCommandsOnlineLabel.sizePolicy().hasHeightForWidth())
         self.rfdCommandsOnlineLabel.setSizePolicy(sizePolicy)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(243, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(243, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
         self.rfdCommandsOnlineLabel.setPalette(palette)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Microsoft Sans Serif"))
@@ -831,23 +735,19 @@ class Ui_MainWindow(object):
         font.setUnderline(False)
         font.setWeight(75)
         self.rfdCommandsOnlineLabel.setFont(font)
-        self.rfdCommandsOnlineLabel.setObjectName(
-            _fromUtf8("rfdCommandsOnlineLabel"))
+        self.rfdCommandsOnlineLabel.setObjectName(_fromUtf8("rfdCommandsOnlineLabel"))
         self.verticalLayout_6.addWidget(self.rfdCommandsOnlineLabel)
         self.horizontalLayout_2.addWidget(self.rfdCommandButtonFrame)
         self.verticalLayout_10.addWidget(self.rfdCommandIdButtonFrame)
         self.rfdListenReceiveFrame = QtGui.QFrame(self.RFDCommands)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.rfdListenReceiveFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.rfdListenReceiveFrame.sizePolicy().hasHeightForWidth())
         self.rfdListenReceiveFrame.setSizePolicy(sizePolicy)
         self.rfdListenReceiveFrame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.rfdListenReceiveFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.rfdListenReceiveFrame.setObjectName(
-            _fromUtf8("rfdListenReceiveFrame"))
+        self.rfdListenReceiveFrame.setObjectName(_fromUtf8("rfdListenReceiveFrame"))
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.rfdListenReceiveFrame)
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
         self.rfdReceivedFrame = QtGui.QFrame(self.rfdListenReceiveFrame)
@@ -872,8 +772,7 @@ class Ui_MainWindow(object):
         self.rfdListenButtonFrame = QtGui.QFrame(self.rfdListenReceiveFrame)
         self.rfdListenButtonFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.rfdListenButtonFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.rfdListenButtonFrame.setObjectName(
-            _fromUtf8("rfdListenButtonFrame"))
+        self.rfdListenButtonFrame.setObjectName(_fromUtf8("rfdListenButtonFrame"))
         self.verticalLayout_7 = QtGui.QVBoxLayout(self.rfdListenButtonFrame)
         self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
         self.rfdListenButton = QtGui.QPushButton(self.rfdListenButtonFrame)
@@ -883,26 +782,21 @@ class Ui_MainWindow(object):
         self.rfdListenButton.setObjectName(_fromUtf8("rfdListenButton"))
         self.verticalLayout_7.addWidget(self.rfdListenButton)
         self.rfdListenOnlineLabel = QtGui.QLabel(self.rfdListenButtonFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.rfdListenOnlineLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.rfdListenOnlineLabel.sizePolicy().hasHeightForWidth())
         self.rfdListenOnlineLabel.setSizePolicy(sizePolicy)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(243, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(243, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
         self.rfdListenOnlineLabel.setPalette(palette)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Microsoft Sans Serif"))
@@ -911,25 +805,19 @@ class Ui_MainWindow(object):
         font.setUnderline(False)
         font.setWeight(75)
         self.rfdListenOnlineLabel.setFont(font)
-        self.rfdListenOnlineLabel.setObjectName(
-            _fromUtf8("rfdListenOnlineLabel"))
+        self.rfdListenOnlineLabel.setObjectName(_fromUtf8("rfdListenOnlineLabel"))
         self.verticalLayout_7.addWidget(self.rfdListenOnlineLabel)
         self.requestStatusButton = QtGui.QPushButton(self.rfdListenButtonFrame)
-        self.requestStatusButton.setObjectName(
-            _fromUtf8("requestStatusButton"))
+        self.requestStatusButton.setObjectName(_fromUtf8("requestStatusButton"))
         self.verticalLayout_7.addWidget(self.requestStatusButton)
-        self.getPiRuntimeDataButton = QtGui.QPushButton(
-            self.rfdListenButtonFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
+        self.getPiRuntimeDataButton = QtGui.QPushButton(self.rfdListenButtonFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.getPiRuntimeDataButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.getPiRuntimeDataButton.sizePolicy().hasHeightForWidth())
         self.getPiRuntimeDataButton.setSizePolicy(sizePolicy)
         self.getPiRuntimeDataButton.setMinimumSize(QtCore.QSize(0, 0))
-        self.getPiRuntimeDataButton.setObjectName(
-            _fromUtf8("getPiRuntimeDataButton"))
+        self.getPiRuntimeDataButton.setObjectName(_fromUtf8("getPiRuntimeDataButton"))
         self.verticalLayout_7.addWidget(self.getPiRuntimeDataButton)
         self.horizontalLayout_3.addWidget(self.rfdListenButtonFrame)
         self.verticalLayout_10.addWidget(self.rfdListenReceiveFrame)
@@ -940,8 +828,7 @@ class Ui_MainWindow(object):
         self.layoutWidget.setGeometry(QtCore.QRect(20, 20, 871, 561))
         self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
         self.payloadTabGridLayout = QtGui.QGridLayout(self.layoutWidget)
-        self.payloadTabGridLayout.setObjectName(
-            _fromUtf8("payloadTabGridLayout"))
+        self.payloadTabGridLayout.setObjectName(_fromUtf8("payloadTabGridLayout"))
         self.tabs.addTab(self.payloadsTab, _fromUtf8(""))
         self.StillImages = QtGui.QWidget()
         self.StillImages.setObjectName(_fromUtf8("StillImages"))
@@ -950,74 +837,55 @@ class Ui_MainWindow(object):
         self.stillImageControlsFrame = QtGui.QFrame(self.StillImages)
         self.stillImageControlsFrame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.stillImageControlsFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.stillImageControlsFrame.setObjectName(
-            _fromUtf8("stillImageControlsFrame"))
-        self.verticalLayout_12 = QtGui.QVBoxLayout(
-            self.stillImageControlsFrame)
+        self.stillImageControlsFrame.setObjectName(_fromUtf8("stillImageControlsFrame"))
+        self.verticalLayout_12 = QtGui.QVBoxLayout(self.stillImageControlsFrame)
         self.verticalLayout_12.setObjectName(_fromUtf8("verticalLayout_12"))
-        self.stillImageStartPictureFrame = QtGui.QFrame(
-            self.stillImageControlsFrame)
+        self.stillImageStartPictureFrame = QtGui.QFrame(self.stillImageControlsFrame)
         self.stillImageStartPictureFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.stillImageStartPictureFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.stillImageStartPictureFrame.setObjectName(
-            _fromUtf8("stillImageStartPictureFrame"))
-        self.gridLayout_19 = QtGui.QGridLayout(
-            self.stillImageStartPictureFrame)
+        self.stillImageStartPictureFrame.setObjectName(_fromUtf8("stillImageStartPictureFrame"))
+        self.gridLayout_19 = QtGui.QGridLayout(self.stillImageStartPictureFrame)
         self.gridLayout_19.setObjectName(_fromUtf8("gridLayout_19"))
-        self.mostRecentImageButton = QtGui.QPushButton(
-            self.stillImageStartPictureFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.mostRecentImageButton = QtGui.QPushButton(self.stillImageStartPictureFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.mostRecentImageButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.mostRecentImageButton.sizePolicy().hasHeightForWidth())
         self.mostRecentImageButton.setSizePolicy(sizePolicy)
         self.mostRecentImageButton.setFlat(False)
-        self.mostRecentImageButton.setObjectName(
-            _fromUtf8("mostRecentImageButton"))
+        self.mostRecentImageButton.setObjectName(_fromUtf8("mostRecentImageButton"))
         self.gridLayout_19.addWidget(self.mostRecentImageButton, 1, 1, 1, 1)
-        self.requestedImageName = QtGui.QLineEdit(
-            self.stillImageStartPictureFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        self.requestedImageName = QtGui.QLineEdit(self.stillImageStartPictureFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.requestedImageName.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.requestedImageName.sizePolicy().hasHeightForWidth())
         self.requestedImageName.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(10)
         self.requestedImageName.setFont(font)
         self.requestedImageName.setObjectName(_fromUtf8("requestedImageName"))
         self.gridLayout_19.addWidget(self.requestedImageName, 1, 0, 1, 1)
-        self.imageDataTxtButton = QtGui.QPushButton(
-            self.stillImageStartPictureFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.imageDataTxtButton = QtGui.QPushButton(self.stillImageStartPictureFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.imageDataTxtButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.imageDataTxtButton.sizePolicy().hasHeightForWidth())
         self.imageDataTxtButton.setSizePolicy(sizePolicy)
         self.imageDataTxtButton.setFlat(False)
         self.imageDataTxtButton.setObjectName(_fromUtf8("imageDataTxtButton"))
         self.gridLayout_19.addWidget(self.imageDataTxtButton, 2, 0, 1, 2)
-        self.stillImageOnlineLabel = QtGui.QLabel(
-            self.stillImageStartPictureFrame)
+        self.stillImageOnlineLabel = QtGui.QLabel(self.stillImageStartPictureFrame)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(243, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(243, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
         self.stillImageOnlineLabel.setPalette(palette)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Microsoft Sans Serif"))
@@ -1027,17 +895,14 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.stillImageOnlineLabel.setFont(font)
         self.stillImageOnlineLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.stillImageOnlineLabel.setObjectName(
-            _fromUtf8("stillImageOnlineLabel"))
+        self.stillImageOnlineLabel.setObjectName(_fromUtf8("stillImageOnlineLabel"))
         self.gridLayout_19.addWidget(self.stillImageOnlineLabel, 0, 0, 1, 2)
         self.verticalLayout_12.addWidget(self.stillImageStartPictureFrame)
         self.picControlFrame = QtGui.QFrame(self.stillImageControlsFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.picControlFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.picControlFrame.sizePolicy().hasHeightForWidth())
         self.picControlFrame.setSizePolicy(sizePolicy)
         self.picControlFrame.setFrameShape(QtGui.QFrame.NoFrame)
         self.picControlFrame.setFrameShadow(QtGui.QFrame.Raised)
@@ -1068,8 +933,7 @@ class Ui_MainWindow(object):
         font.setKerning(True)
         self.picCurrentWidthValue.setFont(font)
         self.picCurrentWidthValue.setAlignment(QtCore.Qt.AlignCenter)
-        self.picCurrentWidthValue.setObjectName(
-            _fromUtf8("picCurrentWidthValue"))
+        self.picCurrentWidthValue.setObjectName(_fromUtf8("picCurrentWidthValue"))
         self.gridLayout.addWidget(self.picCurrentWidthValue, 0, 2, 1, 1)
         self.picHeightLabel = QtGui.QLabel(self.picControlFrame)
         font = QtGui.QFont()
@@ -1094,8 +958,7 @@ class Ui_MainWindow(object):
         font.setKerning(True)
         self.picCurrentHeightValue.setFont(font)
         self.picCurrentHeightValue.setAlignment(QtCore.Qt.AlignCenter)
-        self.picCurrentHeightValue.setObjectName(
-            _fromUtf8("picCurrentHeightValue"))
+        self.picCurrentHeightValue.setObjectName(_fromUtf8("picCurrentHeightValue"))
         self.gridLayout.addWidget(self.picCurrentHeightValue, 1, 2, 1, 1)
         self.picSharpnessLabel = QtGui.QLabel(self.picControlFrame)
         font = QtGui.QFont()
@@ -1119,8 +982,7 @@ class Ui_MainWindow(object):
         font.setKerning(True)
         self.picCurrentSharpnessValue.setFont(font)
         self.picCurrentSharpnessValue.setAlignment(QtCore.Qt.AlignCenter)
-        self.picCurrentSharpnessValue.setObjectName(
-            _fromUtf8("picCurrentSharpnessValue"))
+        self.picCurrentSharpnessValue.setObjectName(_fromUtf8("picCurrentSharpnessValue"))
         self.gridLayout.addWidget(self.picCurrentSharpnessValue, 2, 2, 1, 1)
         self.picBrightnessLabel = QtGui.QLabel(self.picControlFrame)
         font = QtGui.QFont()
@@ -1144,8 +1006,7 @@ class Ui_MainWindow(object):
         font.setKerning(True)
         self.picCurrentBrightnessValue.setFont(font)
         self.picCurrentBrightnessValue.setAlignment(QtCore.Qt.AlignCenter)
-        self.picCurrentBrightnessValue.setObjectName(
-            _fromUtf8("picCurrentBrightnessValue"))
+        self.picCurrentBrightnessValue.setObjectName(_fromUtf8("picCurrentBrightnessValue"))
         self.gridLayout.addWidget(self.picCurrentBrightnessValue, 3, 2, 1, 1)
         self.picContrastLabel = QtGui.QLabel(self.picControlFrame)
         font = QtGui.QFont()
@@ -1169,8 +1030,7 @@ class Ui_MainWindow(object):
         font.setKerning(True)
         self.picCurrentContrastValue.setFont(font)
         self.picCurrentContrastValue.setAlignment(QtCore.Qt.AlignCenter)
-        self.picCurrentContrastValue.setObjectName(
-            _fromUtf8("picCurrentContrastValue"))
+        self.picCurrentContrastValue.setObjectName(_fromUtf8("picCurrentContrastValue"))
         self.gridLayout.addWidget(self.picCurrentContrastValue, 4, 2, 1, 1)
         self.picSaturationLabel = QtGui.QLabel(self.picControlFrame)
         font = QtGui.QFont()
@@ -1183,8 +1043,7 @@ class Ui_MainWindow(object):
         self.picSaturationSlider.setMinimum(-100)
         self.picSaturationSlider.setMaximum(100)
         self.picSaturationSlider.setOrientation(QtCore.Qt.Horizontal)
-        self.picSaturationSlider.setObjectName(
-            _fromUtf8("picSaturationSlider"))
+        self.picSaturationSlider.setObjectName(_fromUtf8("picSaturationSlider"))
         self.gridLayout.addWidget(self.picSaturationSlider, 5, 1, 1, 1)
         self.picCurrentSaturationValue = QtGui.QLabel(self.picControlFrame)
         font = QtGui.QFont()
@@ -1195,8 +1054,7 @@ class Ui_MainWindow(object):
         font.setKerning(True)
         self.picCurrentSaturationValue.setFont(font)
         self.picCurrentSaturationValue.setAlignment(QtCore.Qt.AlignCenter)
-        self.picCurrentSaturationValue.setObjectName(
-            _fromUtf8("picCurrentSaturationValue"))
+        self.picCurrentSaturationValue.setObjectName(_fromUtf8("picCurrentSaturationValue"))
         self.gridLayout.addWidget(self.picCurrentSaturationValue, 5, 2, 1, 1)
         self.picISOLabel = QtGui.QLabel(self.picControlFrame)
         font = QtGui.QFont()
@@ -1224,100 +1082,69 @@ class Ui_MainWindow(object):
         self.picCurrentISOValue.setObjectName(_fromUtf8("picCurrentISOValue"))
         self.gridLayout.addWidget(self.picCurrentISOValue, 6, 2, 1, 1)
         self.verticalLayout_12.addWidget(self.picControlFrame)
-        self.stillImageSettingsControlsFrame = QtGui.QFrame(
-            self.stillImageControlsFrame)
-        self.stillImageSettingsControlsFrame.setFrameShape(
-            QtGui.QFrame.NoFrame)
-        self.stillImageSettingsControlsFrame.setFrameShadow(
-            QtGui.QFrame.Raised)
-        self.stillImageSettingsControlsFrame.setObjectName(
-            _fromUtf8("stillImageSettingsControlsFrame"))
-        self.gridLayout_20 = QtGui.QGridLayout(
-            self.stillImageSettingsControlsFrame)
+        self.stillImageSettingsControlsFrame = QtGui.QFrame(self.stillImageControlsFrame)
+        self.stillImageSettingsControlsFrame.setFrameShape(QtGui.QFrame.NoFrame)
+        self.stillImageSettingsControlsFrame.setFrameShadow(QtGui.QFrame.Raised)
+        self.stillImageSettingsControlsFrame.setObjectName(_fromUtf8("stillImageSettingsControlsFrame"))
+        self.gridLayout_20 = QtGui.QGridLayout(self.stillImageSettingsControlsFrame)
         self.gridLayout_20.setObjectName(_fromUtf8("gridLayout_20"))
-        self.picDefaultSettingsButton = QtGui.QPushButton(
-            self.stillImageSettingsControlsFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.picDefaultSettingsButton = QtGui.QPushButton(self.stillImageSettingsControlsFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.picDefaultSettingsButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.picDefaultSettingsButton.sizePolicy().hasHeightForWidth())
         self.picDefaultSettingsButton.setSizePolicy(sizePolicy)
-        self.picDefaultSettingsButton.setObjectName(
-            _fromUtf8("picDefaultSettingsButton"))
+        self.picDefaultSettingsButton.setObjectName(_fromUtf8("picDefaultSettingsButton"))
         self.gridLayout_20.addWidget(self.picDefaultSettingsButton, 1, 0, 1, 2)
-        self.picSendNewSettingsButton = QtGui.QPushButton(
-            self.stillImageSettingsControlsFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.picSendNewSettingsButton = QtGui.QPushButton(self.stillImageSettingsControlsFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.picSendNewSettingsButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.picSendNewSettingsButton.sizePolicy().hasHeightForWidth())
         self.picSendNewSettingsButton.setSizePolicy(sizePolicy)
-        self.picSendNewSettingsButton.setObjectName(
-            _fromUtf8("picSendNewSettingsButton"))
+        self.picSendNewSettingsButton.setObjectName(_fromUtf8("picSendNewSettingsButton"))
         self.gridLayout_20.addWidget(self.picSendNewSettingsButton, 2, 0, 1, 1)
-        self.picGetSettingsButton = QtGui.QPushButton(
-            self.stillImageSettingsControlsFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.picGetSettingsButton = QtGui.QPushButton(self.stillImageSettingsControlsFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.picGetSettingsButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.picGetSettingsButton.sizePolicy().hasHeightForWidth())
         self.picGetSettingsButton.setSizePolicy(sizePolicy)
-        self.picGetSettingsButton.setObjectName(
-            _fromUtf8("picGetSettingsButton"))
+        self.picGetSettingsButton.setObjectName(_fromUtf8("picGetSettingsButton"))
         self.gridLayout_20.addWidget(self.picGetSettingsButton, 2, 1, 1, 1)
-        self.connectionTestButton = QtGui.QPushButton(
-            self.stillImageSettingsControlsFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.connectionTestButton = QtGui.QPushButton(self.stillImageSettingsControlsFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.connectionTestButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.connectionTestButton.sizePolicy().hasHeightForWidth())
         self.connectionTestButton.setSizePolicy(sizePolicy)
         self.connectionTestButton.setFlat(False)
-        self.connectionTestButton.setObjectName(
-            _fromUtf8("connectionTestButton"))
+        self.connectionTestButton.setObjectName(_fromUtf8("connectionTestButton"))
         self.gridLayout_20.addWidget(self.connectionTestButton, 3, 0, 1, 2)
-        self.picHorizontalFlipButton = QtGui.QPushButton(
-            self.stillImageSettingsControlsFrame)
-        self.picHorizontalFlipButton.setObjectName(
-            _fromUtf8("picHorizontalFlipButton"))
+        self.picHorizontalFlipButton = QtGui.QPushButton(self.stillImageSettingsControlsFrame)
+        self.picHorizontalFlipButton.setObjectName(_fromUtf8("picHorizontalFlipButton"))
         self.gridLayout_20.addWidget(self.picHorizontalFlipButton, 0, 0, 1, 1)
-        self.picVerticalFlipButton = QtGui.QPushButton(
-            self.stillImageSettingsControlsFrame)
-        self.picVerticalFlipButton.setObjectName(
-            _fromUtf8("picVerticalFlipButton"))
+        self.picVerticalFlipButton = QtGui.QPushButton(self.stillImageSettingsControlsFrame)
+        self.picVerticalFlipButton.setObjectName(_fromUtf8("picVerticalFlipButton"))
         self.gridLayout_20.addWidget(self.picVerticalFlipButton, 0, 1, 1, 1)
         self.verticalLayout_12.addWidget(self.stillImageSettingsControlsFrame)
         self.gridLayout_21.addWidget(self.stillImageControlsFrame, 0, 0, 3, 2)
         self.stillImageReceiverFrame = QtGui.QFrame(self.StillImages)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Minimum)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.stillImageReceiverFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.stillImageReceiverFrame.sizePolicy().hasHeightForWidth())
         self.stillImageReceiverFrame.setSizePolicy(sizePolicy)
         self.stillImageReceiverFrame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.stillImageReceiverFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.stillImageReceiverFrame.setObjectName(
-            _fromUtf8("stillImageReceiverFrame"))
-        self.verticalLayout_13 = QtGui.QVBoxLayout(
-            self.stillImageReceiverFrame)
+        self.stillImageReceiverFrame.setObjectName(_fromUtf8("stillImageReceiverFrame"))
+        self.verticalLayout_13 = QtGui.QVBoxLayout(self.stillImageReceiverFrame)
         self.verticalLayout_13.setObjectName(_fromUtf8("verticalLayout_13"))
         self.picLabel = QtGui.QLabel(self.stillImageReceiverFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.picLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.picLabel.sizePolicy().hasHeightForWidth())
         self.picLabel.setSizePolicy(sizePolicy)
         self.picLabel.setMinimumSize(QtCore.QSize(400, 300))
         self.picLabel.setText(_fromUtf8(""))
@@ -1325,25 +1152,20 @@ class Ui_MainWindow(object):
         self.picLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.picLabel.setObjectName(_fromUtf8("picLabel"))
         self.verticalLayout_13.addWidget(self.picLabel)
-        self.photoProgressBar = QtGui.QProgressBar(
-            self.stillImageReceiverFrame)
+        self.photoProgressBar = QtGui.QProgressBar(self.stillImageReceiverFrame)
         self.photoProgressBar.setProperty("value", 0)
         self.photoProgressBar.setObjectName(_fromUtf8("photoProgressBar"))
         self.verticalLayout_13.addWidget(self.photoProgressBar)
-        self.stillImageTextBrowser = QtGui.QTextBrowser(
-            self.stillImageReceiverFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.MinimumExpanding)
+        self.stillImageTextBrowser = QtGui.QTextBrowser(self.stillImageReceiverFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.stillImageTextBrowser.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.stillImageTextBrowser.sizePolicy().hasHeightForWidth())
         self.stillImageTextBrowser.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(8)
         self.stillImageTextBrowser.setFont(font)
-        self.stillImageTextBrowser.setObjectName(
-            _fromUtf8("stillImageTextBrowser"))
+        self.stillImageTextBrowser.setObjectName(_fromUtf8("stillImageTextBrowser"))
         self.verticalLayout_13.addWidget(self.stillImageTextBrowser)
         self.gridLayout_21.addWidget(self.stillImageReceiverFrame, 0, 2, 3, 1)
         self.tabs.addTab(self.StillImages, _fromUtf8(""))
@@ -1352,12 +1174,10 @@ class Ui_MainWindow(object):
         self.gridLayout_7 = QtGui.QGridLayout(self.ManualControl)
         self.gridLayout_7.setObjectName(_fromUtf8("gridLayout_7"))
         self.manualSlidersFrame = QtGui.QFrame(self.ManualControl)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.manualSlidersFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.manualSlidersFrame.sizePolicy().hasHeightForWidth())
         self.manualSlidersFrame.setSizePolicy(sizePolicy)
         self.manualSlidersFrame.setFrameShape(QtGui.QFrame.WinPanel)
         self.manualSlidersFrame.setFrameShadow(QtGui.QFrame.Raised)
@@ -1380,16 +1200,13 @@ class Ui_MainWindow(object):
         font.setPointSize(11)
         font.setItalic(True)
         self.panServoSliderLabel.setFont(font)
-        self.panServoSliderLabel.setObjectName(
-            _fromUtf8("panServoSliderLabel"))
+        self.panServoSliderLabel.setObjectName(_fromUtf8("panServoSliderLabel"))
         self.gridLayout_14.addWidget(self.panServoSliderLabel, 1, 0, 1, 1)
         self.panServoSlider = QtGui.QSlider(self.manualSlidersFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.panServoSlider.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.panServoSlider.sizePolicy().hasHeightForWidth())
         self.panServoSlider.setSizePolicy(sizePolicy)
         self.panServoSlider.setMinimum(-180)
         self.panServoSlider.setMaximum(180)
@@ -1403,8 +1220,7 @@ class Ui_MainWindow(object):
         font.setPointSize(11)
         font.setItalic(True)
         self.tiltServoSliderLabel.setFont(font)
-        self.tiltServoSliderLabel.setObjectName(
-            _fromUtf8("tiltServoSliderLabel"))
+        self.tiltServoSliderLabel.setObjectName(_fromUtf8("tiltServoSliderLabel"))
         self.gridLayout_14.addWidget(self.tiltServoSliderLabel, 3, 0, 1, 1)
         self.tiltServoSlider = QtGui.QSlider(self.manualSlidersFrame)
         self.tiltServoSlider.setMinimum(0)
@@ -1418,16 +1234,13 @@ class Ui_MainWindow(object):
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(243, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(243, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
         self.sliderStatus.setPalette(palette)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Microsoft Sans Serif"))
@@ -1442,114 +1255,87 @@ class Ui_MainWindow(object):
         self.manualCoordinateEntryFrame = QtGui.QFrame(self.ManualControl)
         self.manualCoordinateEntryFrame.setFrameShape(QtGui.QFrame.WinPanel)
         self.manualCoordinateEntryFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.manualCoordinateEntryFrame.setObjectName(
-            _fromUtf8("manualCoordinateEntryFrame"))
+        self.manualCoordinateEntryFrame.setObjectName(_fromUtf8("manualCoordinateEntryFrame"))
         self.gridLayout_16 = QtGui.QGridLayout(self.manualCoordinateEntryFrame)
         self.gridLayout_16.setObjectName(_fromUtf8("gridLayout_16"))
-        self.ManuelGPSEntryLabel = QtGui.QLabel(
-            self.manualCoordinateEntryFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        self.ManuelGPSEntryLabel = QtGui.QLabel(self.manualCoordinateEntryFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.ManuelGPSEntryLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.ManuelGPSEntryLabel.sizePolicy().hasHeightForWidth())
         self.ManuelGPSEntryLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
         self.ManuelGPSEntryLabel.setFont(font)
-        self.ManuelGPSEntryLabel.setObjectName(
-            _fromUtf8("ManuelGPSEntryLabel"))
+        self.ManuelGPSEntryLabel.setObjectName(_fromUtf8("ManuelGPSEntryLabel"))
         self.gridLayout_16.addWidget(self.ManuelGPSEntryLabel, 0, 0, 1, 1)
-        self.ManualEntryUpdateButton = QtGui.QPushButton(
-            self.manualCoordinateEntryFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        self.ManualEntryUpdateButton = QtGui.QPushButton(self.manualCoordinateEntryFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.ManualEntryUpdateButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.ManualEntryUpdateButton.sizePolicy().hasHeightForWidth())
         self.ManualEntryUpdateButton.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.ManualEntryUpdateButton.setFont(font)
-        self.ManualEntryUpdateButton.setObjectName(
-            _fromUtf8("ManualEntryUpdateButton"))
+        self.ManualEntryUpdateButton.setObjectName(_fromUtf8("ManualEntryUpdateButton"))
         self.gridLayout_16.addWidget(self.ManualEntryUpdateButton, 0, 1, 1, 1)
-        self.ManualEntryLatitude = QtGui.QLineEdit(
-            self.manualCoordinateEntryFrame)
+        self.ManualEntryLatitude = QtGui.QLineEdit(self.manualCoordinateEntryFrame)
         font = QtGui.QFont()
         font.setPointSize(11)
         self.ManualEntryLatitude.setFont(font)
         self.ManualEntryLatitude.setText(_fromUtf8(""))
-        self.ManualEntryLatitude.setObjectName(
-            _fromUtf8("ManualEntryLatitude"))
+        self.ManualEntryLatitude.setObjectName(_fromUtf8("ManualEntryLatitude"))
         self.gridLayout_16.addWidget(self.ManualEntryLatitude, 2, 0, 1, 2)
-        self.ManualEntryLongitude = QtGui.QLineEdit(
-            self.manualCoordinateEntryFrame)
+        self.ManualEntryLongitude = QtGui.QLineEdit(self.manualCoordinateEntryFrame)
         font = QtGui.QFont()
         font.setPointSize(11)
         self.ManualEntryLongitude.setFont(font)
-        self.ManualEntryLongitude.setObjectName(
-            _fromUtf8("ManualEntryLongitude"))
+        self.ManualEntryLongitude.setObjectName(_fromUtf8("ManualEntryLongitude"))
         self.gridLayout_16.addWidget(self.ManualEntryLongitude, 4, 0, 1, 2)
-        self.manualEntryLonLabel = QtGui.QLabel(
-            self.manualCoordinateEntryFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        self.manualEntryLonLabel = QtGui.QLabel(self.manualCoordinateEntryFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.manualEntryLonLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.manualEntryLonLabel.sizePolicy().hasHeightForWidth())
         self.manualEntryLonLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setItalic(True)
         self.manualEntryLonLabel.setFont(font)
-        self.manualEntryLonLabel.setObjectName(
-            _fromUtf8("manualEntryLonLabel"))
+        self.manualEntryLonLabel.setObjectName(_fromUtf8("manualEntryLonLabel"))
         self.gridLayout_16.addWidget(self.manualEntryLonLabel, 3, 0, 1, 2)
-        self.ManualEntryAltitude = QtGui.QLineEdit(
-            self.manualCoordinateEntryFrame)
+        self.ManualEntryAltitude = QtGui.QLineEdit(self.manualCoordinateEntryFrame)
         font = QtGui.QFont()
         font.setPointSize(11)
         self.ManualEntryAltitude.setFont(font)
-        self.ManualEntryAltitude.setObjectName(
-            _fromUtf8("ManualEntryAltitude"))
+        self.ManualEntryAltitude.setObjectName(_fromUtf8("ManualEntryAltitude"))
         self.gridLayout_16.addWidget(self.ManualEntryAltitude, 6, 0, 1, 2)
-        self.manualEntryAltLabel = QtGui.QLabel(
-            self.manualCoordinateEntryFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        self.manualEntryAltLabel = QtGui.QLabel(self.manualCoordinateEntryFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.manualEntryAltLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.manualEntryAltLabel.sizePolicy().hasHeightForWidth())
         self.manualEntryAltLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setItalic(True)
         self.manualEntryAltLabel.setFont(font)
-        self.manualEntryAltLabel.setObjectName(
-            _fromUtf8("manualEntryAltLabel"))
+        self.manualEntryAltLabel.setObjectName(_fromUtf8("manualEntryAltLabel"))
         self.gridLayout_16.addWidget(self.manualEntryAltLabel, 5, 0, 1, 2)
-        self.manualEntryLatLabel = QtGui.QLabel(
-            self.manualCoordinateEntryFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        self.manualEntryLatLabel = QtGui.QLabel(self.manualCoordinateEntryFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.manualEntryLatLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.manualEntryLatLabel.sizePolicy().hasHeightForWidth())
         self.manualEntryLatLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setItalic(True)
         self.manualEntryLatLabel.setFont(font)
-        self.manualEntryLatLabel.setObjectName(
-            _fromUtf8("manualEntryLatLabel"))
+        self.manualEntryLatLabel.setObjectName(_fromUtf8("manualEntryLatLabel"))
         self.gridLayout_16.addWidget(self.manualEntryLatLabel, 1, 0, 1, 2)
         self.manualEntryLatLabel.raise_()
         self.ManualEntryLatitude.raise_()
@@ -1559,38 +1345,31 @@ class Ui_MainWindow(object):
         self.manualEntryAltLabel.raise_()
         self.ManuelGPSEntryLabel.raise_()
         self.ManualEntryUpdateButton.raise_()
-        self.gridLayout_7.addWidget(
-            self.manualCoordinateEntryFrame, 0, 0, 1, 1)
+        self.gridLayout_7.addWidget(self.manualCoordinateEntryFrame, 0, 0, 1, 1)
         self.manualAngleEntryFrame = QtGui.QFrame(self.ManualControl)
         self.manualAngleEntryFrame.setFrameShape(QtGui.QFrame.WinPanel)
         self.manualAngleEntryFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.manualAngleEntryFrame.setObjectName(
-            _fromUtf8("manualAngleEntryFrame"))
+        self.manualAngleEntryFrame.setObjectName(_fromUtf8("manualAngleEntryFrame"))
         self.gridLayout_17 = QtGui.QGridLayout(self.manualAngleEntryFrame)
         self.gridLayout_17.setObjectName(_fromUtf8("gridLayout_17"))
         self.ManualAngleEntryLabel = QtGui.QLabel(self.manualAngleEntryFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.ManualAngleEntryLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.ManualAngleEntryLabel.sizePolicy().hasHeightForWidth())
         self.ManualAngleEntryLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
         self.ManualAngleEntryLabel.setFont(font)
-        self.ManualAngleEntryLabel.setObjectName(
-            _fromUtf8("ManualAngleEntryLabel"))
+        self.ManualAngleEntryLabel.setObjectName(_fromUtf8("ManualAngleEntryLabel"))
         self.gridLayout_17.addWidget(self.ManualAngleEntryLabel, 0, 0, 1, 2)
-        self.ManualAngleEntryButton = QtGui.QPushButton(
-            self.manualAngleEntryFrame)
+        self.ManualAngleEntryButton = QtGui.QPushButton(self.manualAngleEntryFrame)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.ManualAngleEntryButton.setFont(font)
-        self.ManualAngleEntryButton.setObjectName(
-            _fromUtf8("ManualAngleEntryButton"))
+        self.ManualAngleEntryButton.setObjectName(_fromUtf8("ManualAngleEntryButton"))
         self.gridLayout_17.addWidget(self.ManualAngleEntryButton, 0, 2, 1, 1)
         self.manualEntryBearing = QtGui.QLineEdit(self.manualAngleEntryFrame)
         font = QtGui.QFont()
@@ -1599,160 +1378,178 @@ class Ui_MainWindow(object):
         self.manualEntryBearing.setText(_fromUtf8(""))
         self.manualEntryBearing.setObjectName(_fromUtf8("manualEntryBearing"))
         self.gridLayout_17.addWidget(self.manualEntryBearing, 3, 0, 1, 3)
-        self.manualEntryElevationLabel = QtGui.QLabel(
-            self.manualAngleEntryFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.manualEntryElevationLabel = QtGui.QLabel(self.manualAngleEntryFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.manualEntryElevationLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.manualEntryElevationLabel.sizePolicy().hasHeightForWidth())
         self.manualEntryElevationLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setItalic(True)
         self.manualEntryElevationLabel.setFont(font)
-        self.manualEntryElevationLabel.setObjectName(
-            _fromUtf8("manualEntryElevationLabel"))
-        self.gridLayout_17.addWidget(
-            self.manualEntryElevationLabel, 4, 0, 1, 3)
+        self.manualEntryElevationLabel.setObjectName(_fromUtf8("manualEntryElevationLabel"))
+        self.gridLayout_17.addWidget(self.manualEntryElevationLabel, 4, 0, 1, 3)
         self.manualEntryElevation = QtGui.QLineEdit(self.manualAngleEntryFrame)
         font = QtGui.QFont()
         font.setPointSize(11)
         self.manualEntryElevation.setFont(font)
-        self.manualEntryElevation.setObjectName(
-            _fromUtf8("manualEntryElevation"))
+        self.manualEntryElevation.setObjectName(_fromUtf8("manualEntryElevation"))
         self.gridLayout_17.addWidget(self.manualEntryElevation, 5, 0, 1, 3)
         self.manualEntryBearingLabel = QtGui.QLabel(self.manualAngleEntryFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.manualEntryBearingLabel.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.manualEntryBearingLabel.sizePolicy().hasHeightForWidth())
         self.manualEntryBearingLabel.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setItalic(True)
         self.manualEntryBearingLabel.setFont(font)
-        self.manualEntryBearingLabel.setObjectName(
-            _fromUtf8("manualEntryBearingLabel"))
+        self.manualEntryBearingLabel.setObjectName(_fromUtf8("manualEntryBearingLabel"))
         self.gridLayout_17.addWidget(self.manualEntryBearingLabel, 2, 0, 1, 3)
         self.gridLayout_7.addWidget(self.manualAngleEntryFrame, 0, 1, 1, 1)
         self.trimFrame = QtGui.QFrame(self.ManualControl)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.trimFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.trimFrame.sizePolicy().hasHeightForWidth())
         self.trimFrame.setSizePolicy(sizePolicy)
         self.trimFrame.setFrameShape(QtGui.QFrame.WinPanel)
         self.trimFrame.setFrameShadow(QtGui.QFrame.Raised)
         self.trimFrame.setObjectName(_fromUtf8("trimFrame"))
         self.gridLayout_18 = QtGui.QGridLayout(self.trimFrame)
         self.gridLayout_18.setObjectName(_fromUtf8("gridLayout_18"))
-        self.trimLabel = QtGui.QLabel(self.trimFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.trimLabel.sizePolicy().hasHeightForWidth())
-        self.trimLabel.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(24)
-        self.trimLabel.setFont(font)
-        self.trimLabel.setObjectName(_fromUtf8("trimLabel"))
-        self.gridLayout_18.addWidget(self.trimLabel, 0, 0, 1, 1)
-        self.trimUpButton = QtGui.QPushButton(self.trimFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.trimUpButton.sizePolicy().hasHeightForWidth())
-        self.trimUpButton.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(28)
-        self.trimUpButton.setFont(font)
-        self.trimUpButton.setObjectName(_fromUtf8("trimUpButton"))
-        self.gridLayout_18.addWidget(self.trimUpButton, 0, 1, 1, 1)
-        self.trimResetButton = QtGui.QPushButton(self.trimFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.trimResetButton.sizePolicy().hasHeightForWidth())
-        self.trimResetButton.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.trimResetButton.setFont(font)
-        self.trimResetButton.setObjectName(_fromUtf8("trimResetButton"))
-        self.gridLayout_18.addWidget(self.trimResetButton, 0, 2, 1, 1)
-        self.trimLeftButton = QtGui.QPushButton(self.trimFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.trimLeftButton.sizePolicy().hasHeightForWidth())
-        self.trimLeftButton.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(28)
-        self.trimLeftButton.setFont(font)
-        self.trimLeftButton.setObjectName(_fromUtf8("trimLeftButton"))
-        self.gridLayout_18.addWidget(self.trimLeftButton, 1, 0, 1, 1)
-        self.trimDownButton = QtGui.QPushButton(self.trimFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.trimDownButton.sizePolicy().hasHeightForWidth())
-        self.trimDownButton.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(28)
-        self.trimDownButton.setFont(font)
-        self.trimDownButton.setObjectName(_fromUtf8("trimDownButton"))
-        self.gridLayout_18.addWidget(self.trimDownButton, 1, 1, 1, 1)
         self.trimRightButton = QtGui.QPushButton(self.trimFrame)
-        sizePolicy = QtGui.QSizePolicy(
-            QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.trimRightButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.trimRightButton.sizePolicy().hasHeightForWidth())
         self.trimRightButton.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(28)
         self.trimRightButton.setFont(font)
         self.trimRightButton.setObjectName(_fromUtf8("trimRightButton"))
-        self.gridLayout_18.addWidget(self.trimRightButton, 1, 2, 1, 1)
+        self.gridLayout_18.addWidget(self.trimRightButton, 3, 5, 1, 1)
+        self.trimDownButton = QtGui.QPushButton(self.trimFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.trimDownButton.sizePolicy().hasHeightForWidth())
+        self.trimDownButton.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.trimDownButton.setFont(font)
+        self.trimDownButton.setObjectName(_fromUtf8("trimDownButton"))
+        self.gridLayout_18.addWidget(self.trimDownButton, 3, 2, 1, 1)
+        self.trimUpButton = QtGui.QPushButton(self.trimFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.trimUpButton.sizePolicy().hasHeightForWidth())
+        self.trimUpButton.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.trimUpButton.setFont(font)
+        self.trimUpButton.setObjectName(_fromUtf8("trimUpButton"))
+        self.gridLayout_18.addWidget(self.trimUpButton, 1, 2, 1, 1)
+        self.trimLeftButton = QtGui.QPushButton(self.trimFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.trimLeftButton.sizePolicy().hasHeightForWidth())
+        self.trimLeftButton.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.trimLeftButton.setFont(font)
+        self.trimLeftButton.setObjectName(_fromUtf8("trimLeftButton"))
+        self.gridLayout_18.addWidget(self.trimLeftButton, 3, 0, 1, 1)
+        self.trimLabel = QtGui.QLabel(self.trimFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.trimLabel.sizePolicy().hasHeightForWidth())
+        self.trimLabel.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(24)
+        self.trimLabel.setFont(font)
+        self.trimLabel.setObjectName(_fromUtf8("trimLabel"))
+        self.gridLayout_18.addWidget(self.trimLabel, 1, 0, 1, 1)
+        self.trimResetButton = QtGui.QPushButton(self.trimFrame)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.trimResetButton.sizePolicy().hasHeightForWidth())
+        self.trimResetButton.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.trimResetButton.setFont(font)
+        self.trimResetButton.setObjectName(_fromUtf8("trimResetButton"))
+        self.gridLayout_18.addWidget(self.trimResetButton, 1, 5, 1, 1)
         self.gridLayout_7.addWidget(self.trimFrame, 1, 1, 1, 1)
         self.tabs.addTab(self.ManualControl, _fromUtf8(""))
+        self.Commands = QtGui.QWidget()
+        self.Commands.setObjectName(_fromUtf8("Commands"))
+        self.verticalLayoutWidget = QtGui.QWidget(self.Commands)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(450, 80, 441, 591))
+        self.verticalLayoutWidget.setObjectName(_fromUtf8("verticalLayoutWidget"))
+        self.verticalLayout_8 = QtGui.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout_8.setObjectName(_fromUtf8("verticalLayout_8"))
+        self.cutdownButton = QtGui.QPushButton(self.verticalLayoutWidget)
+        self.cutdownButton.setObjectName(_fromUtf8("cutdownButton"))
+        self.verticalLayout_8.addWidget(self.cutdownButton)
+        self.idleButton = QtGui.QPushButton(self.verticalLayoutWidget)
+        self.idleButton.setObjectName(_fromUtf8("idleButton"))
+        self.verticalLayout_8.addWidget(self.idleButton)
+        self.verticalLayoutWidget_2 = QtGui.QWidget(self.Commands)
+        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(10, 79, 421, 591))
+        self.verticalLayoutWidget_2.setObjectName(_fromUtf8("verticalLayoutWidget_2"))
+        self.verticalLayout_14 = QtGui.QVBoxLayout(self.verticalLayoutWidget_2)
+        self.verticalLayout_14.setObjectName(_fromUtf8("verticalLayout_14"))
+        self.pushButton = QtGui.QPushButton(self.verticalLayoutWidget_2)
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.verticalLayout_14.addWidget(self.pushButton)
+        self.verticalLayoutWidget_3 = QtGui.QWidget(self.Commands)
+        self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(10, 9, 421, 61))
+        self.verticalLayoutWidget_3.setObjectName(_fromUtf8("verticalLayoutWidget_3"))
+        self.verticalLayout_16 = QtGui.QVBoxLayout(self.verticalLayoutWidget_3)
+        self.verticalLayout_16.setObjectName(_fromUtf8("verticalLayout_16"))
+        self.label = QtGui.QLabel(self.verticalLayoutWidget_3)
+        self.label.setStyleSheet(_fromUtf8("font: 75 14pt \"MS Shell Dlg 2\";"))
+        self.label.setObjectName(_fromUtf8("label"))
+        self.verticalLayout_16.addWidget(self.label, QtCore.Qt.AlignHCenter)
+        self.verticalLayoutWidget_4 = QtGui.QWidget(self.Commands)
+        self.verticalLayoutWidget_4.setGeometry(QtCore.QRect(450, 10, 441, 61))
+        self.verticalLayoutWidget_4.setObjectName(_fromUtf8("verticalLayoutWidget_4"))
+        self.verticalLayout_17 = QtGui.QVBoxLayout(self.verticalLayoutWidget_4)
+        self.verticalLayout_17.setObjectName(_fromUtf8("verticalLayout_17"))
+        self.label_2 = QtGui.QLabel(self.verticalLayoutWidget_4)
+        self.label_2.setStyleSheet(_fromUtf8("font: 75 14pt \"MS Shell Dlg 2\";"))
+        self.label_2.setObjectName(_fromUtf8("label_2"))
+        self.verticalLayout_17.addWidget(self.label_2, QtCore.Qt.AlignHCenter)
+        self.verticalLayoutWidget.raise_()
+        self.verticalLayoutWidget_2.raise_()
+        self.label.raise_()
+        self.verticalLayoutWidget_3.raise_()
+        self.verticalLayoutWidget_4.raise_()
+        self.tabs.addTab(self.Commands, _fromUtf8(""))
         self.autotrackStatusFrame = QtGui.QFrame(self.settingsSplitter)
         self.autotrackStatusFrame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.autotrackStatusFrame.setFrameShadow(QtGui.QFrame.Raised)
-        self.autotrackStatusFrame.setObjectName(
-            _fromUtf8("autotrackStatusFrame"))
+        self.autotrackStatusFrame.setObjectName(_fromUtf8("autotrackStatusFrame"))
         self.horizontalLayout_4 = QtGui.QHBoxLayout(self.autotrackStatusFrame)
         self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
         self.statusLabel = QtGui.QLabel(self.autotrackStatusFrame)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
         self.statusLabel.setPalette(palette)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Microsoft Sans Serif"))
@@ -1761,24 +1558,20 @@ class Ui_MainWindow(object):
         font.setUnderline(False)
         font.setWeight(75)
         self.statusLabel.setFont(font)
-        self.statusLabel.setAlignment(
-            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.statusLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.statusLabel.setObjectName(_fromUtf8("statusLabel"))
         self.horizontalLayout_4.addWidget(self.statusLabel)
         self.status = QtGui.QLabel(self.autotrackStatusFrame)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(243, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(243, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(120, 120, 120))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled,
-                         QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
         self.status.setPalette(palette)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Microsoft Sans Serif"))
@@ -1796,7 +1589,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabs.setCurrentIndex(5)
+        self.tabs.setCurrentIndex(7)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.incomingDataTable, self.groundDataTable)
         MainWindow.setTabOrder(self.groundDataTable, self.tabs)
@@ -1807,10 +1600,8 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.bearingSouth, self.bearingWest)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate(
-            "MainWindow", "Antenna Tracker and RFD Controls", None))
-        self.incomingDataLabel.setText(_translate(
-            "MainWindow", "Incoming GPS Data:", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Antenna Tracker and RFD Controls", None))
+        self.incomingDataLabel.setText(_translate("MainWindow", "Incoming GPS Data:", None))
         item = self.incomingDataTable.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "Last Received Time", None))
         item = self.incomingDataTable.verticalHeaderItem(1)
@@ -1831,8 +1622,7 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Tracking Method", None))
         item = self.incomingDataTable.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Value", None))
-        self.groundDataLabel.setText(_translate(
-            "MainWindow", "Ground Station Data:", None))
+        self.groundDataLabel.setText(_translate("MainWindow", "Ground Station Data:", None))
         item = self.groundDataTable.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "Latitude", None))
         item = self.groundDataTable.verticalHeaderItem(1)
@@ -1851,184 +1641,114 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Elevation Position", None))
         item = self.groundDataTable.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Value", None))
-        self.centerBearingSelectLabel.setText(_translate(
-            "MainWindow", "Center Bearing (True):", None))
-        self.getLocal.setText(_translate(
-            "MainWindow", "Get Local (Arduino)", None))
-        self.bearingNorth.setText(_translate(
-            "MainWindow", "North Facing", None))
+        self.centerBearingSelectLabel.setText(_translate("MainWindow", "Center Bearing (True):", None))
+        self.getLocal.setText(_translate("MainWindow", "Get Local (Arduino)", None))
+        self.bearingNorth.setText(_translate("MainWindow", "North Facing", None))
         self.bearingEast.setText(_translate("MainWindow", "East Facing", None))
-        self.bearingSouth.setText(_translate(
-            "MainWindow", "South Facing", None))
+        self.bearingSouth.setText(_translate("MainWindow", "South Facing", None))
         self.bearingWest.setText(_translate("MainWindow", "West Facing", None))
-        self.manualSettingsEntryLabel.setText(_translate(
-            "MainWindow", "Manual Settings Entry:", None))
-        self.manualLatLabel.setText(_translate(
-            "MainWindow", "Latitude (°):", None))
-        self.manualLat.setPlaceholderText(
-            _translate("MainWindow", "44.9758181", None))
-        self.manualLonLabel.setText(_translate(
-            "MainWindow", "Longitude (°):", None))
-        self.manualLon.setPlaceholderText(
-            _translate("MainWindow", "-93.231584", None))
-        self.manualAltLabel.setText(_translate(
-            "MainWindow", "Altitude (ft):", None))
-        self.manualAlt.setPlaceholderText(
-            _translate("MainWindow", "843", None))
-        self.autotrackLabel.setText(
-            _translate("MainWindow", "AutoTrack:", None))
+        self.manualSettingsEntryLabel.setText(_translate("MainWindow", "Manual Settings Entry:", None))
+        self.manualLatLabel.setText(_translate("MainWindow", "Latitude (°):", None))
+        self.manualLat.setPlaceholderText(_translate("MainWindow", "44.9758181", None))
+        self.manualLonLabel.setText(_translate("MainWindow", "Longitude (°):", None))
+        self.manualLon.setPlaceholderText(_translate("MainWindow", "-93.231584", None))
+        self.manualAltLabel.setText(_translate("MainWindow", "Altitude (ft):", None))
+        self.manualAlt.setPlaceholderText(_translate("MainWindow", "843", None))
+        self.autotrackLabel.setText(_translate("MainWindow", "AutoTrack:", None))
         self.autoDisabled.setText(_translate("MainWindow", "Disabled", None))
         self.autoIridium.setText(_translate("MainWindow", "Iridium", None))
         self.autoAPRS.setText(_translate("MainWindow", "APRS", None))
         self.autoRFD.setText(_translate("MainWindow", "RFD900", None))
-        self.connectionsLabel.setText(
-            _translate("MainWindow", "Connections:", None))
+        self.connectionsLabel.setText(_translate("MainWindow", "Connections:", None))
         self.checkComPorts.setText(_translate("MainWindow", "Search", None))
-        self.aprsCallsign.setPlaceholderText(
-            _translate("MainWindow", "KD0AWK-8", None))
-        self.rfdAttached.setText(_translate(
-            "MainWindow", "RFD Connected", None))
-        self.iridiumIMEI.setPlaceholderText(
-            _translate("MainWindow", "300234064909640", None))
+        self.aprsCallsign.setPlaceholderText(_translate("MainWindow", "KD0AWK-8", None))
+        self.rfdAttached.setText(_translate("MainWindow", "RFD Connected", None))
+        self.iridiumIMEI.setPlaceholderText(_translate("MainWindow", "300234064909640", None))
         self.IMEILabel.setText(_translate("MainWindow", "Iridium IMEI", None))
-        self.aprsCallsignLabel.setText(
-            _translate("MainWindow", "APRS Callsign", None))
-        self.aprsAttached.setText(_translate(
-            "MainWindow", "APRS Connected", None))
-        self.servoAttached.setText(_translate(
-            "MainWindow", "Servos Connected", None))
-        self.arduinoAttached.setText(_translate(
-            "MainWindow", "Arduino Connected", None))
-        self.graphingLoggingLabel.setText(_translate(
-            "MainWindow", "Graphing and Logging:", None))
-        self.saveDataCheckbox.setText(
-            _translate("MainWindow", "Save Data", None))
+        self.aprsCallsignLabel.setText(_translate("MainWindow", "APRS Callsign", None))
+        self.aprsAttached.setText(_translate("MainWindow", "APRS Connected", None))
+        self.servoAttached.setText(_translate("MainWindow", "Servos Connected", None))
+        self.arduinoAttached.setText(_translate("MainWindow", "Arduino Connected", None))
+        self.graphingLoggingLabel.setText(_translate("MainWindow", "Graphing and Logging:", None))
+        self.saveDataCheckbox.setText(_translate("MainWindow", "Save Data", None))
         self.graphReal.setText(_translate("MainWindow", "Graph Runtime", None))
-        self.internetCheckBox.setText(_translate(
-            "MainWindow", "Internet Access", None))
-        self.pointAtBalloon.setText(_translate(
-            "MainWindow", "Point at Most Recent Balloon Location", None))
-        self.trackerLaunch.setText(_translate(
-            "MainWindow", "Launch Antenna Tracker", None))
-        self.antennaCenter.setText(_translate(
-            "MainWindow", "Move Antennas to Center", None))
-        self.updateSettings.setText(_translate(
-            "MainWindow", "Update Settings", None))
-        self.recalibrateCenterBearing.setText(_translate(
-            "MainWindow", "Recalibrate Center Bearing", None))
-        self.tabs.setTabText(self.tabs.indexOf(
-            self.Settings), _translate("MainWindow", "Settings", None))
-        self.tabs.setTabText(self.tabs.indexOf(
-            self.Tracker), _translate("MainWindow", "Tracker", None))
-        self.tabs.setTabText(self.tabs.indexOf(
-            self.MapView), _translate("MainWindow", "Map View", None))
+        self.internetCheckBox.setText(_translate("MainWindow", "Internet Access", None))
+        self.pointAtBalloon.setText(_translate("MainWindow", "Point at Most Recent Balloon Location", None))
+        self.trackerLaunch.setText(_translate("MainWindow", "Launch Antenna Tracker", None))
+        self.antennaCenter.setText(_translate("MainWindow", "Move Antennas to Center", None))
+        self.updateSettings.setText(_translate("MainWindow", "Update Settings", None))
+        self.recalibrateCenterBearing.setText(_translate("MainWindow", "Recalibrate Center Bearing", None))
+        self.tabs.setTabText(self.tabs.indexOf(self.Settings), _translate("MainWindow", "Settings", None))
+        self.tabs.setTabText(self.tabs.indexOf(self.Tracker), _translate("MainWindow", "Tracker", None))
+        self.tabs.setTabText(self.tabs.indexOf(self.MapView), _translate("MainWindow", "Map View", None))
         self.rfdIDLabel.setText(_translate("MainWindow", "Identifier:", None))
-        self.rfdCommandEntryLabel.setText(
-            _translate("MainWindow", "Command:", None))
+        self.rfdCommandEntryLabel.setText(_translate("MainWindow", "Command:", None))
         self.rfdCommandButton.setText(_translate("MainWindow", "Start", None))
-        self.rfdCommandsOnlineLabel.setText(
-            _translate("MainWindow", "OFF", None))
-        self.rfdReceiveLabel.setText(
-            _translate("MainWindow", "Received:", None))
+        self.rfdCommandsOnlineLabel.setText(_translate("MainWindow", "OFF", None))
+        self.rfdReceiveLabel.setText(_translate("MainWindow", "Received:", None))
         self.rfdListenButton.setText(_translate("MainWindow", "Listen", None))
-        self.rfdListenOnlineLabel.setText(
-            _translate("MainWindow", "OFF", None))
-        self.requestStatusButton.setText(
-            _translate("MainWindow", "Request Status", None))
-        self.getPiRuntimeDataButton.setText(
-            _translate("MainWindow", "Get Runtime Data", None))
-        self.tabs.setTabText(self.tabs.indexOf(
-            self.RFDCommands), _translate("MainWindow", "RFD", None))
-        self.tabs.setTabText(self.tabs.indexOf(
-            self.payloadsTab), _translate("MainWindow", "Payloads", None))
-        self.mostRecentImageButton.setText(
-            _translate("MainWindow", "Most Recent Image", None))
-        self.requestedImageName.setPlaceholderText(
-            _translate("MainWindow", "image_XXXX_b.jpg", None))
-        self.imageDataTxtButton.setText(
-            _translate("MainWindow", "Select Image", None))
-        self.stillImageOnlineLabel.setText(
-            _translate("MainWindow", "OFF", None))
+        self.rfdListenOnlineLabel.setText(_translate("MainWindow", "OFF", None))
+        self.requestStatusButton.setText(_translate("MainWindow", "Request Status", None))
+        self.getPiRuntimeDataButton.setText(_translate("MainWindow", "Get Runtime Data", None))
+        self.tabs.setTabText(self.tabs.indexOf(self.RFDCommands), _translate("MainWindow", "RFD", None))
+        self.tabs.setTabText(self.tabs.indexOf(self.payloadsTab), _translate("MainWindow", "Payloads", None))
+        self.mostRecentImageButton.setText(_translate("MainWindow", "Most Recent Image", None))
+        self.requestedImageName.setPlaceholderText(_translate("MainWindow", "image_XXXX_b.jpg", None))
+        self.imageDataTxtButton.setText(_translate("MainWindow", "Select Image", None))
+        self.stillImageOnlineLabel.setText(_translate("MainWindow", "OFF", None))
         self.picWidthLabel.setText(_translate("MainWindow", "Width", None))
-        self.picCurrentWidthValue.setText(
-            _translate("MainWindow", "650", None))
+        self.picCurrentWidthValue.setText(_translate("MainWindow", "650", None))
         self.picHeightLabel.setText(_translate("MainWindow", "Height", None))
-        self.picCurrentHeightValue.setText(
-            _translate("MainWindow", "450", None))
-        self.picSharpnessLabel.setText(
-            _translate("MainWindow", "Sharpness", None))
-        self.picCurrentSharpnessValue.setText(
-            _translate("MainWindow", "0", None))
-        self.picBrightnessLabel.setText(
-            _translate("MainWindow", "Brightness", None))
-        self.picCurrentBrightnessValue.setText(
-            _translate("MainWindow", "50", None))
-        self.picContrastLabel.setText(
-            _translate("MainWindow", "Contrast", None))
-        self.picCurrentContrastValue.setText(
-            _translate("MainWindow", "0", None))
-        self.picSaturationLabel.setText(
-            _translate("MainWindow", "Saturation", None))
-        self.picCurrentSaturationValue.setText(
-            _translate("MainWindow", "0", None))
+        self.picCurrentHeightValue.setText(_translate("MainWindow", "450", None))
+        self.picSharpnessLabel.setText(_translate("MainWindow", "Sharpness", None))
+        self.picCurrentSharpnessValue.setText(_translate("MainWindow", "0", None))
+        self.picBrightnessLabel.setText(_translate("MainWindow", "Brightness", None))
+        self.picCurrentBrightnessValue.setText(_translate("MainWindow", "50", None))
+        self.picContrastLabel.setText(_translate("MainWindow", "Contrast", None))
+        self.picCurrentContrastValue.setText(_translate("MainWindow", "0", None))
+        self.picSaturationLabel.setText(_translate("MainWindow", "Saturation", None))
+        self.picCurrentSaturationValue.setText(_translate("MainWindow", "0", None))
         self.picISOLabel.setText(_translate("MainWindow", "ISO", None))
         self.picCurrentISOValue.setText(_translate("MainWindow", "400", None))
-        self.picDefaultSettingsButton.setText(
-            _translate("MainWindow", "Default Settings", None))
-        self.picSendNewSettingsButton.setText(
-            _translate("MainWindow", "Send New Settings", None))
-        self.picGetSettingsButton.setText(_translate(
-            "MainWindow", "Get Current Settings", None))
-        self.connectionTestButton.setText(_translate(
-            "MainWindow", "Run Connection Test", None))
-        self.picHorizontalFlipButton.setText(
-            _translate("MainWindow", "Horizontal Flip", None))
-        self.picVerticalFlipButton.setText(
-            _translate("MainWindow", "Vertical Flip", None))
-        self.tabs.setTabText(self.tabs.indexOf(self.StillImages), _translate(
-            "MainWindow", "Still Images", None))
+        self.picDefaultSettingsButton.setText(_translate("MainWindow", "Default Settings", None))
+        self.picSendNewSettingsButton.setText(_translate("MainWindow", "Send New Settings", None))
+        self.picGetSettingsButton.setText(_translate("MainWindow", "Get Current Settings", None))
+        self.connectionTestButton.setText(_translate("MainWindow", "Run Connection Test", None))
+        self.picHorizontalFlipButton.setText(_translate("MainWindow", "Horizontal Flip", None))
+        self.picVerticalFlipButton.setText(_translate("MainWindow", "Vertical Flip", None))
+        self.tabs.setTabText(self.tabs.indexOf(self.StillImages), _translate("MainWindow", "Still Images", None))
         self.SliderControl.setText(_translate("MainWindow", "Sliders:", None))
         self.sliderButton.setText(_translate("MainWindow", "Start", None))
-        self.panServoSliderLabel.setText(
-            _translate("MainWindow", "Pan Servo:", None))
-        self.tiltServoSliderLabel.setText(
-            _translate("MainWindow", "Tilt Servo:", None))
+        self.panServoSliderLabel.setText(_translate("MainWindow", "Pan Servo:", None))
+        self.tiltServoSliderLabel.setText(_translate("MainWindow", "Tilt Servo:", None))
         self.sliderStatus.setText(_translate("MainWindow", "OFF", None))
-        self.ManuelGPSEntryLabel.setText(_translate(
-            "MainWindow", "Manual Coordinate Entry:", None))
-        self.ManualEntryUpdateButton.setText(
-            _translate("MainWindow", "Update", None))
-        self.ManualEntryLatitude.setPlaceholderText(
-            _translate("MainWindow", "Latitude (°)", None))
-        self.ManualEntryLongitude.setPlaceholderText(
-            _translate("MainWindow", "Longitude (°)", None))
-        self.manualEntryLonLabel.setText(
-            _translate("MainWindow", "Longitude (°):", None))
-        self.ManualEntryAltitude.setPlaceholderText(
-            _translate("MainWindow", "Altitude (ft)", None))
-        self.manualEntryAltLabel.setText(
-            _translate("MainWindow", "Altitude (ft):", None))
-        self.manualEntryLatLabel.setText(
-            _translate("MainWindow", "Latitude (°):", None))
-        self.ManualAngleEntryLabel.setText(_translate(
-            "MainWindow", "Manual Angle Entry:", None))
-        self.ManualAngleEntryButton.setText(
-            _translate("MainWindow", "Update", None))
-        self.manualEntryBearing.setPlaceholderText(
-            _translate("MainWindow", "Bearing (°)", None))
-        self.manualEntryElevationLabel.setText(
-            _translate("MainWindow", "Elevation Angle (°):", None))
-        self.manualEntryElevation.setPlaceholderText(
-            _translate("MainWindow", "Elevation Angle (°)", None))
-        self.manualEntryBearingLabel.setText(
-            _translate("MainWindow", "Bearing (°):", None))
-        self.trimLabel.setText(_translate("MainWindow", "Trim", None))
-        self.trimUpButton.setText(_translate("MainWindow", "↑", None))
-        self.trimResetButton.setText(_translate("MainWindow", "Reset", None))
-        self.trimLeftButton.setText(_translate("MainWindow", "←", None))
-        self.trimDownButton.setText(_translate("MainWindow", "↓", None))
+        self.ManuelGPSEntryLabel.setText(_translate("MainWindow", "Manual Coordinate Entry:", None))
+        self.ManualEntryUpdateButton.setText(_translate("MainWindow", "Update", None))
+        self.ManualEntryLatitude.setPlaceholderText(_translate("MainWindow", "Latitude (°)", None))
+        self.ManualEntryLongitude.setPlaceholderText(_translate("MainWindow", "Longitude (°)", None))
+        self.manualEntryLonLabel.setText(_translate("MainWindow", "Longitude (°):", None))
+        self.ManualEntryAltitude.setPlaceholderText(_translate("MainWindow", "Altitude (ft)", None))
+        self.manualEntryAltLabel.setText(_translate("MainWindow", "Altitude (ft):", None))
+        self.manualEntryLatLabel.setText(_translate("MainWindow", "Latitude (°):", None))
+        self.ManualAngleEntryLabel.setText(_translate("MainWindow", "Manual Angle Entry:", None))
+        self.ManualAngleEntryButton.setText(_translate("MainWindow", "Update", None))
+        self.manualEntryBearing.setPlaceholderText(_translate("MainWindow", "Bearing (°)", None))
+        self.manualEntryElevationLabel.setText(_translate("MainWindow", "Elevation Angle (°):", None))
+        self.manualEntryElevation.setPlaceholderText(_translate("MainWindow", "Elevation Angle (°)", None))
+        self.manualEntryBearingLabel.setText(_translate("MainWindow", "Bearing (°):", None))
         self.trimRightButton.setText(_translate("MainWindow", "→", None))
-        self.tabs.setTabText(self.tabs.indexOf(self.ManualControl), _translate(
-            "MainWindow", "Manual Control", None))
+        self.trimDownButton.setText(_translate("MainWindow", "↓", None))
+        self.trimUpButton.setText(_translate("MainWindow", "↑", None))
+        self.trimLeftButton.setText(_translate("MainWindow", "←", None))
+        self.trimLabel.setText(_translate("MainWindow", "Trim", None))
+        self.trimResetButton.setText(_translate("MainWindow", "Reset", None))
+        self.tabs.setTabText(self.tabs.indexOf(self.ManualControl), _translate("MainWindow", "Manual Control", None))
+        self.cutdownButton.setText(_translate("MainWindow", "Cutdown", None))
+        self.idleButton.setText(_translate("MainWindow", "Idle", None))
+        self.pushButton.setText(_translate("MainWindow", "Start Video", None))
+        self.label.setText(_translate("MainWindow", "Video Commands", None))
+        self.label_2.setText(_translate("MainWindow", "OCCAMS Commands", None))
+        self.tabs.setTabText(self.tabs.indexOf(self.Commands), _translate("MainWindow", "Commands", None))
         self.statusLabel.setText(_translate("MainWindow", "Autotrack: ", None))
         self.status.setText(_translate("MainWindow", "Offline", None))
+
