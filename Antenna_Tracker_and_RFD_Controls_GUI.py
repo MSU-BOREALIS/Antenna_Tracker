@@ -2,13 +2,13 @@
 """
 Antenna Tracker Controller for Trident Antenna Array and RFD Radio Controller
 
-Author:	Austin Langford, AEM, Trevor Gahl, CpE
-Based on work from Scott Miller, CpE, Dylan Trafford, CpE, and David Schwerr of the Montana Space Grant Consortium
-Software created for use by the Minnesota Space Grant Consortium
+Author:	Trevor Gahl, CpE
+Based on work from Austin Langford, AEM, Scott Miller, CpE, Dylan Trafford, CpE, and David Schwerr, CS of the Minnesota/Montana Space Grant Consortia
+Software created for use by the National Space Grant Consortium
 Purpose: To acquire the location of a balloon in flight, and aim the array of antennae at the balloon
 Additional Features: RFD 900 based Command Center and Image Reception
 Creation Date: March 2016
-Last Edit Date: September 14, 2016
+Last Edit Date: August 2, 2017
 """
 
 # System imports
@@ -238,7 +238,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.stillImageOnline = False
         self.stillImageStall = False
         # The starting display photo is the logo of the MnSGC
-        self.displayPhotoPath = "Images/MnSGC_Logo_highRes.png"
+        self.displayPhotoPath = "Images/MSGC.png"
         self.tabs.resizeEvent = self.resizePicture
         self.picLabel.setScaledContents(True)
         # Create a pixmap from the default image
@@ -1753,13 +1753,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print ("\tBearing: %.0f" % (bearing))
         print ("\tElevation Angle: %.0f" % (elevation))
 
-        # With new digital servos, can use map method as described here: http://arduino.cc/en/reference/map
-        # Get the correct numerical value for the servo position by adjusting
-        # based on offset, max and min
-        # panTo = ((bearing - (self.centerBear - 168)) * (self.servoController.servoMax - self.servoController.servoMin) /
-        #         ((self.centerBear + 168) - (self.centerBear - 168)) + self.servoController.servoMin) + (255 * self.panOffset / 360)
-
-        #panTo =(bearing - self.centerBear)-12
+        # Pan Mapping
+        # Mapping is designed for 45 degree increments
+        # If
         panTo = (bearing - self.centerBear)
         print "PanTo Value\n"
         print panTo
@@ -1793,13 +1789,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 panTo = panTo + 360
             print "180-225"
             panTo = int((panTo * 2.62 + 1025) * 4)
-        elif panTo <-90 and panTo > -136:
+        elif panTo < -90 and panTo > -136:
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
             print "225-270"
             panTo = int((panTo * 2.53 + 1053.75) * 4)
-        elif panTo <-45 and panTo > -90:
+        elif panTo < -45 and panTo > -90:
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
@@ -1818,20 +1814,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print "Default Mapping"
             panTo = int((panTo * 2.639 + 1025) * 4)
 
-        '''
-        if bearing == 0:
-            bearing = 180
-        if bearing<180:
-            bearing = 180 - bearing
-        if bearing>180:
-            bearing = 180 + (360-bearing)
-        if bearing<90:
-            bearing = 90
-        if bearing>270:
-            bearing = 270
-            '''
-
-        #panTo = ((bearing*3.37)+894)*4
         if panTo > 8424:
             panTo = 8424
         if panTo < 3576:
@@ -1841,12 +1823,29 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.servosAttached:
             self.servoController.movePanServo(panTo)
 
-        # Get the correct numerical value for the servo position by adjusting
-        # based on offset, max and min
-        # tiltTo = (((0 - elevation) - self.servoController.tiltAngleMin) * (self.servoController.servoMax - self.servoController.servoMin) /
-        #          (self.servoController.tiltAngleMax - self.servoController.tiltAngleMin) + self.servoController.servoMin) + (255 * (-self.tiltOffset) / 360)
-        # print(tiltTo)
+        # Tilt Mapping
         tiltTo = elevation
+        print "TiltTo Value\n"
+        print tiltTo
+        if tiltTo > -1 and tiltTo < 46:
+            tiltTo = 180 - tiltTo
+            if tiltTo < 0:
+                tiltTo = tiltTo + 360
+            print "0-45"
+            tiltTo = int((tiltTo * 2.81 + 995) * 4)
+        elif tiltTo > 45 and tiltTo < 91:
+            tiltTo = 180 - tiltTo
+            if tiltTo < 0:
+                tiltTo = tiltTo + 360
+            print "45-90"
+            tiltTo = int((tiltTo * 2.44 + 1043.75) * 4)
+        else:
+            tiltTo = 180 - tiltTo
+            if tiltTo < 0:
+                tiltTo = tiltTo + 360
+            print "Default Mapping"
+            tiltTo = int((tiltTo * 2.639 + 1025) * 4)
+
         tiltTo = 180 - tiltTo
         if tiltTo < 0:
             tiltTo = tiltTo + 360
