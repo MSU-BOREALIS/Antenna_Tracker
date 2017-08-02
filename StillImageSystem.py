@@ -273,65 +273,6 @@ class StillImageSystem(QtCore.QObject):
                 #done = True
                 self.mainWindow.stillNewText.emit('Failed to Receive Settings')
 
-        ## Open the file camerasettings.txt in write mode, and write everything the Pi is sending ###
-        # try:
-            # file = open("camerasettings.txt","w")
-            # print "File Successfully Created"
-            # self.mainWindow.stillNewText.emit("File Successfully Created")
-        # except:				# If there's an error opening the file, print the message and return
-            # print "Error with Opening File"
-            # self.mainWindow.stillNewText.emit("Error with Opening File")
-            # sys.stdout.flush()
-            # self.mainWindow.stillSystemFinished.emit()		# Emit the finished signal
-            # return
-        # timecheck = time.time()
-        # sys.stdin.flush()				# Clear the buffer
-        # temp = self.rfdSer.read()
-        # while (temp != "\r") & (temp != ""):		# Write everything the radio is receiving to the file
-            # file.write(temp)
-            # temp = self.rfdSer.read()
-        # file.close()
-        # print "Receive Time =", (time.time() - timecheck)
-        # self.mainWindow.stillNewText.emit("Receive Time = " + str((time.time() - timecheck)))
-        # sys.stdout.flush()
-
-        ## Open the file camerasettings.txt in read mode, and confirm/set the globals based on what's in the settings file ###
-        # try:
-            # file = open("camerasettings.txt","r")
-            # twidth = file.readline()			 # Default = (650,450); range up to
-            # self.picWidth = int(twidth)
-            # print("Width = " + str(self.picWidth))
-            # self.mainWindow.stillNewText.emit("Width = " + str(self.picWidth))
-            # theight = file.readline()			 # Default = (650,450); range up to
-            # self.picHeight = int(theight)
-            # print("Height = " + str(self.picHeight))
-            # self.mainWindow.stillNewText.emit("Height = " + str(self.picHeight))
-            # tsharpness = file.readline()			  # Default  =0; range = (-100 to 100)
-            # self.picSharpness = int(tsharpness)
-            # print("Sharpness = " + str(self.picSharpness))
-            # self.mainWindow.stillNewText.emit("Sharpness = " + str(self.picSharpness))
-            # tbrightness = file.readline()			 # Default = 50; range = (0 to 100)
-            # self.picBrightness = int(tbrightness)
-            # print("Brightness = " + str(self.picBrightness))
-            # self.mainWindow.stillNewText.emit("Brightness = " + str(self.picBrightness))
-            # tcontrast = file.readline()			   # Default = 0; range = (-100 to 100)
-            # self.picContrast = int(tcontrast)
-            # print("Contrast = " + str(self.picContrast))
-            # self.mainWindow.stillNewText.emit("Contrast = " + str(self.picContrast))
-            # tsaturation = file.readline()			 # Default = 0; range = (-100 to 100)
-            # self.picSaturation = int(tsaturation)
-            # print("Saturation = " + str(self.picSaturation))
-            # self.mainWindow.stillNewText.emit("Saturation = " + str(self.picSaturation))
-            # tiso = file.readline()					  # Unknown Default; range = (100 to 800)
-            # self.picISO = int(tiso)
-            # print("ISO = " + str(self.picISO))
-            # self.mainWindow.stillNewText.emit("ISO = " + str(self.picISO))
-            # file.close()
-            # self.mainWindow.newPicSliderValues.emit([self.picWidth,self.picHeight,self.picSharpness,self.picBrightness,self.picContrast,self.picSaturation,self.picISO])
-        # except Exception, e:
-            # print(str(e))
-            # print "Camera Setting Retrieval Error"
-            # self.mainWindow.stillNewText.emit("Camera Setting Retrieval Error")
         sys.stdout.flush()
         self.mainWindow.stillSystemFinished.emit()		# Emit the finished signal
 
@@ -348,17 +289,6 @@ class StillImageSystem(QtCore.QObject):
         self.picContrast = int(settings[4])
         self.picSaturation = int(settings[5])
         self.picISO = int(settings[6])
-
-        ## Open the camerasettings.txt file, and record the new values ###
-        # file = open("camerasettings.txt","w")
-        # file.write(str(self.picWidth)+"\n")
-        # file.write(str(self.picHeight)+"\n")
-        # file.write(str(self.picSharpness)+"\n")
-        # file.write(str(self.picBrightness)+"\n")
-        # file.write(str(self.picContrast)+"\n")
-        # file.write(str(self.picSaturation)+"\n")
-        # file.write(str(self.picISO)+"\n")
-        # file.close()
 
         # Continue sending 5 until the acknowledge is received from the Pi ###
         self.rfdSer.write('5!')
@@ -397,40 +327,6 @@ class StillImageSystem(QtCore.QObject):
                 'No Acknowledge Received on Settings Update\n')
         else:
             self.mainWindow.stillNewText.emit('Settings Updated\n')
-        ## Open the camerasettings.txt file in read mode, and send each line to the Pi ###
-        # try:
-            # file = open("camerasettings.txt","r")
-        # except:
-            # print "Error with Opening File"
-            # self.mainWindow.stillNewText.emit("Error with Opening File")
-            # sys.stdout.flush()
-            # self.mainWindow.stillSystemFinished.emit()		# Emit the finished signal
-            # return
-        # timecheck = time.time()
-        # temp = file.readline()
-        # time.sleep(0.5)
-        # self.rfdSer.write('B')
-        # while temp != "":
-            # print(temp)
-            # self.rfdSer.write(temp)
-            # temp = file.readline()
-        # file.close()
-
-        ## Look for an Acknowledge ###
-        # error = time.time()
-        # while self.rfdSer.read() != 'A':			# Make sure you don't print out a huge stream if you get the wrong response
-            # if timeCheck < time.time():
-            # print "Waiting for Acknowledge"
-            # self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
-            # timeCheck = time.time() + 1
-            # sys.stdout.flush()
-            # if error+10<time.time():
-            # print "Acknowledge not Received"
-            # self.mainWindow.stillNewText.emit("Acknowledge not Received")
-            # self.mainWindow.stillSystemFinished.emit()
-            # return
-        # print "Send Time =", (time.time() - timecheck)
-        # self.mainWindow.stillNewText.emit("Send Time =" + str((time.time() - timecheck)))
 
         sys.stdout.flush()			# Clear the buffer
 
