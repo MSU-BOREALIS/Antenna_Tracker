@@ -1757,56 +1757,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Mapping is designed for 45 degree increments
         # If
         panTo = (bearing - self.centerBear)
-        print "PanTo Value\n"
-        print panTo
-        if panTo > -1 and panTo < 46:
+        # print "PanTo Value\n"
+        # print panTo
+
+        if panTo > -1 and panTo < 91:
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
-            print "0-45"
-            panTo = int((panTo * 2.81 + 995) * 4)
-        elif panTo > 45 and panTo < 91:
+            panTo = int((panTo * 2.6 + 1020) * 4)
+
+        elif panTo < 0 and panTo > -91:
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
-            print "45-90"
-            panTo = int((panTo * 2.44 + 1043.75) * 4)
-        elif panTo > 90 and panTo < 136:
-            panTo = 180 - panTo
-            if panTo < 0:
-                panTo = panTo + 360
-            print "90-135"
-            panTo = int((panTo * 2.47 + 1041.25) * 4)
-        elif panTo > 135 and panTo < 181:
-            panTo = 180 - panTo
-            if panTo < 0:
-                panTo = panTo + 360
-            print "135-180"
-            panTo = int((panTo * 2.833 + 1025) * 4)
-        elif panTo < -135 and panTo > -181:
-            panTo = 180 - panTo
-            if panTo < 0:
-                panTo = panTo + 360
-            print "180-225"
-            panTo = int((panTo * 2.62 + 1025) * 4)
-        elif panTo < -90 and panTo > -136:
-            panTo = 180 - panTo
-            if panTo < 0:
-                panTo = panTo + 360
-            print "225-270"
-            panTo = int((panTo * 2.53 + 1053.75) * 4)
-        elif panTo < -45 and panTo > -90:
-            panTo = 180 - panTo
-            if panTo < 0:
-                panTo = panTo + 360
-            print "270-315"
-            panTo = int((panTo * 2.53 + 1053.75) * 4)
-        elif panTo < 0 and panTo > -46:
-            panTo = 180 - panTo
-            if panTo < 0:
-                panTo = panTo + 360
-            print "315-360"
             panTo = int((panTo * 2.72 + 1010) * 4)
+
         else:
             panTo = 180 - panTo
             if panTo < 0:
@@ -1814,10 +1779,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print "Default Mapping"
             panTo = int((panTo * 2.639 + 1025) * 4)
 
-        if panTo > 8424:
-            panTo = 8424
-        if panTo < 3576:
-            panTo = 3576
+        if panTo > 7600:
+            panTo = 7600
+        if panTo < 4300:
+            panTo = 4300
         # print panTo
         print "\tServo Degrees:"
         if self.servosAttached:
@@ -1825,26 +1790,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # Tilt Mapping
         tiltTo = elevation
-        print "TiltTo Value\n"
-        print tiltTo
-        if tiltTo > -1 and tiltTo < 46:
-            tiltTo = 180 - tiltTo
-            if tiltTo < 0:
-                tiltTo = tiltTo + 360
-            print "0-45"
-            tiltTo = int((tiltTo * 2.81 + 995) * 4)
-        elif tiltTo > 45 and tiltTo < 91:
-            tiltTo = 180 - tiltTo
-            if tiltTo < 0:
-                tiltTo = tiltTo + 360
-            print "45-90"
-            tiltTo = int((tiltTo * 2.44 + 1043.75) * 4)
-        else:
-            tiltTo = 180 - tiltTo
-            if tiltTo < 0:
-                tiltTo = tiltTo + 360
-            print "Default Mapping"
-            tiltTo = int((tiltTo * 2.639 + 1025) * 4)
+        tiltTo = 180 - tiltTo
+        if tiltTo < 0:
+            tiltTo = tiltTo + 360
+
+        # Update the tilt mapping values here#
+        tiltTo = int((tiltTo * 2.639 + 1025) * 4)
 
         tiltTo = 180 - tiltTo
         if tiltTo < 0:
@@ -1871,7 +1822,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def sendCutdownCommand(self):
         self.confirmationCheckWindow = QWidget()
         self.confirmationLabel = QLabel()
-        self.confirmationLabel.setText("WARNING! Are you sure you want to cutdown?")
+        self.confirmationLabel.setText(
+            "WARNING! Are you sure you want to cutdown?")
         self.confirmationYesButton = QPushButton()
         self.confirmationNoButton = QPushButton()
         self.confirmationYesButton.setText("Yes")
@@ -1885,9 +1837,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.confirmationCheckWindow.setLayout(self.confirmationVLayout)
         self.confirmationCheckWindow.show()
 
-		# Connect the buttons to the functions
-        self.confirmationYesButton.clicked.connect(lambda: self.attemptCutdown())
-        self.confirmationNoButton.clicked.connect(lambda: self.deleteWindow(self.confirmationCheckWindow))
+        # Connect the buttons to the functions
+        self.confirmationYesButton.clicked.connect(
+            lambda: self.attemptCutdown())
+        self.confirmationNoButton.clicked.connect(
+            lambda: self.deleteWindow(self.confirmationCheckWindow))
 
     def attemptCutdown(self):
         try:
@@ -1902,10 +1856,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def sendIdleCommand(self):
         """ Confirm that the user wants to perform an idle """
 
-    	# Create the window to ask for confirmation, with text and buttons
-    	self.confirmationCheckWindow = QWidget()
+        # Create the window to ask for confirmation, with text and buttons
+        self.confirmationCheckWindow = QWidget()
         self.confirmationLabel = QLabel()
-        self.confirmationLabel.setText("WARNING! Are you sure you want to Idle?")
+        self.confirmationLabel.setText(
+            "WARNING! Are you sure you want to Idle?")
         self.confirmationYesButton = QPushButton()
         self.confirmationNoButton = QPushButton()
         self.confirmationYesButton.setText("Yes")
@@ -1919,9 +1874,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.confirmationCheckWindow.setLayout(self.confirmationVLayout)
         self.confirmationCheckWindow.show()
 
-		# Connect the buttons to the functions
+        # Connect the buttons to the functions
         self.confirmationYesButton.clicked.connect(lambda: self.SendIdle())
-        self.confirmationNoButton.clicked.connect(lambda: self.deleteWindow(self.confirmationCheckWindow))
+        self.confirmationNoButton.clicked.connect(
+            lambda: self.deleteWindow(self.confirmationCheckWindow))
 
     def SendIdle(self):
         try:
@@ -1933,6 +1889,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.commandEmailer = CommandEmailer(self.IMEI)
         self.commandEmailer.sendIdle()
         print "Emailer Module Command Sent"
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication.instance()		# checks if QApplication already exists

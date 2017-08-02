@@ -36,14 +36,14 @@ class StillImageSystem(QtCore.QObject):
         self.picBrightness = 50
         self.picContrast = 0
         self.picSaturation = 0
-        self.picISO = 400
+        self.picISO = 100
 
         # Variable to determine spacing of checksum. Ex. wordlength = 1000 will
         # send one thousand bits before calculating and verifying checksum
         self.wordlength = 7000
         self.extension = ".jpg"
         # The starting display photo is the logo of the MnSGC
-        self.displayPhotoPath = "Images/MnSGC_Logo_highRes.png"
+        self.displayPhotoPath = "Images/MSGC.png"
 
         self.mainWindow.stillNewText.connect(
             self.mainWindow.updateStillBrowser)

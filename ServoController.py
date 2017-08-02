@@ -148,7 +148,7 @@ class ServoController:
             moveRfdTilt = [self.moveCommand, self.rfdtiltChannel, lsb, msb]
             self.servoController.write(moveTilt)
             self.servoController.write(moveRfdTilt)
-            print(moveTilt)
+            # print(moveTilt)
             print "\t\tMove Tilt: ", float(position)
 
         except Exception, e:
@@ -169,7 +169,7 @@ class ServoController:
             movePan = [self.moveCommand, self.panChannel, lsb, msb]
             moveRfdPan = [self.moveCommand,
                           self.rfdpanChannel, lsb, msb]
-            print(movePan)
+            # print(movePan)
             self.servoController.write(movePan)
             self.servoController.write(moveRfdPan)
             print "\t\tMove Pan: ", float(position)
