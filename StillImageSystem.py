@@ -65,13 +65,14 @@ class StillImageSystem(QtCore.QObject):
         ### Write 1 until you get the acknowledge back ###
         self.rfdSer.write('1!')
         timeCheck = time.time() + 1
+        killTime = time.time() + 10
         while self.rfdSer.read() != 'A':
             if timeCheck < time.time():			# Make sure you don't print out a huge stream if you get the wrong response
                 print "Waiting for Acknowledge"
                 self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
                 timeCheck = time.time() + 1
             sys.stdout.flush()
-            self.rfdSer.write('IMAGE;1!')
+            # self.rfdSer.write('1!')
 
         ### Make the file name by reading the radio ###
         sendfilename = ""
@@ -120,7 +121,7 @@ class StillImageSystem(QtCore.QObject):
         """ Still Image System: Requests imagedata.txt, for the purpose of selecting a specific image to download """
 
         ### Send the Pi 2 until the acknowledge is received ###
-        self.rfdSer.write('IMAGE;2!')
+        self.rfdSer.write('2!')
         timeCheck = time.time() + 1
         while self.rfdSer.read() != 'A':
             if timeCheck < time.time():				# Make sure you don't print out a huge stream if the wrong thing is received
@@ -128,10 +129,11 @@ class StillImageSystem(QtCore.QObject):
                 self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
                 timeCheck = time.time() + 1
             sys.stdout.flush()
-            self.rfdSer.write('IMAGE;2!')
+            # self.rfdSer.write('IMAGE;2!')
 
         try:
             f = open('imagedata' + ".txt", "w")
+            print "opened image"
         except:
             print "Error with Opening File"
             self.mainWindow.stillNewText.emit("Error with Opening File")
@@ -155,7 +157,7 @@ class StillImageSystem(QtCore.QObject):
                 break
             temp = self.rfdSer.readline()
         f.close()
-
+        sys.stdout.flush()
         self.mainWindow.stillSystemFinished.emit()		# Emit the finished signal
 
         return
@@ -164,7 +166,7 @@ class StillImageSystem(QtCore.QObject):
         """ Still Image System: Retrieves the image specified in the argument, deletes the confirmation window if needed """
 
         ### Continuously write 3 until the acknowledge is received ###
-        self.rfdSer.write('IMAGE;3!')
+        self.rfdSer.write('3!')
         timeCheck = time.time() + 1
         killTime = time.time() + 10
         while self.rfdSer.read() != 'A' and time.time() < killTime:
@@ -173,12 +175,12 @@ class StillImageSystem(QtCore.QObject):
                 self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
                 timeCheck = time.time() + 1
             sys.stdout.flush()
-            self.rfdSer.write('IMAGE;3!')
-        # self.sync(self.rfdSer)
+            # self.rfdSer.write('IMAGE;3!')
+         # self.sync(self.rfdSer)
         # # Syncronize the data streams of the ground station and the Pi before
         # starting
         imagepath = data[0:15]
-        self.rfdSer.write('B')
+        self.rfdSer.write('B,')
         # Tell the pi which picture you want to download
         self.rfdSer.write(str(data))
         timecheck = time.time()
@@ -192,7 +194,7 @@ class StillImageSystem(QtCore.QObject):
         self.mainWindow.stillNewText.emit(
             "Receive Time = " + str((time.time() - timecheck)))
         self.mainWindow.stillNewProgress.emit(0, 1)			# Reset the progress bar
-
+        sys.stdout.flush()
         self.mainWindow.stillSystemFinished.emit()		# Emit the finished signal
 
         return
@@ -205,28 +207,33 @@ class StillImageSystem(QtCore.QObject):
         killtime = time.time() + 10  			# A timeout for the loop so you don't get stuck
 
         ### Send the Pi 4 until the acknowledge is received ###
-        self.rfdSer.write('IMAGE;4!')
+        self.rfdSer.write('4!')
         timeCheck = time.time()
         while (self.rfdSer.read() != 'A') & (time.time() < killtime):
             if time.time() < timeCheck:					# Make sure you don't print out a huge stream if you get the wrong response
                 print "Waiting for Acknowledge"
                 self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
                 timeCheck = time.time() + 1
-            self.rfdSer.write('IMAGE;4!')
+            # self.rfdSer.write('IMAGE;4!')
 
         if time.time() > killtime:
             self.mainWindow.stillNewText.emit('No Acknowledge Received')
+            sys.stdout.flush()
             return
 
         termtime = time.time() + 10
         done = False
         while not done:
             settings = self.rfdSer.readline()
+            print settings
             if not settings == '':
                 settings = settings.replace('\n', '')
+                print settings
                 settingsLst = settings.split(',')
-                fail = False
+                print settingsLst
+                fail = True
                 if len(settingsLst) == 7:
+                    fail = False
                     for each in settingsLst:
                         temp = each.replace('-', '')
                         print(temp)
@@ -235,6 +242,7 @@ class StillImageSystem(QtCore.QObject):
                 if not fail:
                     try:
                         done = True
+                        print settingsLst
                         self.picWidth = int(settingsLst[0])
                         self.picHeight = int(settingsLst[1])
                         self.picSharpness = int(settingsLst[2])
@@ -262,7 +270,7 @@ class StillImageSystem(QtCore.QObject):
                         self.mainWindow.stillNewText.emit(
                             'Error retrieving Camera Settings')
             if time.time() > termtime:
-                done = True
+                #done = True
                 self.mainWindow.stillNewText.emit('Failed to Receive Settings')
 
         ## Open the file camerasettings.txt in write mode, and write everything the Pi is sending ###
@@ -324,7 +332,7 @@ class StillImageSystem(QtCore.QObject):
             # print(str(e))
             # print "Camera Setting Retrieval Error"
             # self.mainWindow.stillNewText.emit("Camera Setting Retrieval Error")
-
+        sys.stdout.flush()
         self.mainWindow.stillSystemFinished.emit()		# Emit the finished signal
 
         return
@@ -353,7 +361,7 @@ class StillImageSystem(QtCore.QObject):
         # file.close()
 
         # Continue sending 5 until the acknowledge is received from the Pi ###
-        self.rfdSer.write('IMAGE;5!')
+        self.rfdSer.write('5!')
         acknowledge = self.rfdSer.read()
         timeCheck = time.time() + 1
         termtime = time.time() + 10
@@ -364,7 +372,7 @@ class StillImageSystem(QtCore.QObject):
                 print "Waiting for Acknowledge"
                 self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
                 timeCheck = time.time() + 1
-            self.rfdSer.write('IMAGE;5!')
+            # self.rfdSer.write('IMAGE;5!')
             timecheck = time.time()
 
         if time.time() > termtime:
@@ -380,7 +388,9 @@ class StillImageSystem(QtCore.QObject):
                 print "Waiting for Acknowledge"
                 self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
                 timeCheck = time.time() + 1
-            self.rfdSer.write('A' + settingsStr + '\n')
+
+            self.rfdSer.write('A/' + settingsStr + '\n')
+            self.rfdSer.flushOutput()
 
         if time.time() > termtime:
             self.mainWindow.stillNewText.emit(
@@ -422,7 +432,7 @@ class StillImageSystem(QtCore.QObject):
         # print "Send Time =", (time.time() - timecheck)
         # self.mainWindow.stillNewText.emit("Send Time =" + str((time.time() - timecheck)))
 
-        # sys.stdout.flush()			# Clear the buffer
+        sys.stdout.flush()			# Clear the buffer
 
         self.mainWindow.stillSystemFinished.emit()		# Emit the finished signal
         return
@@ -432,7 +442,7 @@ class StillImageSystem(QtCore.QObject):
 
         # Send the pi 0 until the acknowledge is received, or until too much
         # time has passed ###
-        self.rfdSer.write('IMAGE;0!')
+        self.rfdSer.write('0!')
         termtime = time.time() + 10
         timeCheck = time.time() + 1
         while self.rfdSer.read() != 'A':
@@ -454,6 +464,7 @@ class StillImageSystem(QtCore.QObject):
 
         print("Camera Vertically Flipped")
         self.mainWindow.stillNewText.emit("Camera Vertically Flipped")
+        sys.stdout.flush()
         self.mainWindow.stillSystemFinished.emit()		# Emit the finished signal
 
     def picHorizontalFlip(self):
@@ -461,7 +472,7 @@ class StillImageSystem(QtCore.QObject):
 
         # Send the pi 9 until the acknowledge is received, or until too much
         # time has passed ###
-        self.rfdSer.write('IMAGE;9!')
+        self.rfdSer.write('9!')
         termtime = time.time() + 10
         timeCheck = time.time() + 1
         while self.rfdSer.read() != 'A':
@@ -481,6 +492,7 @@ class StillImageSystem(QtCore.QObject):
 
         print("Camera Horizontally Flipped")
         self.mainWindow.stillNewText.emit("Camera Horizontally Flipped")
+        sys.stdout.flush()
         self.mainWindow.stillSystemFinished.emit()		# Emit the finished signal
 
     def time_sync(self):
@@ -488,7 +500,7 @@ class StillImageSystem(QtCore.QObject):
 
         # Send the Pi 8 until the acknowledge is received, or until the too
         # much time has passed ###
-        self.rfdSer.write('IMAGE;8!')
+        self.rfdSer.write('8!')
         termtime = time.time() + 20
         timeCheck = time.time() + 1
         while self.rfdSer.read() != 'A':
@@ -496,7 +508,7 @@ class StillImageSystem(QtCore.QObject):
                 print "Waiting for Acknowledge"
                 self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
                 timeCheck = time.time() + 1
-            self.rfdSer.write('IMAGE;8!')
+            # self.rfdSer.write('8!')
             if termtime < time.time():  # If too much time has passed, let the user know and return
                 print "No Acknowledge Received, Connection Error"
                 self.mainWindow.stillNewText.emit(
@@ -513,17 +525,16 @@ class StillImageSystem(QtCore.QObject):
         print "##################################\nRaspb Time = %s\nLocal Time = %s\n##################################" % (rasptime, localtime)
         self.mainWindow.stillNewText.emit(
             "##################################\nRaspb Time = %s\nLocal Time = %s\n##################################" % (rasptime, localtime) + '\n')
-        sys.stdin.flush()
+        # sys.stdin.flush()
 
         # Run the connection test
         self.connectiontest(10)
-
+        sys.stdout.flush()
         self.mainWindow.stillSystemFinished.emit() 		# Emit the finished signal
         return
 
     def receive_image(self, savepath, wordlength):
         """ Receive an Image through the RFD 900 """
-        successcount = 0
         # Notifies User we have entered the receiveimage() module
         print "Confirmed photo request"
         self.mainWindow.stillNewText.emit("Confirmed photo request")
@@ -532,6 +543,8 @@ class StillImageSystem(QtCore.QObject):
         ### Module Specific Variables ###
         # Initializes the checksum timeout (timeout value is not set here)
         trycnt = 0
+        failcount = 0
+        totalcnt = 0
         finalstring = ""		# Initializes the data string so that the += function can be used
         done = False			# Initializes the end condition
 
@@ -540,6 +553,7 @@ class StillImageSystem(QtCore.QObject):
         try:
             # The first thing you get is the total picture size so you can make
             # the progress bar
+            time.sleep(1)
             photoSize = self.rfdSer.readline()
             print("Total Picture Size: ", photoSize)
             self.mainWindow.stillNewText.emit(
@@ -568,10 +582,10 @@ class StillImageSystem(QtCore.QObject):
 
             # CHECKSUM
             if checkours != checktheirs:
-                if trycnt < 7:		# This line sets the maximum number of checksum resends. Ex. trycnt = 5 will attempt to rereceive data 5 times before erroring out											  #I've found that the main cause of checksum errors is a bit drop or add desync, this adds a 2 second delay and resyncs both systems
+                if trycnt < 5:		# This line sets the maximum number of checksum resends. Ex. trycnt = 5 will attempt to rereceive data 5 times before erroring out											  #I've found that the main cause of checksum errors is a bit drop or add desync, this adds a 2 second delay and resyncs both systems
                     self.rfdSer.write('N')
                     trycnt += 1
-                    successcount = 0
+                    failcount += 1
                     print "try number:", str(trycnt)
                     self.mainWindow.stillNewText.emit(
                         "try number: " + str(trycnt))
@@ -597,11 +611,6 @@ class StillImageSystem(QtCore.QObject):
                     break
             else:							# If everything goes well, reset the try counter, and add the word to the accumulating final wor
                 trycnt = 0
-                successcount += 1
-                if (successcount >= 3):
-                    if(wordlength < 7000):
-                        wordlength += 1000
-                        self.mainWindow.stillNewText.emit("wordlength Increased "+ str(wordlength))
                 self.rfdSer.write('Y')
                 finalstring += str(word)
                 stillProgress += wordlength
@@ -623,6 +632,7 @@ class StillImageSystem(QtCore.QObject):
             print "Error with filename, saved as newimage" + self.extension
             self.mainWindow.stillNewText.emit(
                 "Error with filename, saved as newimage" + self.extension)
+            self.mainWindow.stillNewText.emit("Test633")
             sys.stdout.flush()
             # Save image as newimage.jpg due to a naming error in the Images
             # folder
@@ -633,6 +643,8 @@ class StillImageSystem(QtCore.QObject):
         self.wordlength = 7000			# Reset the wordlength to the original
         print "Image Saved"
         self.mainWindow.stillNewText.emit("Image Saved")
+        self.mainWindow.stillNewText.emit(
+            "Number of Packets Lost = " + str(failcount))
         sys.stdout.flush()
 
     def sync(self):
@@ -666,6 +678,7 @@ class StillImageSystem(QtCore.QObject):
         self.mainWindow.stillNewText.emit("System Match")
         self.rfdSer.flushInput()			# Clear the buffers to be ready
         self.rfdSer.flushOutput()
+        sys.stdout.flush()
         return
 
     def connectiontest(self, numping):
@@ -673,7 +686,7 @@ class StillImageSystem(QtCore.QObject):
 
         # Send the Pi A until the acknowledge is received, or too much time has
         # passed ###
-        self.rfdSer.write('IMAGE;6!')
+        self.rfdSer.write('6!')
         termtime = time.time() + 20
         timeCheck = time.time() + 1
         while self.rfdSer.read() != 'A':
@@ -681,7 +694,7 @@ class StillImageSystem(QtCore.QObject):
                 print "Waiting for Acknowledge"
                 self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
                 timeCheck = time.time() + 1
-            self.rfdSer.write('IMAGE;6!')
+            # self.rfdSer.write('6!')
             if termtime < time.time():  # If too much time passed, let the user know and return
                 print "No Acknowledge Received, Connection Error"
                 self.mainWindow.stillNewText.emit(
