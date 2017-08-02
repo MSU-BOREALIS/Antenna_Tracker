@@ -181,14 +181,14 @@ class RfdCommand(QtCore.QObject):
         # time has passed ###
         termtime = time.time() + 10
         timeCheck = time.time() + 1
-        self.rfdSer.write('IMAGE;7!')
+        self.rfdSer.write('7!')
         while self.rfdSer.read() != 'A':
             if(timeCheck < time.time()):
                 print("Waiting for Acknowledge")
                 self.mainWindow.rfdCommandNewText.emit(
                     "Waiting for Acknowledge")
                 timeCheck = time.time() + 1
-            self.rfdSer.write('IMAGE;7!')
+            #self.rfdSer.write('IMAGE;7!')
             if(termtime < time.time()):
                 print("No Acknowldeg Received, Connection Error")
                 self.mainWindow.rfdCommandNewText.emit(
@@ -243,7 +243,7 @@ class RfdCommand(QtCore.QObject):
 
     def getDeviceStatus(self):
         """ Retrieve the status of the serial devices connected to the Pi """
-        self.rfdSer.write('IMAGE;-!')
+        self.rfdSer.write('-!')
 
     def setAcknowledged(self, arg):
         self.acknowledged = arg

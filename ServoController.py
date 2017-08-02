@@ -1,4 +1,5 @@
 from Antenna_Tracker_and_RFD_Controls_GUI import SerialDevice
+import numpy
 
 
 class ServoController:
@@ -144,10 +145,10 @@ class ServoController:
                                self.rfdtiltChannel, chr(position)]
             '''
             moveTilt = [self.moveCommand, self.tiltChannel, lsb, msb]
-            moveRfdTilt = [self.moveCommand, self.tiltChannel, lsb, msb]
+            moveRfdTilt = [self.moveCommand, self.rfdtiltChannel, lsb, msb]
             self.servoController.write(moveTilt)
             self.servoController.write(moveRfdTilt)
-            print(moveTilt)
+            # print(moveTilt)
             print "\t\tMove Tilt: ", float(position)
 
         except Exception, e:
@@ -161,14 +162,14 @@ class ServoController:
 
         try:
             ### Move the pan servo ###
-            #if self.previousPan > position:
+            # if self.previousPan > position:
             #    position += 1
             #self.previousPan = position
 
             movePan = [self.moveCommand, self.panChannel, lsb, msb]
             moveRfdPan = [self.moveCommand,
                           self.rfdpanChannel, lsb, msb]
-            print(movePan)
+            # print(movePan)
             self.servoController.write(movePan)
             self.servoController.write(moveRfdPan)
             print "\t\tMove Pan: ", float(position)
@@ -176,3 +177,21 @@ class ServoController:
 
         except Exception, e:
             print(str(e))
+
+    def mapCalc(angleOne, pwmOne, angleTwo, pwmTwo):
+        angleOne = 180 - angleOne
+        if angleOne < 0:
+            angleOne = angleOne + 360
+
+        angleTwo = 180 - angleTwo
+        if angleTwo < 0:
+            angleTwo = angleTwo + 360
+
+        angleOne = angleOne * 4
+        angleTwo = angleTwo * 4
+
+        a = numpy.array([[angleOne, 4], [angleTwo, 4]])
+        b = numpy.array([pwmOne, pwmTwo])
+        x = numpy.linalg.solve(a, b)
+
+        print x

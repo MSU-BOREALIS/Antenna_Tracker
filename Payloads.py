@@ -6,8 +6,8 @@ from MapHTML import *
 
 
 class Payload:
-    """ 
-    A class to associate a payload's name with its messages and GPS updates, 
+    """
+    A class to associate a payload's name with its messages and GPS updates,
     as well as with its associated browsers in the main GUI
     """
 

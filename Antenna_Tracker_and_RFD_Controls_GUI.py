@@ -2,13 +2,13 @@
 """
 Antenna Tracker Controller for Trident Antenna Array and RFD Radio Controller
 
-Author:	Austin Langford, AEM, Trevor Gahl, CpE
-Based on work from Scott Miller, CpE, Dylan Trafford, CpE, and David Schwerr of the Montana Space Grant Consortium
-Software created for use by the Minnesota Space Grant Consortium
+Author:	Trevor Gahl, CpE
+Based on work from Austin Langford, AEM, Scott Miller, CpE, Dylan Trafford, CpE, and David Schwerr, CS of the Minnesota/Montana Space Grant Consortia
+Software created for use by the National Space Grant Consortium
 Purpose: To acquire the location of a balloon in flight, and aim the array of antennae at the balloon
 Additional Features: RFD 900 based Command Center and Image Reception
 Creation Date: March 2016
-Last Edit Date: September 14, 2016
+Last Edit Date: August 2, 2017
 """
 
 # System imports
@@ -48,6 +48,7 @@ from BalloonUpdate import *				# Class to hold balloon info
 from GetData import *					# Module for tracking methods
 from Payloads import *					# Module for handling payloads
 from MapHTML import *						# Module for generating Google Maps HTML and JavaScript
+from CommandEmailer import *
 
 # Matplotlib setup
 from matplotlib.figure import Figure
@@ -180,6 +181,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.recalibrateCenterBearing.clicked.connect(self.calibrateIMU)
         self.checkComPorts.clicked.connect(self.searchComPorts)
 
+        # Command control button Links
+
+        self.cutdownButton.clicked.connect(self.sendCutdownCommand)
+        self.idleButton.clicked.connect(self.sendIdleCommand)
+
         # Manual Entry Button Links
         self.ManualEntryUpdateButton.clicked.connect(self.manualEntryUpdate)
         self.ManualAngleEntryButton.clicked.connect(
@@ -205,14 +211,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.requestStatusButton.clicked.connect(self.requestDeviceStatus)
 
         # Still Image Control Button Links
-        self.mostRecentImageButton.clicked.connect(lambda: self.stillImageButtonPress('mostRecent'))
-        self.imageDataTxtButton.clicked.connect(lambda: self.stillImageButtonPress('selectImage'))
+        self.mostRecentImageButton.clicked.connect(
+            lambda: self.stillImageButtonPress('mostRecent'))
+        self.imageDataTxtButton.clicked.connect(
+            lambda: self.stillImageButtonPress('selectImage'))
         self.picDefaultSettingsButton.clicked.connect(self.picDefaultSettings)
-        self.picSendNewSettingsButton.clicked.connect(lambda: self.stillImageButtonPress('sendNewSettings'))
-        self.picGetSettingsButton.clicked.connect(lambda: self.stillImageButtonPress('getPicSettings'))
-        self.connectionTestButton.clicked.connect(lambda: self.stillImageButtonPress('timeSync'))
-        self.picHorizontalFlipButton.clicked.connect(lambda: self.stillImageButtonPress('HFlip'))
-        self.picVerticalFlipButton.clicked.connect(lambda: self.stillImageButtonPress('VFlip'))
+        self.picSendNewSettingsButton.clicked.connect(
+            lambda: self.stillImageButtonPress('sendNewSettings'))
+        self.picGetSettingsButton.clicked.connect(
+            lambda: self.stillImageButtonPress('getPicSettings'))
+        self.connectionTestButton.clicked.connect(
+            lambda: self.stillImageButtonPress('timeSync'))
+        self.picHorizontalFlipButton.clicked.connect(
+            lambda: self.stillImageButtonPress('HFlip'))
+        self.picVerticalFlipButton.clicked.connect(
+            lambda: self.stillImageButtonPress('VFlip'))
 
         # Make sure the allowed combination of auto tracking checkboxes are
         # enabled
@@ -225,7 +238,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.stillImageOnline = False
         self.stillImageStall = False
         # The starting display photo is the logo of the MnSGC
-        self.displayPhotoPath = "Images/MnSGC_Logo_highRes.png"
+        self.displayPhotoPath = "Images/MSGC.png"
         self.tabs.resizeEvent = self.resizePicture
         self.picLabel.setScaledContents(True)
         # Create a pixmap from the default image
@@ -518,17 +531,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 timestamp = str(datetime.today().strftime("%m-%d-%Y %H-%M-%S"))
 
                 # Create the log files
+                if not os.path.exists("Logs/"):
+                    os.mkdir("Logs/")
                 self.rfdLog = "Logs/" + timestamp + ' ' + "RFDLOG.txt"
-                f = open(self.rfdLog, 'w')
+                f = open(self.rfdLog, 'w+')
                 f.close()
                 self.stillImageLog = "Logs/" + timestamp + ' ' + "STILLIMAGELOG.txt"
-                f = open(self.stillImageLog, 'w')
+                f = open(self.stillImageLog, 'w+')
                 f.close()
                 self.balloonLocationLog = "Logs/" + timestamp + ' ' + "BALLOONLOCATIONLOG.txt"
-                f = open(self.balloonLocationLog, 'w')
+                f = open(self.balloonLocationLog, 'w+')
                 f.close()
                 self.pointingLog = "Logs/" + timestamp + ' ' + "POINTINGLOG.txt"
-                f = open(self.pointingLog, 'w')
+                f = open(self.pointingLog, 'w+')
                 f.close()
         elif not self.saveDataCheckbox.isChecked():
             self.saveData = False
@@ -561,7 +576,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.servoController = ServoController(
                         self.servos.getDevice())
                     self.servoController.setServoAccel(1, 1)
-                    self.servoController.setServoSpeed(3, 1)
+                    self.servoController.setServoSpeed(1, 1)
                     self.servosStarted = True
 
         if self.rfdAttached.isChecked():
@@ -875,17 +890,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if arg == 'up':
             self.tiltOffset += 1
+            self.antennaEle += 1
             print("Tilt Trim: " + str(self.tiltOffset))
         elif arg == 'down':
             self.tiltOffset -= 1
+            self.antennaEle -= 1
             print("Tilt Trim: " + str(self.tiltOffset))
         elif arg == 'left':
             self.panOffset -= 1
+            self.antennaBear -= 1
             print("Pan Trim: " + str(self.panOffset))
         elif arg == 'right':
             self.panOffset += 1
+            self.antennaBear += 1
             print("Pan Trim: " + str(self.panOffset))
         elif arg == 'reset':
+            self.antennaEle -= self.tiltOffset
+            self.antennaBear -= self.panOffset
             self.tiltOffset = 0
             self.panOffset = 0
             print("Tilt Trim: " + str(self.tiltOffset))
@@ -949,7 +970,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if self.rfdListenOnline:
                 self.stillImageStall = True
                 self.rfdListenStop()
-            self.stillImageSystem.mostRecentImageStart.emit(self.requestedImageName.text())
+            self.stillImageSystem.mostRecentImageStart.emit(
+                self.requestedImageName.text())
 
         if arg == 'selectImage':
             self.stillImageStart()
@@ -1713,6 +1735,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def moveToTarget(self, bearing, elevation):
         """ Moves servos based on a bearing and elevation angle """
+        # Account for manual offset
+        bearing = bearing
+        #elevation += self.tiltOffset
 
         temp = 0
         # Uses the center bearing, and makes sure you don't do unnecessary
@@ -1725,57 +1750,62 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             temp = self.centerBear
             self.centerBear = 360 + temp
 
-        print ("\tBearing: %.0f" % (bearing + self.panOffset))
-        print ("\tElevation Angle: %.0f" % (elevation + self.tiltOffset))
+        print ("\tBearing: %.0f" % (bearing))
+        print ("\tElevation Angle: %.0f" % (elevation))
 
-        # With new digital servos, can use map method as described here: http://arduino.cc/en/reference/map
-        # Get the correct numerical value for the servo position by adjusting
-        # based on offset, max and min
-        #panTo = ((bearing - (self.centerBear - 168)) * (self.servoController.servoMax - self.servoController.servoMin) /
-        #         ((self.centerBear + 168) - (self.centerBear - 168)) + self.servoController.servoMin) + (255 * self.panOffset / 360)
+        # Pan Mapping
+        # Mapping is designed for 45 degree increments
+        # If
+        panTo = (bearing - self.centerBear)
+        # print "PanTo Value\n"
+        # print panTo
 
-        #panTo =(bearing - self.centerBear)-12
-        panTo = (bearing -self.centerBear)
-        panTo = 180-panTo
-        if panTo < 0:
-            panTo = panTo + 360
-        panTo = int((panTo*3.37 + 893.4)*4)
+        if panTo > -1 and panTo < 91:
+            panTo = 180 - panTo
+            if panTo < 0:
+                panTo = panTo + 360
+            panTo = int((panTo * 2.6 + 1020) * 4)
 
-        '''
-        if bearing == 0:
-            bearing = 180
-        if bearing<180:
-            bearing = 180 - bearing
-        if bearing>180:
-            bearing = 180 + (360-bearing)
-        if bearing<90:
-            bearing = 90
-        if bearing>270:
-            bearing = 270
-            '''
+        elif panTo < 0 and panTo > -91:
+            panTo = 180 - panTo
+            if panTo < 0:
+                panTo = panTo + 360
+            panTo = int((panTo * 2.72 + 1010) * 4)
 
+        else:
+            panTo = 180 - panTo
+            if panTo < 0:
+                panTo = panTo + 360
+            print "Default Mapping"
+            panTo = int((panTo * 2.639 + 1025) * 4)
 
-        #panTo = ((bearing*3.37)+894)*4
-        if panTo > 8424:
-            panTo = 8424
-        if panTo < 3576:
-            panTo = 3576
+        if panTo > 7600:
+            panTo = 7600
+        if panTo < 4300:
+            panTo = 4300
+        # print panTo
         print "\tServo Degrees:"
         if self.servosAttached:
             self.servoController.movePanServo(panTo)
 
-        # Get the correct numerical value for the servo position by adjusting
-        # based on offset, max and min
-        #tiltTo = (((0 - elevation) - self.servoController.tiltAngleMin) * (self.servoController.servoMax - self.servoController.servoMin) /
-        #          (self.servoController.tiltAngleMax - self.servoController.tiltAngleMin) + self.servoController.servoMin) + (255 * (-self.tiltOffset) / 360)
-        #print(tiltTo)
-        if elevation<180:
-            elevation = 180 - elevation
-        tiltTo = int((elevation*2.9)+1000)*4
+        # Tilt Mapping
+        tiltTo = elevation
+        tiltTo = 180 - tiltTo
+        if tiltTo < 0:
+            tiltTo = tiltTo + 360
+
+        # Update the tilt mapping values here#
+        tiltTo = int((tiltTo * 2.639 + 1025) * 4)
+
+        tiltTo = 180 - tiltTo
+        if tiltTo < 0:
+            tiltTo = tiltTo + 360
+        tiltTo = int((tiltTo * 4.66) + 668.5) * 4
         if tiltTo > 6000:
             tiltTo = 6000		# Don't go over the max
-        if tiltTo < 4200:
-            tiltTo = 4200			# Don't go under the min
+        if tiltTo < 4348:
+            tiltTo = 4348			# Don't go under the min
+        # print tiltTo
         if self.servosAttached:		# Move the servos to the new locations if they're attacheed
             self.servoController.moveTiltServo(tiltTo)
         if temp != 0:
@@ -1788,6 +1818,78 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.antennaBear = bearing
         self.antennaEle = elevation
         self.manualRefresh()
+
+    def sendCutdownCommand(self):
+        self.confirmationCheckWindow = QWidget()
+        self.confirmationLabel = QLabel()
+        self.confirmationLabel.setText(
+            "WARNING! Are you sure you want to cutdown?")
+        self.confirmationYesButton = QPushButton()
+        self.confirmationNoButton = QPushButton()
+        self.confirmationYesButton.setText("Yes")
+        self.confirmationNoButton.setText("No")
+        self.confirmationHLayout = QHBoxLayout()
+        self.confirmationVLayout = QVBoxLayout()
+        self.confirmationHLayout.addWidget(self.confirmationYesButton)
+        self.confirmationHLayout.addWidget(self.confirmationNoButton)
+        self.confirmationVLayout.addWidget(self.confirmationLabel)
+        self.confirmationVLayout.addLayout(self.confirmationHLayout)
+        self.confirmationCheckWindow.setLayout(self.confirmationVLayout)
+        self.confirmationCheckWindow.show()
+
+        # Connect the buttons to the functions
+        self.confirmationYesButton.clicked.connect(
+            lambda: self.attemptCutdown())
+        self.confirmationNoButton.clicked.connect(
+            lambda: self.deleteWindow(self.confirmationCheckWindow))
+
+    def attemptCutdown(self):
+        try:
+            self.deleteWindow(self.confirmationCheckWindow)
+        except Exception, e:
+            print(str(e))
+        print "Sending cutdown"
+        self.commandEmailer = CommandEmailer(self.IMEI)
+        self.commandEmailer.sendCut()
+        print "Emailer Module Command Sent"
+
+    def sendIdleCommand(self):
+        """ Confirm that the user wants to perform an idle """
+
+        # Create the window to ask for confirmation, with text and buttons
+        self.confirmationCheckWindow = QWidget()
+        self.confirmationLabel = QLabel()
+        self.confirmationLabel.setText(
+            "WARNING! Are you sure you want to Idle?")
+        self.confirmationYesButton = QPushButton()
+        self.confirmationNoButton = QPushButton()
+        self.confirmationYesButton.setText("Yes")
+        self.confirmationNoButton.setText("No")
+        self.confirmationHLayout = QHBoxLayout()
+        self.confirmationVLayout = QVBoxLayout()
+        self.confirmationHLayout.addWidget(self.confirmationYesButton)
+        self.confirmationHLayout.addWidget(self.confirmationNoButton)
+        self.confirmationVLayout.addWidget(self.confirmationLabel)
+        self.confirmationVLayout.addLayout(self.confirmationHLayout)
+        self.confirmationCheckWindow.setLayout(self.confirmationVLayout)
+        self.confirmationCheckWindow.show()
+
+        # Connect the buttons to the functions
+        self.confirmationYesButton.clicked.connect(lambda: self.SendIdle())
+        self.confirmationNoButton.clicked.connect(
+            lambda: self.deleteWindow(self.confirmationCheckWindow))
+
+    def SendIdle(self):
+        try:
+            self.deleteWindow(self.confirmationCheckWindow)
+        except Exception, e:
+            print(str(e))
+
+        print "Sending idle"
+        self.commandEmailer = CommandEmailer(self.IMEI)
+        self.commandEmailer.sendIdle()
+        print "Emailer Module Command Sent"
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication.instance()		# checks if QApplication already exists
