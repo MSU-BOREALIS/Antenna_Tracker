@@ -1869,17 +1869,70 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.manualRefresh()
 
     def sendCutdownCommand(self):
+        self.confirmationCheckWindow = QWidget()
+        self.confirmationLabel = QLabel()
+        self.confirmationLabel.setText("WARNING! Are you sure you want to cutdown?")
+        self.confirmationYesButton = QPushButton()
+        self.confirmationNoButton = QPushButton()
+        self.confirmationYesButton.setText("Yes")
+        self.confirmationNoButton.setText("No")
+        self.confirmationHLayout = QHBoxLayout()
+        self.confirmationVLayout = QVBoxLayout()
+        self.confirmationHLayout.addWidget(self.confirmationYesButton)
+        self.confirmationHLayout.addWidget(self.confirmationNoButton)
+        self.confirmationVLayout.addWidget(self.confirmationLabel)
+        self.confirmationVLayout.addLayout(self.confirmationHLayout)
+        self.confirmationCheckWindow.setLayout(self.confirmationVLayout)
+        self.confirmationCheckWindow.show()
+
+		# Connect the buttons to the functions
+        self.confirmationYesButton.clicked.connect(lambda: self.attemptCutdown())
+        self.confirmationNoButton.clicked.connect(lambda: self.deleteWindow(self.confirmationCheckWindow))
+
+    def attemptCutdown(self):
+        try:
+            self.deleteWindow(self.confirmationCheckWindow)
+        except Exception, e:
+            print(str(e))
         print "Sending cutdown"
         self.commandEmailer = CommandEmailer(self.IMEI)
         self.commandEmailer.sendCut()
         print "Emailer Module Command Sent"
 
     def sendIdleCommand(self):
+        """ Confirm that the user wants to perform an idle """
+
+    	# Create the window to ask for confirmation, with text and buttons
+    	self.confirmationCheckWindow = QWidget()
+        self.confirmationLabel = QLabel()
+        self.confirmationLabel.setText("WARNING! Are you sure you want to Idle?")
+        self.confirmationYesButton = QPushButton()
+        self.confirmationNoButton = QPushButton()
+        self.confirmationYesButton.setText("Yes")
+        self.confirmationNoButton.setText("No")
+        self.confirmationHLayout = QHBoxLayout()
+        self.confirmationVLayout = QVBoxLayout()
+        self.confirmationHLayout.addWidget(self.confirmationYesButton)
+        self.confirmationHLayout.addWidget(self.confirmationNoButton)
+        self.confirmationVLayout.addWidget(self.confirmationLabel)
+        self.confirmationVLayout.addLayout(self.confirmationHLayout)
+        self.confirmationCheckWindow.setLayout(self.confirmationVLayout)
+        self.confirmationCheckWindow.show()
+
+		# Connect the buttons to the functions
+        self.confirmationYesButton.clicked.connect(lambda: self.SendIdle())
+        self.confirmationNoButton.clicked.connect(lambda: self.deleteWindow(self.confirmationCheckWindow))
+
+    def SendIdle(self):
+        try:
+            self.deleteWindow(self.confirmationCheckWindow)
+        except Exception, e:
+            print(str(e))
+
         print "Sending idle"
         self.commandEmailer = CommandEmailer(self.IMEI)
         self.commandEmailer.sendIdle()
         print "Emailer Module Command Sent"
-
 
 if __name__ == "__main__":
     app = QtGui.QApplication.instance()		# checks if QApplication already exists
