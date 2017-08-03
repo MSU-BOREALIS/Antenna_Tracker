@@ -1797,10 +1797,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Update the tilt mapping values here#
         tiltTo = int((tiltTo * 2.639 + 1025) * 4)
 
-        tiltTo = 180 - tiltTo
-        if tiltTo < 0:
-            tiltTo = tiltTo + 360
-        tiltTo = int((tiltTo * 4.66) + 668.5) * 4
         if tiltTo > 6000:
             tiltTo = 6000		# Don't go over the max
         if tiltTo < 4348:
