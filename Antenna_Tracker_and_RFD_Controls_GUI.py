@@ -31,7 +31,7 @@ from PyQt4.QtGui import *
 import math
 # database section, help from:
 # http://www.tutorialspoint.com/python/python_database_access.htm
-import MySQLdb
+import cymysql
 import numpy as np
 import matplotlib
 import geomag
@@ -679,7 +679,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.centerBear = 270
             else:
                 self.centerBear = 0
-                print "Error with manual bearing setup"
+                print ("Error with manual bearing setup")
             # Get the ground station location from the entry boxes, default to
             # placeholder
             self.groundLat = self.manualLat.text()
@@ -852,7 +852,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.manualRefresh()
                 print("Reaimed by Manual Angle Entry")
 
-            except Exception, e:
+            except Exception as e:
                 print(str(e))
                 print(
                     "Error with Manual Angle Entry, make sure Bearing and Elevation Angle are entered")
@@ -1111,7 +1111,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Get rid of the window's if they're still around
         try:
             self.deleteWindow(self.confirmationCheckWindow)
-        except Exception, e:
+        except Exception as e:
             print(str(e))
 
         self.stillImageSystem.requestedImageStart.emit(data)
@@ -1129,19 +1129,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         iso = 400				# Unknown Default; range = (100 to 800)
 
         # Print/write to the browser what you're doing
-        print "Default width:", width
+        print ("Default width:", width)
         self.updateStillBrowser("Default Width: " + str(width))
-        print "Default height:", height
+        print ("Default height:", height)
         self.updateStillBrowser("Default Height: " + str(height))
-        print "Default sharpness:", sharpness
+        print ("Default sharpness:", sharpness)
         self.updateStillBrowser("Default Sharpness: " + str(sharpness))
-        print "Default brightness:", brightness
+        print ("Default brightness:", brightness)
         self.updateStillBrowser("Default Brightness: " + str(brightness))
-        print "Default contrast:", contrast
+        print ("Default contrast:", contrast)
         self.updateStillBrowser("Default Contrast: " + str(contrast))
-        print "Default saturation:", saturation
+        print ("Default saturation:", saturation)
         self.updateStillBrowser("Default Saturation: " + str(saturation))
-        print "Default ISO:", iso
+        print ("Default ISO:", iso)
         self.updateStillBrowser("Default ISO: " + str(iso) + '\n')
         sys.stdout.flush()			# Clear the buffer
 
@@ -1651,13 +1651,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.centerBear -= 360
         elif self.centerBear < 0:
             self.centerBear += 360
-        print "Local Latitude: \t", self.groundLat
-        print "Local Longitude:\t", self.groundLon
-        print "Local Altitude: \t", self.groundAlt
-        print "Offset Degrees: \t", self.centerBear
-        print "Declination:	\t", declination
-        print "Offset + Dec:   \t", self.centerBear
-        print "-------------------------------------------------------"
+        print ("Local Latitude: \t", self.groundLat)
+        print ("Local Longitude:\t", self.groundLon)
+        print ("Local Altitude: \t", self.groundAlt)
+        print ("Offset Degrees: \t", self.centerBear)
+        print ("Declination:	\t", declination)
+        print ("Offset + Dec:   \t", self.centerBear)
+        print ("-------------------------------------------------------")
 
         self.antennaBear = self.centerBear
         # Lets the program know that the center bearing has been set before
@@ -1713,7 +1713,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                               self.currentBalloon.getEle())
             print("Tracker aimed at most recent balloon location")
         else:
-            print "Error: Settings set to no Servo Connection"
+            print ("Error: Settings set to no Servo Connection")
 
     def moveToCenterPos(self):
         """ Send servos to their center pos (should be horizontal and straight ahead if zeroed) """
@@ -1731,7 +1731,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.manualRefresh()
 
         else:
-            print "Error: Settings set to no Servo Connection"
+            print ("Error: Settings set to no Servo Connection")
 
     def moveToTarget(self, bearing, elevation):
         """ Moves servos based on a bearing and elevation angle """
@@ -1776,7 +1776,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
-            print "Default Mapping"
+            print ("Default Mapping")
             panTo = int((panTo * 2.639 + 1025) * 4)
 
         if panTo > 7600:
@@ -1784,7 +1784,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if panTo < 4300:
             panTo = 4300
         # print panTo
-        print "\tServo Degrees:"
+        print ("\tServo Degrees:")
         if self.servosAttached:
             self.servoController.movePanServo(panTo)
 
@@ -1842,12 +1842,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def attemptCutdown(self):
         try:
             self.deleteWindow(self.confirmationCheckWindow)
-        except Exception, e:
+        except Exception as e:
             print(str(e))
-        print "Sending cutdown"
+        print ("Sending cutdown")
         self.commandEmailer = CommandEmailer(self.IMEI)
         self.commandEmailer.sendCut()
-        print "Emailer Module Command Sent"
+        print ("Emailer Module Command Sent")
 
     def sendIdleCommand(self):
         """ Confirm that the user wants to perform an idle """
@@ -1878,13 +1878,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def SendIdle(self):
         try:
             self.deleteWindow(self.confirmationCheckWindow)
-        except Exception, e:
+        except Exception as e:
             print(str(e))
 
-        print "Sending idle"
+        print ("Sending idle")
         self.commandEmailer = CommandEmailer(self.IMEI)
         self.commandEmailer.sendIdle()
-        print "Emailer Module Command Sent"
+        print ("Emailer Module Command Sent")
 
 
 if __name__ == "__main__":
