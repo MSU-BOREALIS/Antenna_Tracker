@@ -4,7 +4,7 @@ from PyQt5 import QtGui
 from PyQt5.QtCore import *
 from BalloonUpdate import *
 from time import sleep
-import cymysql
+import MySQLdb
 import datetime
 import serial
 import threading
@@ -97,7 +97,7 @@ class GetIridium(QtCore.QObject):
                     if connectAttempts < 20:
                         try:
                             # Connect to the database
-                            db_local = cymysql.connect(
+                            db_local = MySQLdb.connect(
                                 host=self.dbHost, user=self.dbUser, passwd=self.dbPass, db=self.dbName)
                             # prepare a cursor object using cursor() method
                             cursor = db_local.cursor()

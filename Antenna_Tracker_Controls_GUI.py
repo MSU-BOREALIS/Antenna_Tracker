@@ -36,7 +36,7 @@ from PySide2.QtWebEngineWidgets import QWebEngineView,QWebEnginePage as QWebView
 import math
 # database section, help from:
 # http://www.tutorialspoint.com/python/python_database_access.htm
-import cymysql
+import MySQLdb
 import numpy as np
 import matplotlib
 import geomag

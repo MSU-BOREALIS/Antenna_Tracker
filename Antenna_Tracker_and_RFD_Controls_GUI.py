@@ -31,7 +31,7 @@ from PyQt4.QtGui import *
 import math
 # database section, help from:
 # http://www.tutorialspoint.com/python/python_database_access.htm
-import cymysql
+import MySQLdb
 import numpy as np
 import matplotlib
 import geomag
