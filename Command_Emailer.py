@@ -1,53 +1,27 @@
-#from email.MIMEMultipart import MIMEMultipart
-#from email.MIMEText import MIMEText
-#from email.MIMEBase import MIMEBase
-
-
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-
-from email import encoders
-#from email import Encoders
-#from email.encoders import Encoders
-
-
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText
+from email.MIMEBase import MIMEBase
+from email import Encoders
 import time
 import os
 import smtplib
-# import Antenna_Tracker_and_RFD_Controls_GUI
+import Antenna_Tracker_and_RFD_Controls_GUI
 
 
-class CommandEmailer():
+class ServoController:
 
     # Initialization of IMEI number
-    def __init__(self, IMEI):
+    def __init__(self):
         # Pull from IMEI outlined in main window
-        print("Function called")
-        self.IMEI = IMEI
-        print(IMEI)
+        self.IMEI = Antenna_Tracker_and_RFD_Controls_GUI.self.IMEI
 
-    def sendCut(self):
-
-        command = 'cutdown'
-        self.send(command)
-        print("Cutdown command sent")
-
-        # print "Problem sending cutdown"
-
-    def sendIdle(self):
-
-        self.send('idle')
-        print("Idle command sent")
     # Method used to send an email.
-
-    def send(self, command):
+    def send(command):
         # Used to determine which file to send out
-
         if(command == 'cutdown'):
-            fileOut = 'Command/cutdown.sbd'
-        if(command == 'idle'):
-            fileOut = 'Command/idle.sbd'
+            fileOut = 'cutdown.sbd'
+        if(menuSelect == 'idle'):
+            fileOut = 'idle.sbd'
 
         # Builds and sends the email
         command = str(fileOut)
