@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\andy-\Documents\MSGC\Github\Antenna_Tracker\trackermain.ui',
-# licensing of 'C:\Users\andy-\Documents\MSGC\Github\Antenna_Tracker\trackermain.ui' applies.
+# Form implementation generated from reading ui file 'trackermain.ui',
+# licensing of 'trackermain.ui' applies.
 #
-# Created: Tue Jun  4 14:15:09 2019
+# Created: Tue Jun  4 14:34:42 2019
 #      by: pyside2-uic  running on PySide2 5.12.3
 #
 # WARNING! All changes made in this file will be lost!
