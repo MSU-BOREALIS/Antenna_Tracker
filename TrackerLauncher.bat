@@ -1,2 +1,2 @@
-cd C:\Users\Trevor\Desktop\Tracker\AntennaTracker_withRFD
-python Antenna_Tracker_and_RFD_Controls_GUI.py
+cd C:\Users\andy-\Documents\MSGC\Ground Station\Soft_6_4_19\AntennaTracker
+python Antenna_Tracker_Controls_GUI.py
