@@ -20,13 +20,15 @@ import serial
 import serial.tools.list_ports
 import threading
 
-# Qt imports
-import PyQt4
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtWebKit import QWebView
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+# Qt imports #old
+#import PyQt4
+#from PyQt4 import QtCore, QtGui
+#from PyQt4.QtWebKit import QWebView
+#from PyQt4.QtCore import *
+#from PyQt4.QtGui import *
 
+from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2.QtWebEngineWidgets import QWebEngineView,QWebEnginePage as QWebView
 # Scientific libraries
 import math
 # database section, help from:
@@ -54,7 +56,7 @@ from CommandEmailer import *
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 matplotlib.use('Qt4Agg')
-matplotlib.rcParams['backend.qt4'] = 'PyQt4'
+#matplotlib.rcParams['backend.qt4'] = 'PyQt4'
 
 # https://developers.google.com/maps/documentation/javascript/get-api-key
 googleMapsApiKey = ''
@@ -115,7 +117,7 @@ class Unbuffered:
         self.stream.close()
 
 
-class MainWindow(QMainWindow, Ui_MainWindow):
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     """ The Main GUI Window """
     # Signals
     # RFD Command Signals
@@ -1888,9 +1890,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
 if __name__ == "__main__":
-    app = QtGui.QApplication.instance()		# checks if QApplication already exists
+    #app = QtGui.QApplication.instance()		# checks if QApplication already exists
+    app = QtWidgets.QApplication.instance()		# checks if QApplication already exists
     if not app:								# create QApplication if it doesnt exist
-        app = QtGui.QApplication(sys.argv)
+        #app = QtGui.QApplication(sys.argv)
+        app = QtWidgets.QApplication(sys.argv)
 
     # Let's .jpg be shown
     # (http://www.qtcentre.org/threads/49119-JPG-not-working-when-calling-setPixmap()-on-QLabel)
