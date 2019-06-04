@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'C:\Users\andy-\Documents\MSGC\Github\Antenna_Tracker\trackermain.ui',
 # licensing of 'C:\Users\andy-\Documents\MSGC\Github\Antenna_Tracker\trackermain.ui' applies.
 #
-# Created: Tue Jun  4 13:53:02 2019
+# Created: Tue Jun  4 14:15:09 2019
 #      by: pyside2-uic  running on PySide2 5.12.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -391,9 +391,6 @@ class Ui_MainWindow(object):
         self.trackerAni.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.trackerAni.setAlignment(QtCore.Qt.AlignCenter)
         self.trackerAni.setObjectName("trackerAni")
-        self.widget = QtWidgets.QWidget(self.frame)
-        self.widget.setGeometry(QtCore.QRect(10, 10, 831, 531))
-        self.widget.setObjectName("widget")
         self.hSlider = QtWidgets.QSlider(self.frame)
         self.hSlider.setGeometry(QtCore.QRect(19, 560, 821, 22))
         self.hSlider.setMinimum(-180)
