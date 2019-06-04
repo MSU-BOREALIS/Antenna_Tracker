@@ -1097,16 +1097,6 @@
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QWidget" name="widget" native="true">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>831</width>
-         <height>531</height>
-        </rect>
-       </property>
-      </widget>
       <widget class="QSlider" name="hSlider">
        <property name="geometry">
         <rect>
