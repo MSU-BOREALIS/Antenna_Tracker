@@ -1388,7 +1388,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             obj.setPalette(palette)
         if color == "green":		# Makes the label green
             palette = QtGui.QPalette()
-            print(palette)
             brush = QtGui.QBrush(QtGui.QColor(21, 255, 5))
             brush.setStyle(QtCore.Qt.SolidPattern)
             palette.setBrush(QtGui.QPalette.Active,
