@@ -30,7 +30,9 @@ import threading
 #from PyQt5.QtGui import *
 
 from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtWebEngineWidgets import QWebEngineView,QWebEnginePage as QWebView
+from PySide2.QtWidgets import *
+#from PySide2.QtWebEngineWidgets import QWebEngineView,QWebEnginePage as QWebView
+from PySide2.QtWebEngineWidgets import QWebEngineView as QWebView
 #import PySide2.QtWebEngineWidgets
 
 # Scientific libraries
@@ -122,7 +124,7 @@ class Unbuffered:
         self.stream.close()
 
 
-class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow):
     """ The Main GUI Window """
     # Signals
     # RFD Command Signals
@@ -452,12 +454,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def updateIncoming(self, row, column, value):
         """ Update the Incoming GPS Data grid with the newest values """
         self.incomingDataTable.setItem(
-            column, row, QtGui.QTableWidgetItem(str(value)))
+            #column, row, QtGui.QTableWidgetItem(str(value)))
+            column, row, QtWidgets.QTableWidgetItem(str(value)))
 
     def updateGround(self, row, column, value):
         """ Update the Ground Station Data grid with the newest values """
         self.groundDataTable.setItem(
-            column, row, QtGui.QTableWidgetItem(str(value)))
+            #column, row, QtGui.QTableWidgetItem(str(value)))
+            column, row, QtWidgets.QTableWidgetItem(str(value)))
 
     def refresh(self, update):
         """ Refreshs the info grids and plots with the newest values """
@@ -566,7 +570,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             # Set up the Map View
             if not self.mapMade:
-                self.mapView = WebView()
+                self.mapView = QWebView();
+                #self.mapView = WebView()
                 self.mapView.setHtml(getMapHtml(45, -93, googleMapsApiKey))
                 self.mapViewGridLayout.addWidget(self.mapView)
             self.mapMade = True
