@@ -1393,6 +1393,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             obj.setPalette(palette)
         if color == "green":		# Makes the label green
             palette = QtGui.QPalette()
+            print(palette)
             brush = QtGui.QBrush(QtGui.QColor(21, 255, 5))
             brush.setStyle(QtCore.Qt.SolidPattern)
             palette.setBrush(QtGui.QPalette.Active,
@@ -1609,7 +1610,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             except:
                 print("Error creating the calibration window")
                 return
-
+            
             self.calibrationReady = False
             while not self.calibrationReady:		# Continuously loop until the IMU is calibrated to satisfaction
                 temp_arduino = "0"
@@ -1626,8 +1627,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         displayStr = 'System: ' + str(temp_arduino[7]) + '; ' + 'Gyro: ' + str(temp_arduino[
                             8]) + '; ' + 'Accel: ' + str(temp_arduino[9]) + '; ' + 'Mag: ' + str(temp_arduino[10])
                         print(displayStr)
-                        self.calBrowser.append(displayStr)
-                    QCoreApplication.processEvents()
+                        try:
+                            self.calBrowser.append(displayStr)
+                        except:
+                            print("Tried to print to calBrowser but alr deleted")
+                            break
+                        QCoreApplication.processEvents()
                 except IndexError:
                     print('Index Error')
         else:
@@ -1637,29 +1642,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def getCenterBearing(self, s2):
         """ Acquire a center bearing and a GPS location from the calibration arduino """
 
+        self.calibrationReady = True
         self.calibrationWindow.deleteLater()
         self.calBrowser.deleteLater()
         self.calLabel.deleteLater()
         self.vLayout.deleteLater()
         self.calButton.deleteLater()
-        self.calibrationReady = True
+        
         temp_arduino = "0"
         s2.flushInput()		# Clear the buffer so it can read new info
-        while temp_arduino[0] != '~':
+        while temp_arduino[0] != b'~':
             temp_arduino = s2.readline()
-            temp_arduino = temp_arduino.split(',')
+            temp_arduino = temp_arduino.split(b',')
         tempLat = temp_arduino[1]		# Get ground station latitude
         tempLon = temp_arduino[2]		# Get ground station longitude
         tempAlt = temp_arduino[3]		# Get ground station altitude
         # Get the offset for the center bearing
         tempoffsetDegrees = temp_arduino[4]
-        tempLat = tempLat.split(".")
+        tempLat = tempLat.split(b".")
         # Convert the lat to decimal degrees as a float
         self.groundLat = float(tempLat[0]) + float(tempLat[1]) / 10000000
-        tempLon = tempLon.split(".")
+        tempLon = tempLon.split(b".")
         # Convert the lon to decimal degrees as a float
         self.groundLon = float(tempLon[0]) - float(tempLon[1]) / 10000000
-        tempAlt = tempAlt.split(".")
+        tempAlt = tempAlt.split(b".")
         # Get the altitude to the floor(foot)
         self.groundAlt = int(tempAlt[0])
         self.centerBear = float(tempoffsetDegrees)
