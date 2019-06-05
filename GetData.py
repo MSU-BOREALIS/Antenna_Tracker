@@ -1,7 +1,7 @@
-from PyQt5 import *
-from PyQt5 import QtCore
-from PyQt5 import QtGui
-from PyQt5.QtCore import *
+from PySide2 import *
+from PySide2 import QtCore, QtGui
+from PySide2.QtCore import *
+from PySide2.QtCore import Signal as pyqtSignal
 from BalloonUpdate import *
 from time import sleep
 import MySQLdb
