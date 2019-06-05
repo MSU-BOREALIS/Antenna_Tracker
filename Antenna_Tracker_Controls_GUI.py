@@ -335,9 +335,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Graph Setup
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
-##        #layout = QVBoxLayout()
         layout = QVBoxLayout()
-##        #layout.addWidget(self.canvas)
         layout.addWidget(self.canvas)
         self.graphWidget.setLayout(layout)
 
@@ -1591,10 +1589,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 # Make the Display Window for the Calibration
                 self.calibrationWindow = QWidget()
                 self.calibrationWindow.setWindowTitle("IMU Calibration")
-                self.vLayout = QtGui.QVBoxLayout()
-                self.calBrowser = QtGui.QTextBrowser()
-                self.calButton = QtGui.QPushButton()
-                self.calLabel = QtGui.QLabel()
+####                self.vLayout = QtGui.QVBoxLayout()
+####                self.calBrowser = QtGui.QTextBrowser()
+####                self.calButton = QtGui.QPushButton()
+####                self.calLabel = QtGui.QLabel()
+                self.vLayout = QVBoxLayout()
+                self.calBrowser = QTextBrowser()
+                self.calButton = QPushButton()
+                self.calLabel = QLabel()
                 self.calLabel.setText(
                     "Press Ready when you are done with the calibration")
                 self.calButton.setText("Ready")
@@ -1618,9 +1620,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     # The arduino string is comma separated, and starts with ~
                     while temp_arduino[0] != '~':
                         temp_arduino = s2.readline()
-                        temp_arduino = temp_arduino.split(',')
-                        displayStr = 'System: ' + temp_arduino[7] + '; ' + 'Gyro: ' + temp_arduino[
-                            8] + '; ' + 'Accel: ' + temp_arduino[9] + '; ' + 'Mag: ' + temp_arduino[10]
+                        #temp_arduino = bytes(temp_arduino, 'utf8')
+                        temp_arduino = temp_arduino.split(b',')
+                        #displayStr = 'System: ' + temp_arduino[7] + '; ' + 'Gyro: ' + temp_arduino[
+                        #    8] + '; ' + 'Accel: ' + temp_arduino[9] + '; ' + 'Mag: ' + temp_arduino[10]
+                        displayStr = 'System: ' + str(temp_arduino[7]) + '; ' + 'Gyro: ' + str(temp_arduino[
+                            8]) + '; ' + 'Accel: ' + str(temp_arduino[9]) + '; ' + 'Mag: ' + str(temp_arduino[10])
                         print(displayStr)
                         self.calBrowser.append(displayStr)
                     QCoreApplication.processEvents()
