@@ -1,4 +1,5 @@
-import PyQt5
+#import PyQt5
+import PySide2
 import time
 import datetime
 from datetime import *
