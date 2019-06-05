@@ -20,20 +20,10 @@ import serial
 import serial.tools.list_ports
 import threading
 
-# Qt imports
-#import PyQt5
-#from PyQt5 import QtCore, QtGui
-#from PyQt5.QtWebKit import QWebView #try taking out
-#from PyQt5 import QtWidgets #new
-#from PyQt5.QtWebEngineWidgets import QWebEngineView,QWebEnginePage as QWebView #new test#
-#from PyQt5.QtCore import *
-#from PyQt5.QtGui import *
-
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtWidgets import *
-#from PySide2.QtWebEngineWidgets import QWebEngineView,QWebEnginePage as QWebView
+from PySide2.QtCore import Signal as pyqtSignal
 from PySide2.QtWebEngineWidgets import QWebEngineView as QWebView
-#import PySide2.QtWebEngineWidgets
 
 # Scientific libraries
 import math
@@ -47,15 +37,15 @@ import base64					   # = encodes an image in b64 Strings (and decodes)
 import hashlib					  # = generates hashes
 
 # Imports from files
-from ui_trackermain import Ui_MainWindow  # UI file import
+from ui_trackermain import Ui_MainWindow        # UI file import
 from ServoController import *			# Module for controlling Mini Maestro
 from StillImageSystem import *			# RFD based Still Image system
-from PointingMath import *				# Functions for calculating angles and distances
-from RfdControls import *				# RFD commands and listen
-from BalloonUpdate import *				# Class to hold balloon info
-from GetData import *					# Module for tracking methods
-from Payloads import *					# Module for handling payloads
-from MapHTML import *						# Module for generating Google Maps HTML and JavaScript
+from PointingMath import *			# Functions for calculating angles and distances
+from RfdControls import *			# RFD commands and listen
+from BalloonUpdate import *			# Class to hold balloon info
+from GetData import *				# Module for tracking methods
+from Payloads import *				# Module for handling payloads
+from MapHTML import *				# Module for generating Google Maps HTML and JavaScript
 from CommandEmailer import *
 
 # Matplotlib setup
@@ -338,7 +328,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Graph Setup
 ##        self.figure = Figure()
 ##        self.canvas = FigureCanvas(self.figure)
-##        #layout = QtGui.QVBoxLayout()
+##        #layout = QVBoxLayout()
 ##        layout = QtWidgets.QVBoxLayout()
 ##        #layout.addWidget(self.canvas)
 ##        layout.addWidget(self)
