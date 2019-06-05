@@ -278,7 +278,7 @@
         <enum>QTabWidget::West</enum>
        </property>
        <property name="currentIndex">
-        <number>5</number>
+        <number>7</number>
        </property>
        <widget class="QWidget" name="Settings">
         <attribute name="title">
@@ -2694,6 +2694,37 @@
           </widget>
          </item>
         </layout>
+       </widget>
+       <widget class="QWidget" name="Commands">
+        <attribute name="title">
+         <string>Commands</string>
+        </attribute>
+        <widget class="QPushButton" name="cutdownButton">
+         <property name="geometry">
+          <rect>
+           <x>134</x>
+           <y>82</y>
+           <width>111</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Send Cutdown</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="idleButton">
+         <property name="geometry">
+          <rect>
+           <x>260</x>
+           <y>80</y>
+           <width>111</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Send Idle</string>
+         </property>
+        </widget>
        </widget>
       </widget>
       <widget class="QFrame" name="autotrackStatusFrame">
