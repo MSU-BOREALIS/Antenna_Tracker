@@ -49,10 +49,17 @@ from MapHTML import *				# Module for generating Google Maps HTML and JavaScript
 from CommandEmailer import *
 
 # Matplotlib setup
-from matplotlib.figure import Figure
+#matplotlib.use('Qt5Agg')
+#from matplotlib.backends.backend_qt4agg import (
+#        FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-matplotlib.use('Qt5Agg')
-#matplotlib.rcParams['backend.qt5'] = 'PyQt5'
+from matplotlib.figure import Figure
+
+#from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+
+#matplotlib.use('Qt4Agg')
+#matplotlib.rcParams['backend.qt5'] = 'Pyside'
+#matplotlib.rcParams['Qt5Agg'] = 'PyQt5'
 ##matplotlib.rcParams['backend.qt4'] = 'PyQt4'
 
 # https://developers.google.com/maps/documentation/javascript/get-api-key
@@ -326,22 +333,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tabs.setCurrentIndex(0)
 
         # Graph Setup
-##        self.figure = Figure()
-##        self.canvas = FigureCanvas(self.figure)
+        self.figure = Figure()
+        self.canvas = FigureCanvas(self.figure)
 ##        #layout = QVBoxLayout()
-##        layout = QtWidgets.QVBoxLayout()
+        layout = QVBoxLayout()
 ##        #layout.addWidget(self.canvas)
-##        layout.addWidget(self)
-##        self.graphWidget.setLayout(layout)
-##
-##        # Graphing Arrays
-##        self.receivedTime = np.array([])
-##        self.receivedLat = np.array([])
-##        self.receivedLon = np.array([])
-##        self.receivedAlt = np.array([])
-##        self.losLog = np.array([])
-##        self.elevationLog = np.array([])
-##        self.bearingLog = np.array([])
+        layout.addWidget(self.canvas)
+        self.graphWidget.setLayout(layout)
+
+        # Graphing Arrays
+        self.receivedTime = np.array([])
+        self.receivedLat = np.array([])
+        self.receivedLon = np.array([])
+        self.receivedAlt = np.array([])
+        self.losLog = np.array([])
+        self.elevationLog = np.array([])
+        self.bearingLog = np.array([])
 
         # Determine Serial Connections
         self.searchComPorts()
