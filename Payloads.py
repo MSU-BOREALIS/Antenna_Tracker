@@ -1,4 +1,3 @@
-import PyQt5
 import time
 import datetime
 from datetime import *
