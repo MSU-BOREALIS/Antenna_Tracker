@@ -31,6 +31,8 @@ import threading
 
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtWidgets import *
+from PySide2.QtCore import *
+from PySide2.QtGui import *
 #from PySide2.QtWebEngineWidgets import QWebEngineView,QWebEnginePage as QWebView
 from PySide2.QtWebEngineWidgets import QWebEngineView as QWebView
 #import PySide2.QtWebEngineWidgets
@@ -1398,6 +1400,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             obj.setPalette(palette)
         if color == "green":		# Makes the label green
             palette = QtGui.QPalette()
+            print(palette)
             brush = QtGui.QBrush(QtGui.QColor(21, 255, 5))
             brush.setStyle(QtCore.Qt.SolidPattern)
             palette.setBrush(QtGui.QPalette.Active,
