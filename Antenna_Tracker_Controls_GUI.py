@@ -46,7 +46,8 @@ from BalloonUpdate import *			# Class to hold balloon info
 from GetData import *				# Module for tracking methods
 from Payloads import *				# Module for handling payloads
 from MapHTML import *				# Module for generating Google Maps HTML and JavaScript
-from CommandEmailer import *
+from CommandEmailer import *                    # Module for emailing Iridium commands
+from Interpolate import *                       # Module for interpolating balloon pointing updates
 
 # Matplotlib setup
 #matplotlib.use('Qt5Agg')
@@ -55,16 +56,18 @@ from CommandEmailer import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
-#from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
+###to be removed (andy)
+#from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 #matplotlib.use('Qt4Agg')
 #matplotlib.rcParams['backend.qt5'] = 'Pyside'
 #matplotlib.rcParams['Qt5Agg'] = 'PyQt5'
 ##matplotlib.rcParams['backend.qt4'] = 'PyQt4'
+###
 
 # https://developers.google.com/maps/documentation/javascript/get-api-key
-googleMapsApiKey = ''
-
+#googleMapsApiKey = ''
+googleMapsApiKey = "AIzaSyC8pn8oSSHPY-a57pHVyNMr7ASC67HNs7k"
 
 class EventThread(QThread):
     def run(self):
@@ -133,6 +136,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     # RFD Listen Signals
     rfdNewLocation = pyqtSignal(BalloonUpdate)
     iridiumNewLocation = pyqtSignal(BalloonUpdate)
+    iridiumInterpolateNewLocation = pyqtSignal(BalloonUpdate)
     aprsNewLocation = pyqtSignal(BalloonUpdate)
     payloadUpdate = pyqtSignal(str)
 
@@ -169,13 +173,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.iridiumThread.daemon = True
         self.aprsThread = EventThread()
         self.aprsThread.daemon = True
-
+        self.iridiumInterpolateThread = EventThread()
+        self.iridiumInterpolateThread.daemon = True
+        
         # Start the threads, they should run forever, and add them to the
         # thread pool
         self.rfdListenThread.start()
         self.rfdCommandThread.start()
         self.stillImageThread.start()
         self.iridiumThread.start()
+        self.iridiumInterpolateThread.start()
         self.aprsThread.start()
 
         # Button Function Link Setup
@@ -240,6 +247,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.autoDisabled.toggled.connect(self.disabledChecked)
         #self.autoIridium.stateChanged.connect(self.autotrackChecked)
         self.autoIridium.toggled.connect(self.autotrackChecked)
+
+        self.autoIridiumInterpolate.toggled.connect(self.autotrackChecked)
 ##        self.autoAPRS.stateChanged.connect(self.autotrackChecked)
 ##        self.autoRFD.stateChanged.connect(self.autotrackChecked)
 
@@ -284,6 +293,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ardAttached = False
         self.APRSAttached = False
         self.useIridium = False
+        self.useIridiumInterpolate = False
         self.useRFD = False
         self.useAPRS = False
         self.autotrackOnline = False
@@ -292,6 +302,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.centerBearSet = False
         self.aprsStarted = False
         self.iridiumStarted = False
+        self.iridiumInterpolateStarted = False
         self.autotrackBlock = False
         self.calibrationReady = False
         self.inSliderMode = False
@@ -394,9 +405,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if not self.servosAttached:
                 self.createWarning('No servos attached')
 
-    def updateBalloonLocation(self, update):
+    def updateBalloonLocation(self, update):        
         """ Updates the tracker with the latest balloon location """
-
         # Log the balloon location no matter what
         self.logData("balloonLocation", update.getTrackingMethod() + ',' + str(update.getTime()) + ',' + str(update.getLat()) + ',' + str(
             update.getLon()) + ',' + str(update.getAlt()) + ',' + str(update.getBear()) + ',' + str(update.getEle()) + ',' + str(update.getLOS()))
@@ -417,7 +427,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             return
 
         # Makes sure it's the newest location
-        if update.getSeconds() < self.currentBalloon.getSeconds():
+        if update.getSeconds() <= self.currentBalloon.getSeconds():
             return
             # Confirm that update matches a selected tracking method
             # if self.currentBalloon.getTrackingMethod() == 'RFD':
@@ -445,6 +455,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.internetAccess and self.mapMade:		# Update the map
             self.mapView.setHtml(getMapHtml(
                 update.getLat(), update.getLon(), googleMapsApiKey))
+            
+    def updateBalloonInterpolation(self, update):
+        # Make sure it's a good location
+        # Don't consider updates with bad info to be new updates
+        if ((update.getLat() == 0.0) or (update.getLon() == 0.0) or (update.getAlt() == 0.0)):
+            return
+
+        # Makes sure it's the newest location
+        if update.getSeconds() < self.currentBalloon.getSeconds():
+            return
+            # Confirm that update matches a selected tracking method
+            # if self.currentBalloon.getTrackingMethod() == 'RFD':
+            # if (not self.useIridium or not self.useAPRS) and self.useRFD:
+            # return
+
+            # if self.currentBalloon.getTrackingMethod() == 'Iridium':
+            # if (not self.useRFD or not self.useAPRS) and self.useIridium:
+            # return
+
+            # if self.currentBalloon.getTrackingMethod() == 'APRS':
+            # if (not self.useIridium or not self.useRFD) and self.useAPRS:
+            # return
+        self.antennaOnline(update)		# Move the tracker if tracking
+        self.refresh(update)			# Update the tables
 
     def updateIncoming(self, row, column, value):
         """ Update the Incoming GPS Data grid with the newest values """
@@ -495,10 +529,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 bearPlot = self.figure.add_subplot(224)
 
                 # discards the old graph
-                altPlot.hold(False)
-                losPlot.hold(False)
-                elePlot.hold(False)
-                bearPlot.hold(False)
+##hold on AxesSubplot deprecated in matplotlib 3
+                #altPlot.hold(False)
+                #losPlot.hold(False)
+                #elePlot.hold(False)
+                #bearPlot.hold(False)
 
                 # plot data
                 altPlot.plot(self.receivedTime -
@@ -709,6 +744,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # Determine which types of tracking are selected
         self.useIridium = self.autoIridium.isChecked()
+        self.useIridiumInterpolate = self.autoIridiumInterpolate.isChecked()
         self.useAPRS = self.autoAPRS.isChecked()
         self.useRFD = self.autoRFD.isChecked()
         self.useDisabled = self.autoDisabled.isChecked()
@@ -768,7 +804,32 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print("Iridium Interrupted")
             self.getIridium.setInterrupt.emit()
             self.iridiumStarted = False
+##ADDING INTERPOLATION------------------------------------------------------------------------------------------------
+        if self.useIridiumInterpolate and not self.iridiumInterpolateStarted:	# Don't start it up again if it's already going
+            if self.useIridium and self.internetAccess:
+                self.interpolateIridium = InterpolateIridium(self)
+                self.interpolateIridium.moveToThread(self.iridiumInterpolateThread)
+                self.interpolateIridium.start.connect(self.interpolateIridium.run)
+                self.interpolateIridium.setInterrupt.connect(self.interpolateIridium.interrupt)                
+                self.iridiumNewLocation.connect(
+                     self.interpolateIridium.addPosition)
+                self.interpolateIridium.start.emit()
+                self.iridiumInterpolateStarted = True
 
+            else:
+                self.createWarning(
+                    'Iridium Interpolation will not work without Iridium')
+                self.autoIridiumInterpolate.setChecked(False)
+                self.useIridiumInterpolate = False
+                self.iridiumInterpolateStarted = False
+
+        elif not self.useIridiumInterpolate and self.iridiumInterpolateStarted:
+            print("Iridium Interpolate Interrupted")
+            #self.interpolateIridium.setInterrupt.connect(self.interpolateIridium.interrupt) 
+            self.interpolateIridium.setInterrupt.emit()
+            self.iridiumInterpolateStarted = False
+##--------------------------------------------------------------------------------------------------------------------
+        
         if self.autoIridium.isChecked() or self.autoAPRS.isChecked() or self.autoRFD.isChecked():
             self.manualRefresh()
         else:
@@ -1393,7 +1454,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             obj.setPalette(palette)
         if color == "green":		# Makes the label green
             palette = QtGui.QPalette()
-            print(palette)
+            #print(palette)
             brush = QtGui.QBrush(QtGui.QColor(21, 255, 5))
             brush.setStyle(QtCore.Qt.SolidPattern)
             palette.setBrush(QtGui.QPalette.Active,
@@ -1556,6 +1617,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.autoDisabled.isChecked():
             self.autotrackBlock = True
             self.autoIridium.setChecked(False)
+            self.autoIridiumInterpolate.setChecked(False)
 ##            self.autoAPRS.setChecked(False)
             self.autoRFD.setChecked(False)
         self.autotrackBlock = False
@@ -1563,7 +1625,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def autotrackChecked(self):
         """ Makes sure that disabled isn't checked if there is an autotrack option checked """
 
-        if self.autoIridium.isChecked() or self.autoAPRS.isChecked() or self.autoRFD.isChecked():
+        if self.autoIridium.isChecked() or self.autoIridiumInterpolate.isChecked() or self.autoAPRS.isChecked() or self.autoRFD.isChecked():
             if not self.autotrackBlock:
                 self.autoDisabled.setChecked(False)
 
@@ -1589,10 +1651,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 # Make the Display Window for the Calibration
                 self.calibrationWindow = QWidget()
                 self.calibrationWindow.setWindowTitle("IMU Calibration")
-####                self.vLayout = QtGui.QVBoxLayout()
-####                self.calBrowser = QtGui.QTextBrowser()
-####                self.calButton = QtGui.QPushButton()
-####                self.calLabel = QtGui.QLabel()
                 self.vLayout = QVBoxLayout()
                 self.calBrowser = QTextBrowser()
                 self.calButton = QPushButton()

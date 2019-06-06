@@ -278,7 +278,7 @@
         <enum>QTabWidget::West</enum>
        </property>
        <property name="currentIndex">
-        <number>7</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="Settings">
         <attribute name="title">
@@ -595,6 +595,13 @@
                     </property>
                    </widget>
                   </item>
+                  <item row="4" column="0">
+                   <widget class="QCheckBox" name="autoRFD">
+                    <property name="text">
+                     <string>RFD900</string>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="1" column="0">
                    <widget class="QCheckBox" name="autoIridium">
                     <property name="text">
@@ -602,17 +609,17 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="2" column="0">
+                  <item row="3" column="0">
                    <widget class="QCheckBox" name="autoAPRS">
                     <property name="text">
                      <string>APRS</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="3" column="0">
-                   <widget class="QCheckBox" name="autoRFD">
+                  <item row="2" column="0">
+                   <widget class="QCheckBox" name="autoIridiumInterpolate">
                     <property name="text">
-                     <string>RFD900</string>
+                     <string>Iridium + Interpolation</string>
                     </property>
                    </widget>
                   </item>

@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'trackermain.ui',
 # licensing of 'trackermain.ui' applies.
 #
-# Created: Wed Jun  5 08:14:14 2019
+# Created: Thu Jun  6 08:54:48 2019
 #      by: pyside2-uic  running on PySide2 5.12.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -339,15 +339,18 @@ class Ui_MainWindow(object):
         self.autoDisabled.setChecked(True)
         self.autoDisabled.setObjectName("autoDisabled")
         self.gridLayout_6.addWidget(self.autoDisabled, 0, 0, 1, 1)
+        self.autoRFD = QtWidgets.QCheckBox(self.autotrackModeFrame)
+        self.autoRFD.setObjectName("autoRFD")
+        self.gridLayout_6.addWidget(self.autoRFD, 4, 0, 1, 1)
         self.autoIridium = QtWidgets.QCheckBox(self.autotrackModeFrame)
         self.autoIridium.setObjectName("autoIridium")
         self.gridLayout_6.addWidget(self.autoIridium, 1, 0, 1, 1)
         self.autoAPRS = QtWidgets.QCheckBox(self.autotrackModeFrame)
         self.autoAPRS.setObjectName("autoAPRS")
-        self.gridLayout_6.addWidget(self.autoAPRS, 2, 0, 1, 1)
-        self.autoRFD = QtWidgets.QCheckBox(self.autotrackModeFrame)
-        self.autoRFD.setObjectName("autoRFD")
-        self.gridLayout_6.addWidget(self.autoRFD, 3, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.autoAPRS, 3, 0, 1, 1)
+        self.autoIridiumInterpolate = QtWidgets.QCheckBox(self.autotrackModeFrame)
+        self.autoIridiumInterpolate.setObjectName("autoIridiumInterpolate")
+        self.gridLayout_6.addWidget(self.autoIridiumInterpolate, 2, 0, 1, 1)
         self.verticalLayout_2.addWidget(self.autotrackModeFrame)
         self.horizontalLayout_6.addWidget(self.autotrackSelectFrame)
         self.gridLayout_4.addWidget(self.autotrackSimulationFrame, 0, 1, 1, 2)
@@ -1520,7 +1523,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabs.setCurrentIndex(7)
+        self.tabs.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.incomingDataTable, self.groundDataTable)
         MainWindow.setTabOrder(self.groundDataTable, self.tabs)
@@ -1568,9 +1571,10 @@ class Ui_MainWindow(object):
         self.manualAlt.setPlaceholderText(QtWidgets.QApplication.translate("MainWindow", "843", None, -1))
         self.autotrackLabel.setText(QtWidgets.QApplication.translate("MainWindow", "AutoTrack:", None, -1))
         self.autoDisabled.setText(QtWidgets.QApplication.translate("MainWindow", "Disabled", None, -1))
+        self.autoRFD.setText(QtWidgets.QApplication.translate("MainWindow", "RFD900", None, -1))
         self.autoIridium.setText(QtWidgets.QApplication.translate("MainWindow", "Iridium", None, -1))
         self.autoAPRS.setText(QtWidgets.QApplication.translate("MainWindow", "APRS", None, -1))
-        self.autoRFD.setText(QtWidgets.QApplication.translate("MainWindow", "RFD900", None, -1))
+        self.autoIridiumInterpolate.setText(QtWidgets.QApplication.translate("MainWindow", "Iridium + Interpolation", None, -1))
         self.connectionsLabel.setText(QtWidgets.QApplication.translate("MainWindow", "Connections:", None, -1))
         self.checkComPorts.setText(QtWidgets.QApplication.translate("MainWindow", "Search", None, -1))
         self.aprsCallsign.setPlaceholderText(QtWidgets.QApplication.translate("MainWindow", "KD0AWK-8", None, -1))
