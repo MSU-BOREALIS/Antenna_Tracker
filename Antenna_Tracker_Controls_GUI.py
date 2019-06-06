@@ -66,8 +66,8 @@ from matplotlib.figure import Figure
 ###
 
 # https://developers.google.com/maps/documentation/javascript/get-api-key
-#googleMapsApiKey = ''
-googleMapsApiKey = "AIzaSyC8pn8oSSHPY-a57pHVyNMr7ASC67HNs7k"
+googleMapsApiKey = ''
+#googleMapsApiKey = "AIzaSyC8pn8oSSHPY-a57pHVyNMr7ASC67HNs7k"
 
 class EventThread(QThread):
     def run(self):
