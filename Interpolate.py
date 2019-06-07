@@ -11,7 +11,7 @@ class InterpolateIridium(QtCore.QObject):
     #Received Signals
     start = pyqtSignal()
     setInterrupt = pyqtSignal()
-    #newIridiumLocation = pyqtSignal(BalloonUpdate)
+    setPredictionUpdateSpeed = pyqtSignal(float)
     
     def __init__(self, MainWindow):
         super(InterpolateIridium, self).__init__()
@@ -40,12 +40,6 @@ class InterpolateIridium(QtCore.QObject):
         
         while(not self.interpolateInterrupt):
             time.sleep(self.updateSpeed) #update frequency
-
-            # Check for new positions
-            ##if len(self.balloonLocations) < 1: # Handle adding the first position
-            ##    self.balloonLocations.append(self.mainWindow.currentBalloon)
-            ##elif self.mainWindow.currentBalloon.getSeconds() != self.balloonLocations[len(self.balloonLocations)-1].getSeconds():
-            ##    self.addPosition(self.mainWindow.currentBalloon)
             
             if self.ready:
                 print("Moving at " + "latSpeed: " + str(self.latSpeed) + " lonSpeed: " + str(self.lonSpeed) + " altSpeed: " + str(self.altSpeed))
@@ -59,7 +53,7 @@ class InterpolateIridium(QtCore.QObject):
                 simulatedLon = self.balloonLocations[len(self.balloonLocations)-1].getLon() + (self.lonSpeed * self.updateSpeed * self.ticksSinceLastLocation)
                 simulatedAlt = self.balloonLocations[len(self.balloonLocations)-1].getAlt() + (self.altSpeed * self.updateSpeed * self.ticksSinceLastLocation)
                 # Make new location object
-                print("Simulated Location Update" + "lat: " + str(simulatedLat) + " lon: " + str(simulatedLon) + " alt: " + str(simulatedAlt) + "\n")
+                print("Simulated Location Update>>> " + "lat: " + str(simulatedLat) + " lon: " + str(simulatedLon) + " alt: " + str(simulatedAlt) + "\n")
                 simulatedLocation = BalloonUpdate(simulatedTime, simulatedSeconds, simulatedLat, simulatedLon, simulatedAlt,
                                             "Iridium", self.mainWindow.groundLat, self.mainWindow.groundLon, self.mainWindow.groundAlt)
                 # Notify main GUI of new location request
@@ -103,5 +97,9 @@ class InterpolateIridium(QtCore.QObject):
 
     def interrupt(self):
         self.ready = False
-        self.interpolateInterrupt = True  
+        self.interpolateInterrupt = True
+
+    def setUpdateSpeed(self, speed):
+        self.updateSpeed = speed
+        print("Set update speed to: " + str(self.updateSpeed))
 

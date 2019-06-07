@@ -812,7 +812,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.interpolateIridium.start.connect(self.interpolateIridium.run)
                 self.interpolateIridium.setInterrupt.connect(self.interpolateIridium.interrupt)                
                 self.iridiumNewLocation.connect(
-                     self.interpolateIridium.addPosition)
+                    self.interpolateIridium.addPosition)
+                self.interpolateIridium.setPredictionUpdateSpeed.connect(
+                    self.interpolateIridium.setUpdateSpeed)
                 self.interpolateIridium.start.emit()
                 self.iridiumInterpolateStarted = True
 
@@ -828,6 +830,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             #self.interpolateIridium.setInterrupt.connect(self.interpolateIridium.interrupt) 
             self.interpolateIridium.setInterrupt.emit()
             self.iridiumInterpolateStarted = False
+
+        if self.useIridiumInterpolate and self.iridiumInterpolateStarted:
+            self.interpolateIridium.setPredictionUpdateSpeed.emit(float(self.iridiumPredictionUpdateSpeed.text()))
 ##--------------------------------------------------------------------------------------------------------------------
         
         if self.autoIridium.isChecked() or self.autoAPRS.isChecked() or self.autoRFD.isChecked():

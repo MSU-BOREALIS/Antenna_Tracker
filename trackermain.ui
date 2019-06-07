@@ -585,6 +585,13 @@
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_6">
+                  <item row="1" column="1">
+                   <widget class="QCheckBox" name="autoIridiumInterpolate">
+                    <property name="text">
+                     <string>+ Prediction</string>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="0" column="0">
                    <widget class="QCheckBox" name="autoDisabled">
                     <property name="text">
@@ -595,10 +602,24 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="4" column="0">
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="iridiumPredictionUpdateSpeed">
+                    <property name="placeholderText">
+                     <string>2</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="0">
                    <widget class="QCheckBox" name="autoRFD">
                     <property name="text">
                      <string>RFD900</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QCheckBox" name="autoAPRS">
+                    <property name="text">
+                     <string>APRS</string>
                     </property>
                    </widget>
                   </item>
@@ -609,17 +630,10 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="3" column="0">
-                   <widget class="QCheckBox" name="autoAPRS">
-                    <property name="text">
-                     <string>APRS</string>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="2" column="0">
-                   <widget class="QCheckBox" name="autoIridiumInterpolate">
+                   <widget class="QLabel" name="label">
                     <property name="text">
-                     <string>Iridium + Interpolation</string>
+                     <string>Update Speed (s):</string>
                     </property>
                    </widget>
                   </item>
