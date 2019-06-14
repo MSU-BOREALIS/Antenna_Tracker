@@ -24,6 +24,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtWidgets import *
 from PySide2.QtCore import Signal as pyqtSignal
 from PySide2.QtWebEngineWidgets import QWebEngineView as QWebView
+from PySide2.QtGui import QPixmap
 
 # Scientific libraries
 import math
@@ -218,72 +219,72 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # RFD Control Button Links
         #Commented out 6/4/2019
-##        self.rfdCommandButton.clicked.connect(self.rfdCommandsButtonPress)
-##        self.rfdListenButton.clicked.connect(self.rfdListenButtonPress)
-##        self.getPiRuntimeDataButton.clicked.connect(
-##            self.getPiRuntimeDataButtonPress)
-##        self.requestStatusButton.clicked.connect(self.requestDeviceStatus)
-##
-##         Still Image Control Button Links
-##        self.mostRecentImageButton.clicked.connect(
-##            lambda: self.stillImageButtonPress('mostRecent'))
-##        self.imageDataTxtButton.clicked.connect(
-##            lambda: self.stillImageButtonPress('selectImage'))
-##        self.picDefaultSettingsButton.clicked.connect(self.picDefaultSettings)
-##        self.picSendNewSettingsButton.clicked.connect(
-##            lambda: self.stillImageButtonPress('sendNewSettings'))
-##        self.picGetSettingsButton.clicked.connect(
-##            lambda: self.stillImageButtonPress('getPicSettings'))
-##        self.connectionTestButton.clicked.connect(
-##            lambda: self.stillImageButtonPress('timeSync'))
-##        self.picHorizontalFlipButton.clicked.connect(
-##            lambda: self.stillImageButtonPress('HFlip'))
-##        self.picVerticalFlipButton.clicked.connect(
-##            lambda: self.stillImageButtonPress('VFlip'))
+        self.rfdCommandButton.clicked.connect(self.rfdCommandsButtonPress)
+        self.rfdListenButton.clicked.connect(self.rfdListenButtonPress)
+        self.getPiRuntimeDataButton.clicked.connect(
+            self.getPiRuntimeDataButtonPress)
+        self.requestStatusButton.clicked.connect(self.requestDeviceStatus)
+
+        # Still Image Control Button Links
+        self.mostRecentImageButton.clicked.connect(
+            lambda: self.stillImageButtonPress('mostRecent'))
+        self.imageDataTxtButton.clicked.connect(
+            lambda: self.stillImageButtonPress('selectImage'))
+        self.picDefaultSettingsButton.clicked.connect(self.picDefaultSettings)
+        self.picSendNewSettingsButton.clicked.connect(
+            lambda: self.stillImageButtonPress('sendNewSettings'))
+        self.picGetSettingsButton.clicked.connect(
+            lambda: self.stillImageButtonPress('getPicSettings'))
+        self.connectionTestButton.clicked.connect(
+            lambda: self.stillImageButtonPress('timeSync'))
+        self.picHorizontalFlipButton.clicked.connect(
+            lambda: self.stillImageButtonPress('HFlip'))
+        self.picVerticalFlipButton.clicked.connect(
+            lambda: self.stillImageButtonPress('VFlip'))
 
         # Make sure the allowed combination of auto tracking checkboxes are
         # enabled
-        #self.autoDisabled.stateChanged.connect(self.disabledChecked)
+        # self.autoDisabled.stateChanged.connect(self.disabledChecked)
         self.autoDisabled.toggled.connect(self.disabledChecked)
-        #self.autoIridium.stateChanged.connect(self.autotrackChecked)
+        # self.autoIridium.stateChanged.connect(self.autotrackChecked)
         self.autoIridium.toggled.connect(self.autotrackChecked)
 
         self.autoIridiumInterpolate.toggled.connect(self.autotrackChecked)
-##        self.autoAPRS.stateChanged.connect(self.autotrackChecked)
-##        self.autoRFD.stateChanged.connect(self.autotrackChecked)
+        self.autoAPRS.stateChanged.connect(self.autotrackChecked)
+        self.autoRFD.stateChanged.connect(self.autotrackChecked)
 
-##        # Initial Still Image System Picture Display Setup
-##        self.stillImageOnline = False
-##        self.stillImageStall = False
-##        # The starting display photo is the logo of the MnSGC
-##        self.displayPhotoPath = "Images/MSGC.png"
-##        self.tabs.resizeEvent = self.resizePicture
-##        self.picLabel.setScaledContents(True)
-##        # Create a pixmap from the default image
-##        pm = QPixmap(self.displayPhotoPath)
-##        scaledPm = pm.scaled(self.picLabel.size(
-##        ), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
-##        self.picLabel.setPixmap(scaledPm)		# Set the label to the map
-##        self.picLabel.show()		# Show the image
-##
-##        # Picture Qualities
-##        self.picWidth = 650
-##        self.picHeight = 450
-##        self.picSharpness = 0
-##        self.picBrightness = 50
-##        self.picContrast = 0
-##        self.picSaturation = 0
-##        self.picISO = 400
-##
-##        # Still Image Slider Updates
-##        self.picWidthSlider.valueChanged.connect(self.updatePicSliderValues)
-##        self.picHeightSlider.valueChanged.connect(self.updatePicSliderValues)
-##        self.picSharpSlider.valueChanged.connect(self.updatePicSliderValues)
-##        self.picBrightSlider.valueChanged.connect(self.updatePicSliderValues)
-##        self.picContrastSlider.valueChanged.connect(self.updatePicSliderValues)
-##        self.picSaturationSlider.valueChanged.connect(
-##            self.updatePicSliderValues)
-##        self.picISOSlider.valueChanged.connect(self.updatePicSliderValues)
+        # Initial Still Image System Picture Display Setup
+        self.stillImageOnline = False
+        self.stillImageStall = False
+        # The starting display photo is the logo of the MnSGC
+        self.displayPhotoPath = "Images/MSGC.png"
+        self.tabs.resizeEvent = self.resizePicture
+        self.picLabel.setScaledContents(True)
+        # Create a pixmap from the default image
+        pm = QPixmap(self.displayPhotoPath)
+        scaledPm = pm.scaled(self.picLabel.size(
+            ), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
+        self.picLabel.setPixmap(scaledPm)		# Set the label to the map
+        self.picLabel.show()		# Show the image
+
+        # Picture Qualities
+        self.picWidth = 650
+        self.picHeight = 450
+        self.picSharpness = 0
+        self.picBrightness = 50
+        self.picContrast = 0
+        self.picSaturation = 0
+        self.picISO = 400
+
+        # Still Image Slider Updates
+        self.picWidthSlider.valueChanged.connect(self.updatePicSliderValues)
+        self.picHeightSlider.valueChanged.connect(self.updatePicSliderValues)
+        self.picSharpSlider.valueChanged.connect(self.updatePicSliderValues)
+        self.picBrightSlider.valueChanged.connect(self.updatePicSliderValues)
+        self.picContrastSlider.valueChanged.connect(self.updatePicSliderValues)
+        self.picSaturationSlider.valueChanged.connect(
+            self.updatePicSliderValues)
+        self.picISOSlider.valueChanged.connect(self.updatePicSliderValues)
 
         # Booleans for Ground Station and Tracking Method settings
         self.servosAttached = False
@@ -311,8 +312,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.arduinoStarted = False
 
         # RFD Commands Controls
-##        self.rfdCommandsOnline = False
-##       self.rfdListenOnline = False
+        self.rfdCommandsOnline = False
+        self.rfdListenOnline = False
 
         # Ground Station Variables
         self.groundLat = 0.00
