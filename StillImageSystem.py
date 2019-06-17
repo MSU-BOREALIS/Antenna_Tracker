@@ -77,7 +77,7 @@ class StillImageSystem(QtCore.QObject):
                 self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
                 timeCheck = time.time() + 1
             sys.stdout.flush()
-            #self.rfdSer.write('1!')
+            #self.rfdSer.write(b'1!') #probably breaks code dunno ? :/ uwu
 
         ### Make the file name by reading the radio ###
         sendfilename = ""
@@ -236,15 +236,15 @@ class StillImageSystem(QtCore.QObject):
             settings = self.rfdSer.readline()
             print(settings)
             if not settings == '':
-                settings = settings.replace('\n', '')
+                settings = settings.replace(b'\n', b'')
                 print(settings)
-                settingsLst = settings.split(',')
+                settingsLst = settings.split(b',')
                 print(settingsLst)
                 fail = True
                 if len(settingsLst) == 7:
                     fail = False
                     for each in settingsLst:
-                        temp = each.replace('-', '')
+                        temp = each.replace(b'-', b'')
                         print(temp)
                         if not temp.isdigit():
                             fail = True
@@ -374,7 +374,7 @@ class StillImageSystem(QtCore.QObject):
         acknowledge = self.rfdSer.read()
         timeCheck = time.time() + 1
         termtime = time.time() + 10
-        while acknowledge !=b'A' and time.time() < termtime:
+        while acknowledge != b'A' and time.time() < termtime:
             acknowledge = self.rfdSer.read()
             print(acknowledge)
             if timeCheck < time.time():
@@ -392,13 +392,13 @@ class StillImageSystem(QtCore.QObject):
         termtime = time.time() + 10
         settingsStr = str(self.picWidth) + ',' + str(self.picHeight) + ',' + str(self.picSharpness) + ',' + str(
             self.picBrightness) + ',' + str(self.picContrast) + ',' + str(self.picSaturation) + ',' + str(self.picISO)
-        while self.rfdSer.read() != 'B' and time.time() < termtime:
+        while self.rfdSer.read() != b'B' and time.time() < termtime:
             if timeCheck < time.time():
                 print("Waiting for Acknowledge")
                 self.mainWindow.stillNewText.emit("Waiting for Acknowledge")
                 timeCheck = time.time() + 1
-                
-            self.rfdSer.write('A/' + settingsStr + '\n')
+            #print(b'A/' + settingsStr.encode('utf-8') + b'\n')
+            self.rfdSer.write(b'A/' + settingsStr.encode('utf-8') + b'\n')
             self.rfdSer.flushOutput()
 
         if time.time() > termtime:
@@ -572,7 +572,7 @@ class StillImageSystem(QtCore.QObject):
             self.mainWindow.stillNewText.emit(
                 "Total Picture Size: " + str(int(photoSize)))
             stillPhotoMax = int(photoSize)
-            #print(stillPhotoMax)
+            print(stillPhotoMax)
             self.mainWindow.stillNewProgress.emit(stillProgress, stillPhotoMax)
         except:
             print("Error retrieving picture size")
