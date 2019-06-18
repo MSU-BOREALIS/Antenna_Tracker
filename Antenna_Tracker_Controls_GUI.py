@@ -218,7 +218,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.trimResetButton.clicked.connect(lambda: self.trimControl('reset'))
 
         # RFD Control Button Links
-        #Commented out 6/4/2019
         self.rfdCommandButton.clicked.connect(self.rfdCommandsButtonPress)
         self.rfdListenButton.clicked.connect(self.rfdListenButtonPress)
         self.getPiRuntimeDataButton.clicked.connect(
@@ -969,23 +968,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if arg == 'up':
             self.tiltOffset += 1
-            self.antennaEle += 1
+            #self.antennaEle += 1
             print("Tilt Trim: " + str(self.tiltOffset))
         elif arg == 'down':
             self.tiltOffset -= 1
-            self.antennaEle -= 1
+            #self.antennaEle -= 1
             print("Tilt Trim: " + str(self.tiltOffset))
         elif arg == 'left':
             self.panOffset -= 1
-            self.antennaBear -= 1
+            #self.antennaBear -= 1
             print("Pan Trim: " + str(self.panOffset))
         elif arg == 'right':
             self.panOffset += 1
-            self.antennaBear += 1
+            #self.antennaBear += 1
             print("Pan Trim: " + str(self.panOffset))
         elif arg == 'reset':
-            self.antennaEle -= self.tiltOffset
-            self.antennaBear -= self.panOffset
+            #self.antennaEle -= self.tiltOffset
+            #self.antennaBear -= self.panOffset
             self.tiltOffset = 0
             self.panOffset = 0
             print("Tilt Trim: " + str(self.tiltOffset))
@@ -1826,7 +1825,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """ Moves servos based on a bearing and elevation angle """
         # Account for manual offset
         AdBearing = bearing + self.panOffset
-        #elevation += self.tiltOffset
 
         temp = 0
         # Uses the center bearing, and makes sure you don't do unnecessary
@@ -1847,7 +1845,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # If
         panTo = (AdBearing - self.centerBear)
         print ("**************************")
-        print(panTo)
         # print "PanTo Value\n"
         # print panTo
 
@@ -1900,6 +1897,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if temp != 0:
             self.centerBear = temp
 
+##TESTING PRINTOUT
+##        print()
+##        print("moveToTarget: (panTo: " + str(panTo) + ") (tiltTo: " + str(tiltTo) + ")")
+##        print()
         # Write the new pointing location to the log file
         self.logData("pointing", str(bearing) + ',' + str(elevation))
 
