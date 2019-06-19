@@ -68,7 +68,6 @@ from matplotlib.figure import Figure
 
 # https://developers.google.com/maps/documentation/javascript/get-api-key
 googleMapsApiKey = ''
-#googleMapsApiKey = "AIzaSyC8pn8oSSHPY-a57pHVyNMr7ASC67HNs7k"
 
 class EventThread(QThread):
     def run(self):
@@ -601,7 +600,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # Set up the Map View
             if not self.mapMade:
                 self.mapView = QWebView();
-                #self.mapView = WebView()
                 self.mapView.setHtml(getMapHtml(45, -93, googleMapsApiKey))
                 self.mapViewGridLayout.addWidget(self.mapView)
             self.mapMade = True
@@ -724,23 +722,38 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.centerBear = 180
             elif self.bearingWest.isChecked():			# West Radio Button
                 self.centerBear = 270
+            elif self.bearingManual.isChecked():      # Manual Radio Button
+                if self.manualBear.text() == "":
+                    self.centerBear = int(self.manualBear.placeholderText()) #Default to placeholder
+                else:
+                    self.centerBear = int(self.manualBear.text())
             else:
                 self.centerBear = 0
                 print("Error with manual bearing setup")
-            # Get the ground station location from the entry boxes, default to
-            # placeholder
-            self.groundLat = self.manualLat.text()
-            self.groundLon = self.manualLon.text()
-            self.groundAlt = self.manualAlt.text()
-            if self.groundLat == "":
-                self.groundLat = self.manualLat.placeholderText()
-            if self.groundLon == "":
-                self.groundLon = self.manualLon.placeholderText()
-            if self.groundAlt == "":
-                self.groundAlt = self.manualAlt.placeholderText()
-            self.groundLat = float(self.groundLat)
-            self.groundLon = float(self.groundLon)
-            self.groundAlt = float(self.groundAlt)
+
+            self.groundLat = 0
+            self.groundLon = 0
+            self.groundAlt = 0
+            # Try to get the arduino's ground station location if there is nothing in the manual field
+            if (self.manualLat.text() == "") | (self.manualLon.text() == "") | (self.manualAlt.text() == ""):
+                self.getArduinoCoords()
+            # If that failed, use the manual settings entry field
+            if (self.groundLat == 0) & (self.groundLon == 0) & (self.groundAlt == 0):
+                print("Using manual ground station position")
+                # Get the ground station location from the entry boxes, default to
+                # placeholder
+                self.groundLat = self.manualLat.text()
+                self.groundLon = self.manualLon.text()
+                self.groundAlt = self.manualAlt.text()
+                if self.groundLat == "":
+                    self.groundLat = self.manualLat.placeholderText()
+                if self.groundLon == "":
+                    self.groundLon = self.manualLon.placeholderText()
+                if self.groundAlt == "":
+                    self.groundAlt = self.manualAlt.placeholderText()
+                self.groundLat = float(self.groundLat)
+                self.groundLon = float(self.groundLon)
+                self.groundAlt = float(self.groundAlt)
 
         # Determine which types of tracking are selected
         self.useIridium = self.autoIridium.isChecked()
@@ -832,7 +845,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.iridiumInterpolateStarted = False
 
         if self.useIridiumInterpolate and self.iridiumInterpolateStarted:
-            self.interpolateIridium.setPredictionUpdateSpeed.emit(float(self.iridiumPredictionUpdateSpeed.text()))
+            if self.iridiumPredictionUpdateSpeed.text() == "":
+                self.interpolateIridium.setPredictionUpdateSpeed.emit(float(self.iridiumPredictionUpdateSpeed.placeholderText()))
+            else:
+                self.interpolateIridium.setPredictionUpdateSpeed.emit(float(self.iridiumPredictionUpdateSpeed.text()))
 ##--------------------------------------------------------------------------------------------------------------------
         
         if self.autoIridium.isChecked() or self.autoAPRS.isChecked() or self.autoRFD.isChecked():
@@ -1750,6 +1766,42 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.antennaBear = self.centerBear
         # Lets the program know that the center bearing has been set before
         self.centerBearSet = True
+        self.manualRefresh()
+
+    def getArduinoCoords(self):
+        """Acquire GPS location from the calibration arduino"""
+
+        try:
+            s2 = self.arduino.getDevice()
+        except:
+            print("Error opening the Arduino serial port for ground station position")
+            return
+
+        try:
+            temp_arduino = "0"
+            s2.flushInput()  # Clear the buffer so it can read new info
+            while temp_arduino[0] != b'~':
+                temp_arduino = s2.readline()
+                temp_arduino = temp_arduino.split(b',')
+            tempLat = temp_arduino[1]  # Get ground station latitude
+            tempLon = temp_arduino[2]  # Get ground station longitude
+            tempAlt = temp_arduino[3]  # Get ground station altitude
+            tempLat = tempLat.split(b".")
+            # Convert the lat to decimal degrees as a float
+            self.groundLat = float(tempLat[0]) + float(tempLat[1]) / 10000000
+            tempLon = tempLon.split(b".")
+            # Convert the lon to decimal degrees as a float
+            self.groundLon = float(tempLon[0]) - float(tempLon[1]) / 10000000
+            tempAlt = tempAlt.split(b".")
+            # Get the altitude to the floor(foot)
+            self.groundAlt = int(tempAlt[0])
+            print ("Local Latitude: \t", self.groundLat)
+            print ("Local Longitude:\t", self.groundLon)
+            print ("Local Altitude: \t", self.groundAlt)
+            print ("-------------------------------------------------------")
+        except:
+            print("Error reading the Arduino ground station position")
+
         self.manualRefresh()
 
     def updateGraphingArrays(self, location):

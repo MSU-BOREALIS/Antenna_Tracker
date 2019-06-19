@@ -1,7 +1,3 @@
-#from PyQt5 import *
-#from PyQt5 import QtCore
-#from PyQt5.QtCore import *
-
 from PySide2 import *
 from PySide2 import QtCore
 from PySide2.QtCore import *

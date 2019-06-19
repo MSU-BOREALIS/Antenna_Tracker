@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1462</width>
+    <width>1537</width>
     <height>798</height>
    </rect>
   </property>
@@ -343,6 +343,11 @@
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
                  <property name="frameShape">
                   <enum>QFrame::NoFrame</enum>
                  </property>
@@ -350,18 +355,15 @@
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_12">
-                  <item row="0" column="0">
-                   <widget class="QRadioButton" name="getLocal">
+                  <item row="4" column="0">
+                   <widget class="QRadioButton" name="bearingWest">
                     <property name="font">
                      <font>
                       <pointsize>11</pointsize>
                      </font>
                     </property>
                     <property name="text">
-                     <string>Get Local (Arduino)</string>
-                    </property>
-                    <property name="checked">
-                     <bool>true</bool>
+                     <string>West Facing</string>
                     </property>
                    </widget>
                   </item>
@@ -380,15 +382,18 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="2" column="0">
-                   <widget class="QRadioButton" name="bearingEast">
+                  <item row="0" column="0">
+                   <widget class="QRadioButton" name="getLocal">
                     <property name="font">
                      <font>
                       <pointsize>11</pointsize>
                      </font>
                     </property>
                     <property name="text">
-                     <string>East Facing</string>
+                     <string>Get Local (Arduino)</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
                     </property>
                    </widget>
                   </item>
@@ -404,15 +409,34 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="4" column="0">
-                   <widget class="QRadioButton" name="bearingWest">
+                  <item row="5" column="0">
+                   <widget class="QRadioButton" name="bearingManual">
+                    <property name="text">
+                     <string>Manual Bearing (°):</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QRadioButton" name="bearingEast">
                     <property name="font">
                      <font>
                       <pointsize>11</pointsize>
                      </font>
                     </property>
                     <property name="text">
-                     <string>West Facing</string>
+                     <string>East Facing</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QLineEdit" name="manualBear">
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                     </font>
+                    </property>
+                    <property name="placeholderText">
+                     <string>127</string>
                     </property>
                    </widget>
                   </item>
@@ -585,10 +609,31 @@
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_6">
-                  <item row="1" column="1">
-                   <widget class="QCheckBox" name="autoIridiumInterpolate">
+                  <item row="2" column="1">
+                   <widget class="QLabel" name="label">
                     <property name="text">
-                     <string>+ Prediction</string>
+                     <string>Update Speed (s):</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="2">
+                   <widget class="QLineEdit" name="iridiumPredictionUpdateSpeed">
+                    <property name="placeholderText">
+                     <string>2</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_2">
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QCheckBox" name="autoIridium">
+                    <property name="text">
+                     <string>Iridium</string>
                     </property>
                    </widget>
                   </item>
@@ -602,38 +647,24 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="2" column="1">
-                   <widget class="QLineEdit" name="iridiumPredictionUpdateSpeed">
-                    <property name="placeholderText">
-                     <string>2</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="6" column="0">
-                   <widget class="QCheckBox" name="autoRFD">
+                  <item row="1" column="1">
+                   <widget class="QCheckBox" name="autoIridiumInterpolate">
                     <property name="text">
-                     <string>RFD900</string>
+                     <string>+ Prediction</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="5" column="0">
+                  <item row="3" column="0">
                    <widget class="QCheckBox" name="autoAPRS">
                     <property name="text">
                      <string>APRS</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="1" column="0">
-                   <widget class="QCheckBox" name="autoIridium">
+                  <item row="4" column="0">
+                   <widget class="QCheckBox" name="autoRFD">
                     <property name="text">
-                     <string>Iridium</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="0">
-                   <widget class="QLabel" name="label">
-                    <property name="text">
-                     <string>Update Speed (s):</string>
+                     <string>RFD900</string>
                     </property>
                    </widget>
                   </item>
