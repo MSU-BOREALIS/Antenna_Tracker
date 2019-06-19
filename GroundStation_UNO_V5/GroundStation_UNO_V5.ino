@@ -52,7 +52,14 @@ void useInterrupt(boolean v) {                              //turns the interrup
 void setup() {
         // put your setup code here, to run once:
         lcd.begin(16,2);
-        Serial.begin(115200);                               //Launches a serial connection with a 115200 baud rate
+        Serial.begin(115200);  //Launches a serial connection with a 115200 baud rate
+        
+        GPS.begin(9600);                                    //Launches a software serial connection to the GPS at a baud rate of 9600
+        delay(500);                                         //Wait for 0.5s
+        GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);       //String formatting on the GPS
+        GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);          //GPS packet dump rate
+        GPS.sendCommand(PGCMD_ANTENNA);
+        useInterrupt(usingInterrupt);                       //Set to use or not use the interrupt for GPS parcing
 
         if(!bno.begin())                                    //Launches the IMU. It returns a true value if it successfully launches.
         {
@@ -208,14 +215,7 @@ void setup() {
         delay(500);
 
         bno.setMode(bno.OPERATION_MODE_NDOF);
-
-        GPS.begin(9600);                                    //Launches a software serial connection to the GPS at a baud rate of 9600
-        delay(500);                                         //Wait for 0.5s
         bno.setExtCrystalUse(true);                          //Use the external clock in the IMU (true for better accuracy)
-        GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);       //String formatting on the GPS
-        GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);          //GPS packet dump rate
-        GPS.sendCommand(PGCMD_ANTENNA);
-        useInterrupt(usingInterrupt);                       //Set to use or not use the interrupt for GPS parcing
         delay(100);                                         //Wait for 0.1s
         lcd.clear();
 }
