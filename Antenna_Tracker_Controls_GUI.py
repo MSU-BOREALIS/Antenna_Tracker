@@ -203,11 +203,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ManualEntryUpdateButton.clicked.connect(self.manualEntryUpdate)
         self.ManualAngleEntryButton.clicked.connect(
             self.manualAngleEntryUpdate)
-        self.sliderButton.clicked.connect(lambda: self.sliderControl("click"))
-        self.panServoSlider.valueChanged.connect(
-            lambda: self.sliderControl("slide"))
-        self.tiltServoSlider.valueChanged.connect(
-            lambda: self.sliderControl("slide"))
+        #Slider stuff commented out 6/19/2019
+        #self.sliderButton.clicked.connect(lambda: self.sliderControl("click"))
+        #self.panServoSlider.valueChanged.connect(
+        #    lambda: self.sliderControl("slide"))
+        #self.tiltServoSlider.valueChanged.connect(
+        #    lambda: self.sliderControl("slide"))
 
         # Trim Button Links
         self.trimUpButton.clicked.connect(lambda: self.trimControl('up'))
@@ -248,7 +249,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.autoIridium.toggled.connect(self.autotrackChecked)
 
         self.autoIridiumInterpolate.toggled.connect(self.autotrackChecked)
-        self.autoAPRS.stateChanged.connect(self.autotrackChecked)
+        #self.autoAPRS.stateChanged.connect(self.autotrackChecked)
         self.autoRFD.stateChanged.connect(self.autotrackChecked)
 
         # Initial Still Image System Picture Display Setup
@@ -364,8 +365,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def iridiumNoConnection(self):
         self.useIridium = False
         self.autoIridium.setChecked(False)
-        if(not self.autoAPRS.isChecked() and not self.autoRFD.isChecked()):
-            self.autoDisabled.setChecked(True)
+        #if(not self.autoAPRS.isChecked() and not self.autoRFD.isChecked()):
+        #    self.autoDisabled.setChecked(True)
         self.createWarning("Unable to Connect to Iridium Database")
         self.iridiumStarted = False
 
@@ -611,7 +612,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.servosAttached = self.servoAttached.isChecked()
         self.RFDAttached = self.rfdAttached.isChecked()
         self.ardAttached = self.arduinoAttached.isChecked()
-        self.APRSAttached = self.aprsAttached.isChecked()
+        #self.APRSAttached = self.aprsAttached.isChecked()
 
         if self.servoAttached.isChecked():
             if not self.servosStarted:
@@ -690,14 +691,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.arduino = SerialDevice(arduinoCOM, 115200, 5)
                     self.arduinoStarted = True
 
-        if self.aprsAttached.isChecked():
-            if self.aprsCallsign.text() == "":				# Get the APRS callsign too, default to placeholder
-                self.callsign = str(self.aprsCallsign.placeholderText())
-            else:
-                self.callsign = self.aprsCallsign.text()
-            if not self.aprsCOM.text() == "":
-                aprsCOM = str(self.aprsCOM.text())
-                self.APRS = SerialDevice(aprsCOM, 9600, 5)
+        #if self.aprsAttached.isChecked():
+        #    if self.aprsCallsign.text() == "":				# Get the APRS callsign too, default to placeholder
+        #        self.callsign = str(self.aprsCallsign.placeholderText())
+        #    else:
+        #        self.callsign = self.aprsCallsign.text()
+        #    if not self.aprsCOM.text() == "":
+        #        aprsCOM = str(self.aprsCOM.text())
+        #        self.APRS = SerialDevice(aprsCOM, 9600, 5)
 
         # Get the IMEI for the iridium modem, default to placeholder
         if self.iridiumIMEI.text() == '':
@@ -758,7 +759,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Determine which types of tracking are selected
         self.useIridium = self.autoIridium.isChecked()
         self.useIridiumInterpolate = self.autoIridiumInterpolate.isChecked()
-        self.useAPRS = self.autoAPRS.isChecked()
+        #self.useAPRS = self.autoAPRS.isChecked()
         self.useRFD = self.autoRFD.isChecked()
         self.useDisabled = self.autoDisabled.isChecked()
 
@@ -851,7 +852,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.interpolateIridium.setPredictionUpdateSpeed.emit(float(self.iridiumPredictionUpdateSpeed.text()))
 ##--------------------------------------------------------------------------------------------------------------------
         
-        if self.autoIridium.isChecked() or self.autoAPRS.isChecked() or self.autoRFD.isChecked():
+        if self.autoIridium.isChecked() or self.autoRFD.isChecked():
             self.manualRefresh()
         else:
             self.autoDisabled.setChecked(True)
@@ -951,33 +952,34 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 print(
                     "Error with Manual Angle Entry, make sure Bearing and Elevation Angle are entered")
 
-    def sliderControl(self, arg):
-        """ Control the sliders when you hit the button, or stop it if you hit the button again """
-
-        # When the start/stop button is clicked, toggle the state of the
-        # sliders
-        if arg == "click":
-            if not self.autotrackOnline:   # Only let this work if you're not in autotrack mode
-                if self.inSliderMode:				# If you're in slider mode, set the boolean to false, change the text back and get out
-                    self.inSliderMode = False
-                    self.sliderButton.setText("START")
-                    self.sliderStatus.setText("OFF")
-                    self.changeTextColor(self.sliderStatus, "red")
-                    return
-                elif not self.inSliderMode:		# if not in slider mode, change the boolean, text and text color
-                    print(self.inSliderMode)
-                    self.inSliderMode = True
-                    print(self.inSliderMode)
-                    self.sliderButton.setText("STOP")
-                    self.sliderStatus.setText("ON")
-                    self.changeTextColor(self.sliderStatus, "green")
-
-        # When a slider position is changed, move the position of the servos
-        if arg == "slide":
-            if self.inSliderMode:			# Only move if you're in slider mode
-                self.moveToTarget(self.panServoSlider.value(),
-                                  self.tiltServoSlider.value())
-                self.manualRefresh()			# Refresh the data tables
+    # Slider stuff commented out 6/19/2019
+    # def sliderControl(self, arg):
+    #     """ Control the sliders when you hit the button, or stop it if you hit the button again """
+    #
+    #     # When the start/stop button is clicked, toggle the state of the
+    #     # sliders
+    #     if arg == "click":
+    #         if not self.autotrackOnline:   # Only let this work if you're not in autotrack mode
+    #             if self.inSliderMode:				# If you're in slider mode, set the boolean to false, change the text back and get out
+    #                 self.inSliderMode = False
+    #                 self.sliderButton.setText("START")
+    #                 self.sliderStatus.setText("OFF")
+    #                 self.changeTextColor(self.sliderStatus, "red")
+    #                 return
+    #             elif not self.inSliderMode:		# if not in slider mode, change the boolean, text and text color
+    #                 print(self.inSliderMode)
+    #                 self.inSliderMode = True
+    #                 print(self.inSliderMode)
+    #                 self.sliderButton.setText("STOP")
+    #                 self.sliderStatus.setText("ON")
+    #                 self.changeTextColor(self.sliderStatus, "green")
+    #
+    #     # When a slider position is changed, move the position of the servos
+    #     if arg == "slide":
+    #         if self.inSliderMode:			# Only move if you're in slider mode
+    #             self.moveToTarget(self.panServoSlider.value(),
+    #                               self.tiltServoSlider.value())
+    #             self.manualRefresh()			# Refresh the data tables
 
     def trimControl(self, arg):
         """ Updates the trim values when the trim buttons are clicked, and move the tracking accordingly """
