@@ -45,7 +45,7 @@ class StillImageSystem(QtCore.QObject):
 
         # Variable to determine spacing of checksum. Ex. wordlength = 1000 will
         # send one thousand bits before calculating and verifying checksum
-        self.wordlength = 7000
+        self.wordlength = 100000
         self.extension = ".jpg"
         # The starting display photo is the logo of the MnSGC
         self.displayPhotoPath = "Images/MnSGC_Logo_highRes.png"
@@ -552,6 +552,8 @@ class StillImageSystem(QtCore.QObject):
         self.mainWindow.stillNewText.emit("Confirmed photo request")
         sys.stdout.flush()
 
+
+        print("starting wordlength: " + str(wordlength))
         ### Module Specific Variables ###
         # Initializes the checksum timeout (timeout value is not set here)
         scount = 0
@@ -598,7 +600,7 @@ class StillImageSystem(QtCore.QObject):
 
             # CHECKSUM
             if checkours != checktheirs:
-                if trycnt < 5:		# This line sets the maximum number of checksum resends. Ex. trycnt = 5 will attempt to rereceive data 5 times before erroring out											  #I've found that the main cause of checksum errors is a bit drop or add desync, this adds a 2 second delay and resyncs both systems
+                if trycnt < 10:		# This line sets the maximum number of checksum resends. Ex. trycnt = 5 will attempt to rereceive data 5 times before erroring out											  #I've found that the main cause of checksum errors is a bit drop or add desync, this adds a 2 second delay and resyncs both systems
                     scount = 0
                     self.rfdSer.write(b'N')
                     trycnt += 1
@@ -615,8 +617,8 @@ class StillImageSystem(QtCore.QObject):
                     self.mainWindow.stillNewText.emit(
                         "\twordlength " + str(wordlength))
                     sys.stdout.flush()
-                    if wordlength > 1000:
-                        wordlength -= 1000
+##                    if wordlength > 1000:
+##                        wordlength -= 1000
                     self.sync()		# This corrects for bit deficits or excesses ######  THIS IS A MUST FOR DATA TRANSMISSION WITH THE RFD900s!!!! #####
                 else:
                     # Kind of a worst case, checksum trycnt is reached and so
@@ -634,14 +636,14 @@ class StillImageSystem(QtCore.QObject):
                 stillProgress += wordlength
                 self.mainWindow.stillNewProgress.emit(
                     stillProgress, stillPhotoMax)
-                if(scount > 10 and wordlength < 7000):
-                    scount = 0
-                    wordlength += 1000
-                    print("\nIncreasing Wordsize : +", str(wordlength))
-                    print("\n")
-                    self.mainWindow.stillNewText.emit("\nIncreasing Wordsize :" + str(wordlength))
-                    self.mainWindow.stillNewText.emit("\n")
-                    self.sync()
+##                if(scount > 10 and wordlength < 7000):
+##                    scount = 0
+##                    wordlength += 1000
+##                    print("\nIncreasing Wordsize : +", str(wordlength))
+##                    print("\n")
+##                    self.mainWindow.stillNewText.emit("\nIncreasing Wordsize :" + str(wordlength))
+##                    self.mainWindow.stillNewText.emit("\n")
+##                    self.sync()
             # The words always come in increments of some thousand, so if it's
             # not evenly divisible, you're probably at the end
             if len(finalstring) % 1000 != 0:
@@ -666,7 +668,7 @@ class StillImageSystem(QtCore.QObject):
                               "newimage" + self.extension)
 
         ### Clean Up ###
-        self.wordlength = 7000			# Reset the wordlength to the original
+        #self.wordlength = 7000			# Reset the wordlength to the original
         print("Image Saved")
         self.mainWindow.stillNewText.emit("Image Saved")
         self.mainWindow.stillNewText.emit("Number of Packets Lost = " + str(failcount))
@@ -694,7 +696,7 @@ class StillImageSystem(QtCore.QObject):
             if addsync0 == '':
                 break
             sync = addsync3 + addsync2 + addsync1 + addsync0
-            print(sync)
+            #print(sync)
             addsync3 = addsync2
             addsync2 = addsync1
             addsync1 = addsync0
