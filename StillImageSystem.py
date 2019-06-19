@@ -45,7 +45,7 @@ class StillImageSystem(QtCore.QObject):
 
         # Variable to determine spacing of checksum. Ex. wordlength = 1000 will
         # send one thousand bits before calculating and verifying checksum
-        self.wordlength = 100000
+        self.wordlength = 8000
         self.extension = ".jpg"
         # The starting display photo is the logo of the MnSGC
         self.displayPhotoPath = "Images/MnSGC_Logo_highRes.png"
