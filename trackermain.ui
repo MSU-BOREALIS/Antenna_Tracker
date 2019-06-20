@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1537</width>
+    <width>1623</width>
     <height>798</height>
    </rect>
   </property>
@@ -278,7 +278,7 @@
         <enum>QTabWidget::West</enum>
        </property>
        <property name="currentIndex">
-        <number>6</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="Settings">
         <attribute name="title">
@@ -609,6 +609,34 @@
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_6">
+                  <item row="1" column="1">
+                   <widget class="QCheckBox" name="autoIridiumInterpolate">
+                    <property name="text">
+                     <string>+ Prediction</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QCheckBox" name="autoIridium">
+                    <property name="text">
+                     <string>Iridium</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLabel" name="iridiumUpdateSpeedLabel">
+                    <property name="text">
+                     <string>Update Speed (s):</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="0">
+                   <widget class="QCheckBox" name="autoRFD">
+                    <property name="text">
+                     <string>RFD900</string>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="2" column="2">
                    <widget class="QLineEdit" name="iridiumPredictionUpdateSpeed">
                     <property name="placeholderText">
@@ -633,31 +661,17 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="4" column="0">
-                   <widget class="QCheckBox" name="autoRFD">
+                  <item row="3" column="0">
+                   <widget class="QCheckBox" name="autoUbiquitySignalTrack">
                     <property name="text">
-                     <string>RFD900</string>
+                     <string>Ubiquity Signal Tracker</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="1" column="0">
-                   <widget class="QCheckBox" name="autoIridium">
+                  <item row="3" column="1">
+                   <widget class="QLabel" name="ubiquitySignalStrengthLabel">
                     <property name="text">
-                     <string>Iridium</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="1">
-                   <widget class="QCheckBox" name="autoIridiumInterpolate">
-                    <property name="text">
-                     <string>+ Prediction</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="1">
-                   <widget class="QLabel" name="label">
-                    <property name="text">
-                     <string>Update Speed (s):</string>
+                     <string>Current Strength: n/a</string>
                     </property>
                    </widget>
                   </item>
@@ -744,97 +758,20 @@
                <enum>QFrame::Raised</enum>
               </property>
               <layout class="QGridLayout" name="gridLayout_13">
-               <item row="5" column="1">
-                <widget class="QLineEdit" name="aprsCallsign">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="placeholderText">
-                  <string>KD0AWK-8</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QCheckBox" name="rfdAttached">
-                 <property name="text">
-                  <string>RFD Connected</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="1">
-                <widget class="QLineEdit" name="iridiumIMEI">
-                 <property name="placeholderText">
-                  <string>300234064909640</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1">
-                <widget class="QLineEdit" name="aprsCOM">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="placeholderText">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLineEdit" name="servoCOM">
-                 <property name="placeholderText">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLineEdit" name="rfdCOM">
-                 <property name="placeholderText">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="0">
-                <widget class="QLabel" name="IMEILabel">
-                 <property name="text">
-                  <string>Iridium IMEI</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QLineEdit" name="arduinoCOM">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="placeholderText">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
                <item row="5" column="0">
-                <widget class="QLabel" name="aprsCallsignLabel">
-                 <property name="text">
-                  <string>APRS Callsign</string>
-                 </property>
-                 <property name="scaledContents">
-                  <bool>false</bool>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                 <property name="wordWrap">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
                 <widget class="QCheckBox" name="aprsAttached">
                  <property name="text">
                   <string>APRS Connected</string>
                  </property>
                  <property name="checked">
                   <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="2">
+                <widget class="QLineEdit" name="iridiumIMEI">
+                 <property name="placeholderText">
+                  <string>300234064909640</string>
                  </property>
                 </widget>
                </item>
@@ -855,6 +792,97 @@
                  </property>
                  <property name="checked">
                   <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QCheckBox" name="ubiquityAttached">
+                 <property name="text">
+                  <string>Ubiquity Connected</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="2">
+                <widget class="QLineEdit" name="aprsCallsign">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string>KD0AWK-8</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QLineEdit" name="servoCOM">
+                 <property name="placeholderText">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QLineEdit" name="rfdCOM">
+                 <property name="placeholderText">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="2">
+                <widget class="QLineEdit" name="arduinoCOM">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="2">
+                <widget class="QLineEdit" name="aprsCOM">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="0">
+                <widget class="QLabel" name="IMEILabel">
+                 <property name="text">
+                  <string>Iridium IMEI</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QCheckBox" name="rfdAttached">
+                 <property name="text">
+                  <string>RFD Connected</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0">
+                <widget class="QLabel" name="aprsCallsignLabel">
+                 <property name="text">
+                  <string>APRS Callsign</string>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>false</bool>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="2">
+                <widget class="QLineEdit" name="ubiquityCOM">
+                 <property name="placeholderText">
+                  <string>192.168.1.20</string>
                  </property>
                 </widget>
                </item>
@@ -1143,6 +1171,63 @@
           </widget>
          </item>
         </layout>
+       </widget>
+       <widget class="QWidget" name="UbiquityView">
+        <attribute name="title">
+         <string>Ubiquity</string>
+        </attribute>
+        <widget class="QFrame" name="ubiquityViewFrame">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>1261</width>
+           <height>661</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QWidget" name="ubiquitySignalStrengthGraph" native="true">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>30</y>
+            <width>1121</width>
+            <height>611</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>40</y>
+            <width>91</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Current Strength</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="ubiquitySignalStrengthLabel_graph">
+          <property name="geometry">
+           <rect>
+            <x>50</x>
+            <y>70</y>
+            <width>47</width>
+            <height>13</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>n/a</string>
+          </property>
+         </widget>
+        </widget>
        </widget>
        <widget class="QWidget" name="MapView">
         <attribute name="title">
