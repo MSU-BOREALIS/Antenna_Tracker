@@ -9,14 +9,14 @@ from BalloonUpdate import *			# Class to hold balloon info
 import SignalScraper as scraper
 
 
-class UbiquitySignalTracker(QtCore.QObject):
+class UbiquitiSignalTracker(QtCore.QObject):
 
     # Received Signals
     start = pyqtSignal()
     setInterrupt = pyqtSignal()
     
-    def __init__(self, MainWindow, IP):
-        super(UbiquitySignalTracker, self).__init__()
+    def __init__(self, MainWindow, IP, username, password):
+        super(UbiquitiSignalTracker, self).__init__()
         self.mainWindow = MainWindow
         self.signalTrackerInterrupt = False
 
@@ -24,12 +24,12 @@ class UbiquitySignalTracker(QtCore.QObject):
         self.updateSpeed = 0.25    # in seconds
 
         # Emitted Signals
-        self.mainWindow.ubiquityNewSignalStrength.connect(
-            self.mainWindow.updateUbiquitySignalStrength)
+        self.mainWindow.ubiquitiNewSignalStrength.connect(
+            self.mainWindow.updateUbiquitiSignalStrength)
 
         self.ip = IP
         # Start the scraper
-        scraper.begin('C://chromedriver.exe', self.ip, password='ground')
+        scraper.begin('C://chromedriver.exe', self.ip, username=username, password=password)
 
     def run(self):
         """ Interpolates Iridium tracking information to provide smoother tracking """
@@ -38,7 +38,7 @@ class UbiquitySignalTracker(QtCore.QObject):
         while not self.signalTrackerInterrupt:
             time.sleep(self.updateSpeed)  # frequency
             strength = scraper.fetch_signal(self.ip)
-            self.mainWindow.ubiquityNewSignalStrength.emit(strength)
+            self.mainWindow.ubiquitiNewSignalStrength.emit(strength)
             QCoreApplication.processEvents()  # Allow the thread to process events
 
     def interrupt(self):
