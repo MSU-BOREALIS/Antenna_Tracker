@@ -27,19 +27,19 @@ class UbiquitiSignalTracker(QtCore.QObject):
         self.mainWindow.ubiquitiNewSignalStrength.connect(
             self.mainWindow.updateUbiquitiSignalStrength)
 
-        self.ip = IP
+        #self.ip = IP
         # Start the scraper
-        scraper.begin('C://chromedriver.exe', self.ip, username=username, password=password)
+        #scraper.begin('C://chromedriver.exe', self.ip, username=username, password=password)
 
     def run(self):
-        """ Interpolates Iridium tracking information to provide smoother tracking """
+        """ Use signal strength to hone antenna in on payload """
         self.signalTrackerInterrupt = False
         
         while not self.signalTrackerInterrupt:
             time.sleep(self.updateSpeed)  # frequency
-            strength = scraper.fetch_signal(self.ip)
-            self.mainWindow.ubiquitiNewSignalStrength.emit(strength)
-            QCoreApplication.processEvents()  # Allow the thread to process events
+            #strength = scraper.fetch_signal(self.ip)
+            #self.mainWindow.ubiquitiNewSignalStrength.emit(strength)
+            #QCoreApplication.processEvents()  # Allow the thread to process events
 
     def interrupt(self):
         self.ready = False

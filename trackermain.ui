@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1623</width>
+    <width>1712</width>
     <height>798</height>
    </rect>
   </property>
@@ -278,7 +278,7 @@
         <enum>QTabWidget::West</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="Settings">
         <attribute name="title">
@@ -1199,63 +1199,6 @@
           </widget>
          </item>
         </layout>
-       </widget>
-       <widget class="QWidget" name="UbiquitiView">
-        <attribute name="title">
-         <string>Ubiquiti</string>
-        </attribute>
-        <widget class="QFrame" name="ubiquityViewFrame">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>1261</width>
-           <height>661</height>
-          </rect>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <widget class="QWidget" name="ubiquitiSignalStrengthGraph" native="true">
-          <property name="geometry">
-           <rect>
-            <x>120</x>
-            <y>30</y>
-            <width>1121</width>
-            <height>611</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>40</y>
-            <width>91</width>
-            <height>41</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Current Strength</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="ubiquitiSignalStrengthLabel_graph">
-          <property name="geometry">
-           <rect>
-            <x>50</x>
-            <y>70</y>
-            <width>47</width>
-            <height>13</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>n/a</string>
-          </property>
-         </widget>
-        </widget>
        </widget>
        <widget class="QWidget" name="MapView">
         <attribute name="title">
@@ -2566,7 +2509,7 @@
            </layout>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="2" column="1">
           <widget class="QFrame" name="trimFrame">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -2690,6 +2633,58 @@
              </widget>
             </item>
            </layout>
+          </widget>
+         </item>
+         <item row="1" column="0" rowspan="2">
+          <widget class="QFrame" name="ubiquityViewFrame">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <widget class="QFrame" name="ubiquitiSignalStrengthGraph">
+            <property name="geometry">
+             <rect>
+              <x>9</x>
+              <y>29</y>
+              <width>651</width>
+              <height>411</height>
+             </rect>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>171</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Current Ubiquiti Signal Strength:</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="ubiquitiSignalStrengthLabel_graph">
+            <property name="geometry">
+             <rect>
+              <x>190</x>
+              <y>10</y>
+              <width>47</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>n/a</string>
+            </property>
+           </widget>
           </widget>
          </item>
         </layout>

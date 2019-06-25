@@ -50,6 +50,7 @@ from MapHTML import *				# Module for generating Google Maps HTML and JavaScript
 from CommandEmailer import *                    # Module for emailing Iridium commands
 from Interpolate import *                       # Module for interpolating balloon pointing updates
 from UbiquitiSignalTracker import *             # Module for adjusting the antenna based on signal strength
+from UbiquitiSignalScraper import *             # Module for scraping the signal strength from the modem
 
 # Matplotlib setup
 #matplotlib.use('Qt5Agg')
@@ -142,6 +143,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     ubiquitiTrackerNewPointing = pyqtSignal(float, float)
     aprsNewLocation = pyqtSignal(BalloonUpdate)
     payloadUpdate = pyqtSignal(str)
+    ubiquitiScraperError = pyqtSignal(str)
 
     # Still Image Signals
     stillNewText = pyqtSignal(str)
@@ -180,6 +182,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.iridiumInterpolateThread.daemon = True
         self.ubiquitiTrackerThread = EventThread()
         self.ubiquitiTrackerThread.daemon = True
+        self.ubiquitiScraperThread = EventThread()
+        self.ubiquitiScraperThread.daemon = True
         
         # Start the threads, they should run forever, and add them to the
         # thread pool
@@ -189,6 +193,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.iridiumThread.start()
         self.iridiumInterpolateThread.start()
         self.ubiquitiTrackerThread.start()
+        self.ubiquitiScraperThread.start()
         self.aprsThread.start()
 
         # Button Function Link Setup
@@ -318,6 +323,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.rfdStarted = False
         self.servosStarted = False
         self.arduinoStarted = False
+        self.ubiquitiSignalScraperStarted = False
 
         # RFD Commands Controls
         self.rfdCommandsOnline = False
@@ -596,6 +602,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def getSettings(self):
         """ Go through the settings tab and update class and global variables with the new settings """
 
+        print() # Readability
+
         # Determine whether or not to save the Data for this flight
         if self.saveDataCheckbox.isChecked():
             if not self.saveData:
@@ -768,9 +776,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.centerBear = 270
             elif self.bearingManual.isChecked():      # Manual Radio Button
                 if self.manualBear.text() == "":
-                    self.centerBear = int(self.manualBear.placeholderText()) #Default to placeholder
+                    self.centerBear = stringToFloat(self.manualBear.placeholderText()) #Default to placeholder
                 else:
-                    self.centerBear = int(self.manualBear.text())
+                    self.centerBear = stringToFloat(self.manualBear.text())
             else:
                 self.centerBear = 0
                 print("Error with manual bearing setup")
@@ -904,10 +912,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.ubiquitiSignalTracker.moveToThread(self.ubiquitiTrackerThread)
                 self.ubiquitiSignalTracker.start.connect(self.ubiquitiSignalTracker.run)
                 self.ubiquitiSignalTracker.setInterrupt.connect(self.ubiquitiSignalTracker.interrupt)
-                #self.iridiumNewLocation.connect(
-                #    self.interpolateIridium.addPosition)
-                # self.interpolateIridium.setPredictionUpdateSpeed.connect(
-                #    self.interpolateIridium.setUpdateSpeed)
                 self.ubiquitiSignalTracker.start.emit()
                 self.ubiquitiSignalTrackStarted = True
 
@@ -923,11 +927,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # self.interpolateIridium.setInterrupt.connect(self.interpolateIridium.interrupt)
             self.ubiquitiSignalTracker.setInterrupt.emit()
             self.ubiquitiSignalTrackStarted = False
-            self.signalStrengthTime = np.array([])
-            self.signalStrength = np.array([])
+            #self.signalStrengthTime = np.array([])
+            #self.signalStrength = np.array([])
             QCoreApplication.processEvents()  # Allow the thread to process events
-            self.ubiquitiSignalStrengthLabel.setText("Current Strength: n/a")
-            self.ubiquitiSignalStrengthLabel_graph.setText("n/a")
+            #self.ubiquitiSignalStrengthLabel.setText("Current Strength: n/a")
+            #self.ubiquitiSignalStrengthLabel_graph.setText("n/a")
 
 ##--------------------------------------------------------------------------------------------------------------------
 
@@ -1538,34 +1542,33 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def updateUbiquitiSignalStrength(self, strength):
         """ Updates the signal strength indicators in the GUI and the signal strength graph on the Ubiquiti Tab"""
-        if self.useUbiquitiSignalTrack:
-            self.ubiquitiSignalStrengthLabel.setText("Current Strength: " + str(strength) + " dB")
-            self.ubiquitiSignalStrengthLabel_graph.setText(str(strength) + " dB")
+        self.ubiquitiSignalStrengthLabel.setText("Current Strength: " + str(strength) + " dB")
+        self.ubiquitiSignalStrengthLabel_graph.setText(str(strength) + " dB")
 
-            # Update the Graphs in the Ubiquiti Tab
-            if self.graphReal.isChecked():  # Check to see if you have the graph checkbox selected
-                if(len(self.signalStrengthTime) >= 250): # Restrict graph to most recent X number of points (to avoid lag)
-                    self.signalStrengthTime = np.delete(self.signalStrengthTime, 0)
-                    self.signalStrength = np.delete(self.signalStrength, 0)
-                self.signalStrengthTime = np.append(self.signalStrengthTime, time.time())
-                self.signalStrength = np.append(self.signalStrength, strength)
+        # Update the Graphs in the Ubiquiti Tab
+        if self.graphReal.isChecked():  # Check to see if you have the graph checkbox selected
+            if (len(self.signalStrengthTime) >= 200):  # Restrict graph to most recent X number of points (to avoid lag)
+                self.signalStrengthTime = np.delete(self.signalStrengthTime, 0)
+                self.signalStrength = np.delete(self.signalStrength, 0)
+            self.signalStrengthTime = np.append(self.signalStrengthTime, time.time())
+            self.signalStrength = np.append(self.signalStrength, strength)
 
-                if len(self.signalStrengthTime) > 0:
-                    # creates the subplot
-                    plot = self.ubiFigure.add_subplot(111)
-                    plot.cla()
+            if len(self.signalStrengthTime) > 0:
+                # creates the subplot
+                plot = self.ubiFigure.add_subplot(111)
+                plot.cla()
 
-
-                    #self.ubiGraphColor = self.ubiGraphColor + 1;  # Yay flashy colors
-                    if self.ubiGraphColor >= len(self.ubiGraphColors):
-                        self.ubiGraphColor = 0
-                    # plot data
-                    plot.plot(self.signalStrengthTime -
-                                 self.signalStrengthTime[len(self.signalStrengthTime) - 1], self.signalStrength, self.ubiGraphColors[self.ubiGraphColor])
-                    plot.set_ylabel('Signal (dB)')
-                                    # refresh canvas
-                    self.ubiCanvas.draw()
-                    QCoreApplication.processEvents()  # Allow the thread to process events (an attempt to keep things smooth)
+                # self.ubiGraphColor = self.ubiGraphColor + 1;  # Yay flashy colors
+                if self.ubiGraphColor >= len(self.ubiGraphColors):
+                    self.ubiGraphColor = 0
+                # plot data
+                plot.plot(self.signalStrengthTime -
+                          self.signalStrengthTime[len(self.signalStrengthTime) - 1], self.signalStrength,
+                          self.ubiGraphColors[self.ubiGraphColor])
+                plot.set_ylabel('Signal (dB)')
+                # refresh canvas
+                self.ubiCanvas.draw()
+                QCoreApplication.processEvents()  # Allow the thread to process events (an attempt to keep things smooth)
 
     def changeTextColor(self, obj, color):
         """ Changes the color of a text label to either red or green """
@@ -1748,6 +1751,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.searchForUbiquiti()
 
     def searchForUbiquiti(self):
+        """ Attempts to ping the Ubiquity modem, and if reached, starts scraping signal strength """
         # Get the IP for the ubiquiti modem, default to placeholder
         if self.ubiquitiCOM.text() == "":
             self.ubiquitiIP = self.ubiquitiCOM.placeholderText()
@@ -1759,10 +1763,57 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if ret == 0:
             print("- - - Found ubiquiti modem - - -")
             self.ubiquitiCOM.setText(self.ubiquitiIP)
+
+            # The ubiquiti modem has been found, now start scraping
+            if not self.ubiquitiSignalScraperStarted:  # Don't start it up again if it's already going
+                # Get the Username and Password for the ubiquiti modem, default to placeholder
+                if self.ubiUsername.text() == "":
+                    self.ubiquitiUser = self.ubiUsername.placeholderText()
+                else:
+                    self.ubiquitiUser = self.ubiUsername.text()
+                if self.ubiPassword.text() == "":
+                    self.ubiquitiPass = self.ubiPassword.placeholderText()
+                else:
+                    self.ubiquitiPass = self.ubiPassword.text()
+                print("Starting Ubiquiti Signal Scraping")
+                self.ubiquitiSignalScraper = UbiquitiSignalScraper(self, self.ubiquitiIP, self.ubiquitiUser,
+                                                                       self.ubiquitiPass)
+                self.ubiquitiSignalScraper.moveToThread(self.ubiquitiScraperThread)
+                self.ubiquitiSignalScraper.start.connect(self.ubiquitiSignalScraper.run)
+                self.ubiquitiSignalScraper.setInterrupt.connect(self.ubiquitiSignalScraper.interrupt)
+                self.ubiquitiSignalScraper.start.emit()
+                self.ubiquitiSignalScraperStarted = True
+                
             self.ubiquitiAttached.setChecked(True)
+            
         else:
             print("- - - Ubiquiti modem not found- - -")
+            # Check if the scraper has been started. If so, stop the scraping thread
+            if self.ubiquitiSignalScraperStarted:
+                print("Ubiquiti Signal Scraping interrupted")
+                self.ubiquitiSignalScraper.setInterrupt.emit()
+                self.ubiquitiSignalScraperStarted = False
+                self.signalStrengthTime = np.array([])
+                self.signalStrength = np.array([])
+                QCoreApplication.processEvents()  # Allow the thread to process events
+                self.ubiquitiSignalStrengthLabel.setText("Current Strength: n/a")
+                self.ubiquitiSignalStrengthLabel_graph.setText("n/a")
+
             self.ubiquitiAttached.setChecked(False)
+            
+    def handleUbiquitiScraperError(self, errcode: str):
+        if errcode == 'JSON Fetch':
+            print("Scraper JSON Fetch Error -- Most likely due to invalid login")
+            print("Turning scraper off, retry connection with new credentials.")
+            self.ubiquitiSignalScraper.setInterrupt.emit()
+            self.ubiquitiSignalScraperStarted = False
+            self.ubiquitiAttached.setChecked(False)
+            self.signalStrengthTime = np.array([])
+            self.signalStrength = np.array([])
+            QCoreApplication.processEvents()  # Allow the thread to process events
+            self.ubiquitiSignalStrengthLabel.setText("Current Strength: n/a")
+            self.ubiquitiSignalStrengthLabel_graph.setText("n/a")
+
 
     def disabledChecked(self):
         """ Makes sure that only the disabled autotrack option is checked """
