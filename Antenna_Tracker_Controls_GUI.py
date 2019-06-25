@@ -359,6 +359,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.payloadList = []		# List of payloads in this flight
         self.mapMade = False
+        self.suntableMade = False
 
         self.currentBalloon = BalloonUpdate('', 0, 0, 0, 0, '', 0, 0, 0)
         self.tabs.setCurrentIndex(0)
@@ -638,6 +639,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.mapView.setHtml(getMapHtml(45, -93, googleMapsApiKey))
                 self.mapViewGridLayout.addWidget(self.mapView)
             self.mapMade = True
+            # Set up the Map View
+            if not self.suntableMade:
+                self.suntableView = QWebView();
+                stUrl = QUrl("https://aa.usno.navy.mil/data/docs/AltAz.php")
+                self.suntableView.load(stUrl)
+                self.suntableViewGridLayout.addWidget(self.suntableView)
+                self.suntableMade = True
         else:
             self.internetAccess = False
 
