@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'trackermain.ui',
 # licensing of 'trackermain.ui' applies.
 #
-# Created: Wed Jun 26 08:39:39 2019
+# Created: Wed Jun 26 13:46:33 2019
 #      by: pyside2-uic  running on PySide2 5.12.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -614,6 +614,11 @@ class Ui_MainWindow(object):
         self.gridLayout_7 = QtWidgets.QGridLayout(self.ManualControl)
         self.gridLayout_7.setObjectName("gridLayout_7")
         self.manualCoordinateEntryFrame = QtWidgets.QFrame(self.ManualControl)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.manualCoordinateEntryFrame.sizePolicy().hasHeightForWidth())
+        self.manualCoordinateEntryFrame.setSizePolicy(sizePolicy)
         self.manualCoordinateEntryFrame.setFrameShape(QtWidgets.QFrame.WinPanel)
         self.manualCoordinateEntryFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.manualCoordinateEntryFrame.setObjectName("manualCoordinateEntryFrame")
@@ -701,6 +706,11 @@ class Ui_MainWindow(object):
         self.gridLayout_16.addWidget(self.manualEntryLatLabel, 1, 0, 1, 2)
         self.gridLayout_7.addWidget(self.manualCoordinateEntryFrame, 0, 0, 1, 1)
         self.manualAngleEntryFrame = QtWidgets.QFrame(self.ManualControl)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.manualAngleEntryFrame.sizePolicy().hasHeightForWidth())
+        self.manualAngleEntryFrame.setSizePolicy(sizePolicy)
         self.manualAngleEntryFrame.setFrameShape(QtWidgets.QFrame.WinPanel)
         self.manualAngleEntryFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.manualAngleEntryFrame.setObjectName("manualAngleEntryFrame")
@@ -842,11 +852,21 @@ class Ui_MainWindow(object):
         self.gridLayout_18.addWidget(self.trimRightButton, 1, 2, 1, 1)
         self.gridLayout_7.addWidget(self.trimFrame, 2, 1, 1, 1)
         self.ubiquityViewFrame = QtWidgets.QFrame(self.ManualControl)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ubiquityViewFrame.sizePolicy().hasHeightForWidth())
+        self.ubiquityViewFrame.setSizePolicy(sizePolicy)
         self.ubiquityViewFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.ubiquityViewFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.ubiquityViewFrame.setObjectName("ubiquityViewFrame")
         self.ubiquitiSignalStrengthGraph = QtWidgets.QFrame(self.ubiquityViewFrame)
         self.ubiquitiSignalStrengthGraph.setGeometry(QtCore.QRect(9, 29, 651, 411))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ubiquitiSignalStrengthGraph.sizePolicy().hasHeightForWidth())
+        self.ubiquitiSignalStrengthGraph.setSizePolicy(sizePolicy)
         self.ubiquitiSignalStrengthGraph.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.ubiquitiSignalStrengthGraph.setFrameShadow(QtWidgets.QFrame.Raised)
         self.ubiquitiSignalStrengthGraph.setObjectName("ubiquitiSignalStrengthGraph")
@@ -1521,7 +1541,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabs.setCurrentIndex(0)
+        self.tabs.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.incomingDataTable, self.groundDataTable)
         MainWindow.setTabOrder(self.groundDataTable, self.tabs)
@@ -1561,7 +1581,7 @@ class Ui_MainWindow(object):
         self.bearingSouth.setText(QtWidgets.QApplication.translate("MainWindow", "South Facing", None, -1))
         self.bearingManual.setText(QtWidgets.QApplication.translate("MainWindow", "Manual Bearing (°):", None, -1))
         self.bearingEast.setText(QtWidgets.QApplication.translate("MainWindow", "East Facing", None, -1))
-        self.manualBear.setPlaceholderText(QtWidgets.QApplication.translate("MainWindow", "127", None, -1))
+        self.manualBear.setPlaceholderText(QtWidgets.QApplication.translate("MainWindow", "127.6", None, -1))
         self.manualSettingsEntryLabel.setText(QtWidgets.QApplication.translate("MainWindow", "Manual Settings Entry:", None, -1))
         self.manualLatLabel.setText(QtWidgets.QApplication.translate("MainWindow", "Latitude (°):", None, -1))
         self.manualLat.setPlaceholderText(QtWidgets.QApplication.translate("MainWindow", "44.9758181", None, -1))

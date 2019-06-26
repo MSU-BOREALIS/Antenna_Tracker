@@ -29,7 +29,7 @@ class UbiquitiSignalTracker(QtCore.QObject):
 
         #self.ip = IP
         # Start the scraper
-        #scraper.begin('C://chromedriver.exe', self.ip, username=username, password=password)
+        #scraper.begin('Drivers/chromedriver.exe', self.ip, username=username, password=password)
 
     def run(self):
         """ Use signal strength to hone antenna in on payload """
