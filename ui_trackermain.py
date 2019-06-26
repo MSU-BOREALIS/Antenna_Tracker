@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'trackermain.ui',
 # licensing of 'trackermain.ui' applies.
 #
-# Created: Tue Jun 25 15:43:16 2019
+# Created: Wed Jun 26 08:39:39 2019
 #      by: pyside2-uic  running on PySide2 5.12.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -357,6 +357,7 @@ class Ui_MainWindow(object):
         self.iridiumUpdateSpeedLabel.setObjectName("iridiumUpdateSpeedLabel")
         self.gridLayout_6.addWidget(self.iridiumUpdateSpeedLabel, 2, 1, 1, 1)
         self.autoRFD = QtWidgets.QCheckBox(self.autotrackModeFrame)
+        self.autoRFD.setEnabled(False)
         self.autoRFD.setObjectName("autoRFD")
         self.gridLayout_6.addWidget(self.autoRFD, 6, 0, 1, 1)
         self.iridiumPredictionUpdateSpeed = QtWidgets.QLineEdit(self.autotrackModeFrame)
@@ -371,9 +372,11 @@ class Ui_MainWindow(object):
         self.label_2.setObjectName("label_2")
         self.gridLayout_6.addWidget(self.label_2, 2, 0, 1, 1)
         self.autoUbiquitiSignalTrack = QtWidgets.QCheckBox(self.autotrackModeFrame)
+        self.autoUbiquitiSignalTrack.setEnabled(False)
         self.autoUbiquitiSignalTrack.setObjectName("autoUbiquitiSignalTrack")
         self.gridLayout_6.addWidget(self.autoUbiquitiSignalTrack, 3, 0, 1, 1)
         self.ubiquitiSignalStrengthLabel = QtWidgets.QLabel(self.autotrackModeFrame)
+        self.ubiquitiSignalStrengthLabel.setEnabled(False)
         self.ubiquitiSignalStrengthLabel.setObjectName("ubiquitiSignalStrengthLabel")
         self.gridLayout_6.addWidget(self.ubiquitiSignalStrengthLabel, 3, 1, 1, 1)
         self.verticalLayout_2.addWidget(self.autotrackModeFrame)
@@ -428,6 +431,7 @@ class Ui_MainWindow(object):
         self.gridLayout_13 = QtWidgets.QGridLayout(self.connectionControlsFrame)
         self.gridLayout_13.setObjectName("gridLayout_13")
         self.aprsAttached = QtWidgets.QCheckBox(self.connectionControlsFrame)
+        self.aprsAttached.setEnabled(False)
         self.aprsAttached.setChecked(False)
         self.aprsAttached.setObjectName("aprsAttached")
         self.gridLayout_13.addWidget(self.aprsAttached, 7, 0, 1, 1)
@@ -474,11 +478,13 @@ class Ui_MainWindow(object):
         self.ubiPasswordLabel.setObjectName("ubiPasswordLabel")
         self.gridLayout_13.addWidget(self.ubiPasswordLabel, 6, 3, 1, 1)
         self.aprsCOM = QtWidgets.QLineEdit(self.connectionControlsFrame)
+        self.aprsCOM.setEnabled(False)
         self.aprsCOM.setText("")
         self.aprsCOM.setPlaceholderText("")
         self.aprsCOM.setObjectName("aprsCOM")
         self.gridLayout_13.addWidget(self.aprsCOM, 7, 1, 1, 2)
         self.aprsCallsignLabel = QtWidgets.QLabel(self.connectionControlsFrame)
+        self.aprsCallsignLabel.setEnabled(False)
         self.aprsCallsignLabel.setScaledContents(False)
         self.aprsCallsignLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.aprsCallsignLabel.setWordWrap(False)
@@ -489,6 +495,7 @@ class Ui_MainWindow(object):
         self.IMEILabel.setObjectName("IMEILabel")
         self.gridLayout_13.addWidget(self.IMEILabel, 10, 0, 1, 1)
         self.aprsCallsign = QtWidgets.QLineEdit(self.connectionControlsFrame)
+        self.aprsCallsign.setEnabled(False)
         self.aprsCallsign.setText("")
         self.aprsCallsign.setObjectName("aprsCallsign")
         self.gridLayout_13.addWidget(self.aprsCallsign, 9, 1, 1, 2)
@@ -1228,6 +1235,7 @@ class Ui_MainWindow(object):
         self.gridLayout_22.addLayout(self.mapViewGridLayout, 0, 0, 1, 1)
         self.tabs.addTab(self.MapView, "")
         self.RFDCommands = QtWidgets.QWidget()
+        self.RFDCommands.setEnabled(False)
         self.RFDCommands.setObjectName("RFDCommands")
         self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.RFDCommands)
         self.verticalLayout_10.setObjectName("verticalLayout_10")
@@ -1513,7 +1521,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabs.setCurrentIndex(8)
+        self.tabs.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.incomingDataTable, self.groundDataTable)
         MainWindow.setTabOrder(self.groundDataTable, self.tabs)
