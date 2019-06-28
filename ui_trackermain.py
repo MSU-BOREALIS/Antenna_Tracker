@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'trackermain.ui',
 # licensing of 'trackermain.ui' applies.
 #
-# Created: Wed Jun 26 13:46:33 2019
+# Created: Fri Jun 28 12:13:01 2019
 #      by: pyside2-uic  running on PySide2 5.12.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -1246,6 +1246,15 @@ class Ui_MainWindow(object):
         self.verticalLayout_13.addWidget(self.stillImageTextBrowser)
         self.gridLayout_21.addWidget(self.stillImageReceiverFrame, 0, 2, 3, 1)
         self.tabs.addTab(self.StillImages, "")
+        self.UbiquitiVideo = QtWidgets.QWidget()
+        self.UbiquitiVideo.setObjectName("UbiquitiVideo")
+        self.streamVLCButton = QtWidgets.QPushButton(self.UbiquitiVideo)
+        self.streamVLCButton.setGeometry(QtCore.QRect(10, 10, 1261, 661))
+        self.streamVLCButton.setObjectName("streamVLCButton")
+        self.killVLCStreamButton = QtWidgets.QPushButton(self.UbiquitiVideo)
+        self.killVLCStreamButton.setGeometry(QtCore.QRect(1280, 350, 75, 23))
+        self.killVLCStreamButton.setObjectName("killVLCStreamButton")
+        self.tabs.addTab(self.UbiquitiVideo, "")
         self.MapView = QtWidgets.QWidget()
         self.MapView.setObjectName("MapView")
         self.gridLayout_22 = QtWidgets.QGridLayout(self.MapView)
@@ -1541,7 +1550,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabs.setCurrentIndex(1)
+        self.tabs.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.incomingDataTable, self.groundDataTable)
         MainWindow.setTabOrder(self.groundDataTable, self.tabs)
@@ -1673,6 +1682,9 @@ class Ui_MainWindow(object):
         self.picHorizontalFlipButton.setText(QtWidgets.QApplication.translate("MainWindow", "Horizontal Flip", None, -1))
         self.picVerticalFlipButton.setText(QtWidgets.QApplication.translate("MainWindow", "Vertical Flip", None, -1))
         self.tabs.setTabText(self.tabs.indexOf(self.StillImages), QtWidgets.QApplication.translate("MainWindow", "Still Images", None, -1))
+        self.streamVLCButton.setText(QtWidgets.QApplication.translate("MainWindow", "Stream (via VLC)", None, -1))
+        self.killVLCStreamButton.setText(QtWidgets.QApplication.translate("MainWindow", "Kill Stream", None, -1))
+        self.tabs.setTabText(self.tabs.indexOf(self.UbiquitiVideo), QtWidgets.QApplication.translate("MainWindow", "Ubiquiti Video", None, -1))
         self.tabs.setTabText(self.tabs.indexOf(self.MapView), QtWidgets.QApplication.translate("MainWindow", "Map View", None, -1))
         self.rfdIDLabel.setText(QtWidgets.QApplication.translate("MainWindow", "Identifier:", None, -1))
         self.rfdCommandEntryLabel.setText(QtWidgets.QApplication.translate("MainWindow", "Command:", None, -1))

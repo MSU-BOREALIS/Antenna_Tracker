@@ -37,6 +37,11 @@ import geomag
 import base64					   # = encodes an image in b64 Strings (and decodes)
 import hashlib					  # = generates hashes
 
+# Library for using SSH
+import paramiko
+from paramiko import client
+from paramiko.client import *
+
 # Imports from files
 from ui_trackermain import Ui_MainWindow        # UI file import
 from ServoController import *			# Module for controlling Mini Maestro
@@ -157,6 +162,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     # Data Signals
     noIridium = pyqtSignal()
 
+    streamThread = None
+
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         # Uses the GUI built in QtCreator and interpreted using pyuic
@@ -234,6 +241,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.getPiRuntimeDataButton.clicked.connect(
             self.getPiRuntimeDataButtonPress)
         self.requestStatusButton.clicked.connect(self.requestDeviceStatus)
+
+        # Ubiquiti Control Button Links
+        self.streamVLCButton.clicked.connect(self.startVLCStream)
+        self.killVLCStreamButton.clicked.connect(self.killVLCStream)
 
         # Still Image Control Button Links
         self.mostRecentImageButton.clicked.connect(
@@ -1821,6 +1832,29 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QCoreApplication.processEvents()  # Allow the thread to process events
             self.ubiquitiSignalStrengthLabel.setText("Current Strength: n/a")
             self.ubiquitiSignalStrengthLabel_graph.setText("n/a")
+
+    def startVLCStream(self):
+        """ Executes the streaming command on the pi and then begins stream """
+        print("Connecting to streaming pi")
+        client = SSHClient()
+        client.set_missing_host_key_policy(AutoAddPolicy)
+        client.connect('192.168.1.69', port=22, username='pi', password='raspberry')
+        # If the pi is already streaming, will not start another streaming process
+        client.exec_command('if pgrep vlc; then echo "Streaming already started"; else ./vlcTest.sh; fi')
+        # Delay to allow the streaming to start
+        time.sleep(1)
+        # Attempt to start streaming
+        print("Starting VLC stream capture")
+        self.streamThread = threading.Thread(target=lambda: os.system('vlc.exe rtsp://' + '192.168.1.69' + ':8080/'))
+        self.streamThread.start()
+
+    def killVLCStream(self):
+        """ Sends a command to the pi to kill streaming """
+        print("Connecting to streaming pi")
+        client = SSHClient()
+        client.set_missing_host_key_policy(AutoAddPolicy)
+        client.connect('192.168.1.69', port=22, username='pi', password='raspberry')
+        client.exec_command('pkill vlc')
 
 
     def disabledChecked(self):

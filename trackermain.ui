@@ -278,7 +278,7 @@
         <enum>QTabWidget::West</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="Settings">
         <attribute name="title">
@@ -2337,6 +2337,37 @@
           </widget>
          </item>
         </layout>
+       </widget>
+       <widget class="QWidget" name="UbiquitiVideo">
+        <attribute name="title">
+         <string>Ubiquiti Video</string>
+        </attribute>
+        <widget class="QPushButton" name="streamVLCButton">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>1261</width>
+           <height>661</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Stream (via VLC)</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="killVLCStreamButton">
+         <property name="geometry">
+          <rect>
+           <x>1280</x>
+           <y>350</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Kill Stream</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="MapView">
         <attribute name="title">
