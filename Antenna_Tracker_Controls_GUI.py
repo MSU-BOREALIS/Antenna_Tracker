@@ -1934,13 +1934,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 try:
                     # The arduino string is comma separated, and starts with ~
                     while temp_arduino[0] != '~':
-                        temp_arduino = s2.readline()
+                        temp_arduino = s2.readline().decode('utf-8')
                         #temp_arduino = bytes(temp_arduino, 'utf8')
-                        temp_arduino = temp_arduino.split(b',')
+                        temp_arduino = temp_arduino.split(',')
                         #displayStr = 'System: ' + temp_arduino[7] + '; ' + 'Gyro: ' + temp_arduino[
                         #    8] + '; ' + 'Accel: ' + temp_arduino[9] + '; ' + 'Mag: ' + temp_arduino[10]
-                        displayStr = 'System: ' + str(temp_arduino[7]) + '; ' + 'Gyro: ' + str(temp_arduino[
-                            8]) + '; ' + 'Accel: ' + str(temp_arduino[9]) + '; ' + 'Mag: ' + str(temp_arduino[10])
+                        displayStr = 'System: ' + temp_arduino[7] + '; ' + 'Gyro: ' + temp_arduino[
+                            8] + '; ' + 'Accel: ' + temp_arduino[9] + '; ' + 'Mag: ' + temp_arduino[10]
                         print(displayStr)
                         try:
                             self.calBrowser.append(displayStr)
