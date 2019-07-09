@@ -2096,7 +2096,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if self.servosAttached:
             try:
-                self.servoController.moveTiltServo(5970)
+                #self.servoController.moveTiltServo(5970)
+                #self.servoController.movePanServo(6000)
+                self.servoController.moveTiltServo(6024)
                 self.servoController.movePanServo(6000)
             except:
                 print("Error moving servos to center position")
@@ -2104,6 +2106,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # Set the antenna bearing and elevation to the center position
             self.antennaBear = self.centerBear
             self.antennaEle = 0
+            # Reset trim settings
+            self.tiltOffset = 0
+            self.panOffset = 0
             self.manualRefresh()
 
         else:
@@ -2175,12 +2180,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Update the tilt mapping values here#
         tiltTo = int((tiltTo * 4.656 + 668) * 4)
 
-        if tiltTo > 6000:
-            tiltTo = 6000		# Don't go over the max
+        if tiltTo > 6300:
+            tiltTo = 6300		# Don't go over the max
         if tiltTo < 4348:
             tiltTo = 4348			# Don't go under the min
         # print tiltTo
-        if self.servosAttached:		# Move the servos to the new locations if they're attacheed
+        if self.servosAttached:		# Move the servos to the new locations if they're attached
             self.servoController.moveTiltServo(tiltTo)
         if temp != 0:
             self.centerBear = temp
