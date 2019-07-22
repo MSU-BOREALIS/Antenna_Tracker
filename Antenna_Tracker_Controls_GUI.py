@@ -628,7 +628,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.saveDataCheckbox.isChecked():
             if not self.saveData:
                 self.saveData = True
-                timestamp = str(datetime.today().strftime("%m-%d-%Y %H-%M-%S"))
+                timestamp = str(datetime.datetime.today().strftime("%m-%d-%Y %H-%M-%S"))
 
                 # Create the log files
                 if not os.path.exists("Logs/"):
@@ -2080,7 +2080,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     f = open(self.balloonLocationLog, 'a')
                 elif type == "pointing":
                     f = open(self.pointingLog, 'a')
-                f.write(str(datetime.today().strftime(
+                f.write(str(datetime.datetime.today().strftime(
                     "%m/%d/%Y %H:%M:%S")) + ',' + msg + '\n')
                 f.close()
             except:
