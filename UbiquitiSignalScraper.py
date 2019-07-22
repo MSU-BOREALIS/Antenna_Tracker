@@ -53,4 +53,3 @@ class UbiquitiSignalScraper(QtCore.QObject):
     def setUpdateSpeed(self, speed):
         self.updateSpeed = speed
         print("Set update speed to: " + str(self.updateSpeed))
-

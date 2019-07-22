@@ -18,7 +18,7 @@ import time as t
 from datetime import *
 import serial
 import serial.tools.list_ports
-import threading
+#import threading
 
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtWidgets import *
@@ -37,10 +37,10 @@ import geomag
 import base64					   # = encodes an image in b64 Strings (and decodes)
 import hashlib					  # = generates hashes
 
-# Library for using SSH
-import paramiko
-from paramiko import client
-from paramiko.client import *
+# # Library for using SSH
+# import paramiko
+# from paramiko import client
+# from paramiko.client import *
 
 # Imports from files
 from ui_trackermain import Ui_MainWindow        # UI file import
@@ -52,10 +52,11 @@ from BalloonUpdate import *			# Class to hold balloon info
 from GetData import *				# Module for tracking methods
 from Payloads import *				# Module for handling payloads
 from MapHTML import *				# Module for generating Google Maps HTML and JavaScript
-from CommandEmailer import *                    # Module for emailing Iridium commands
-from Interpolate import *                       # Module for interpolating balloon pointing updates
-from UbiquitiSignalTracker import *             # Module for adjusting the antenna based on signal strength
-from UbiquitiSignalScraper import *             # Module for scraping the signal strength from the modem
+from CommandEmailer import *        # Module for emailing Iridium commands
+from Interpolate import *           # Module for interpolating balloon pointing updates
+from UbiquitiSignalTracker import * # Module for adjusting the antenna based on signal strength
+from UbiquitiSignalScraper import * # Module for scraping the signal strength from the modem
+from VLCStreamer import *           # Module for streaming via VLC
 
 # Matplotlib setup
 #matplotlib.use('Qt5Agg')
@@ -162,7 +163,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     # Data Signals
     noIridium = pyqtSignal()
 
-    streamThread = None
+    #streamThread = None
 
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
@@ -191,6 +192,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ubiquitiTrackerThread.daemon = True
         self.ubiquitiScraperThread = EventThread()
         self.ubiquitiScraperThread.daemon = True
+        self.VLCStreamerThread = EventThread()
+        self.VLCStreamerThread.daemon = True
         
         # Start the threads, they should run forever, and add them to the
         # thread pool
@@ -201,6 +204,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.iridiumInterpolateThread.start()
         self.ubiquitiTrackerThread.start()
         self.ubiquitiScraperThread.start()
+        self.VLCStreamerThread.start()
         self.aprsThread.start()
 
         # Button Function Link Setup
@@ -242,9 +246,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.getPiRuntimeDataButtonPress)
         self.requestStatusButton.clicked.connect(self.requestDeviceStatus)
 
-        # Ubiquiti Control Button Links
-        self.streamVLCButton.clicked.connect(self.startVLCStream)
-        self.killVLCStreamButton.clicked.connect(self.killVLCStream)
+        # VLC Control Button Links
+        self.vlcStreamer = VLCStreamer() # Init the thread and object first
+        self.vlcStreamer.moveToThread(self.VLCStreamerThread)
+        self.vlcStreamer.start.connect(self.vlcStreamer.startVLCStream)
+        self.vlcStreamer.kill.connect(self.vlcStreamer.killVLCStream)
+        self.streamVLCButton.clicked.connect(self.vlcStreamer.start)
+        self.killVLCStreamButton.clicked.connect(self.vlcStreamer.kill)
 
         # Still Image Control Button Links
         self.mostRecentImageButton.clicked.connect(
@@ -1833,28 +1841,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.ubiquitiSignalStrengthLabel.setText("Current Strength: n/a")
             self.ubiquitiSignalStrengthLabel_graph.setText("n/a")
 
-    def startVLCStream(self):
-        """ Executes the streaming command on the pi and then begins stream """
-        print("Connecting to streaming pi")
-        client = SSHClient()
-        client.set_missing_host_key_policy(AutoAddPolicy)
-        client.connect('192.168.1.69', port=22, username='pi', password='raspberry')
-        # If the pi is already streaming, will not start another streaming process
-        client.exec_command('if pgrep vlc; then echo "Streaming already started"; else ./vlcTest.sh; fi')
-        # Delay to allow the streaming to start
-        time.sleep(1)
-        # Attempt to start streaming
-        print("Starting VLC stream capture")
-        self.streamThread = threading.Thread(target=lambda: os.system('vlc.exe rtsp://' + '192.168.1.69' + ':8080/'))
-        self.streamThread.start()
+    # def startVLCStream(self):
+    #     """ Executes the streaming command on the pi and then begins stream """
+    #     print("Connecting to streaming pi")
+    #     client = SSHClient()
+    #     client.set_missing_host_key_policy(AutoAddPolicy)
+    #     client.connect('192.168.1.69', port=22, username='pi', password='raspberry')
+    #     # If the pi is already streaming, will not start another streaming process
+    #     client.exec_command('if pgrep vlc; then echo "Streaming already started"; else ./vlcTest.sh; fi')
+    #     # Delay to allow the streaming to start
+    #     time.sleep(1)
+    #     # Attempt to start streaming
+    #     print("Starting VLC stream capture")
+    #     self.streamThread = threading.Thread(target=lambda: os.system('vlc.exe rtsp://' + '192.168.1.69' + ':8080/'))
+    #     self.streamThread.start()
 
-    def killVLCStream(self):
-        """ Sends a command to the pi to kill streaming """
-        print("Connecting to streaming pi")
-        client = SSHClient()
-        client.set_missing_host_key_policy(AutoAddPolicy)
-        client.connect('192.168.1.69', port=22, username='pi', password='raspberry')
-        client.exec_command('pkill vlc')
+    # def killVLCStream(self):
+    #     """ Sends a command to the pi to kill streaming """
+    #     print("Connecting to streaming pi")
+    #     client = SSHClient()
+    #     client.set_missing_host_key_policy(AutoAddPolicy)
+    #     client.connect('192.168.1.69', port=22, username='pi', password='raspberry')
+    #     client.exec_command('pkill vlc')
 
 
     def disabledChecked(self):
