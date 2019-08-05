@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """
+
 Antenna Tracker Controller for Trident Antenna Array and RFD Radio Controller
 
 Author:	Trevor Gahl, CpE
@@ -8,7 +9,12 @@ Software created for use by the National Space Grant Consortium
 Purpose: To acquire the location of a balloon in flight, and aim the array of antennae at the balloon
 Additional Features: RFD 900 based Command Center and Image Reception
 Creation Date: March 2016
-Last Edit Date: August 2, 2017
+
+Supplemental Authors: Andy Kirby, CpE --- Sierra MacLeod, CpE --- Cayden Seiler, CpE --- Michelle Valentino-Manno, CpE --- Andrew Snider, EE
+Updated software for compatibility with Python 3.7. Streamlined setup process and added various functions, like Ubiquiti
+Signal Scraping, one-click VLC Streaming, primitive prediction tracking, and a socket to implement signal-based tracking.
+Last Edit Date: August 5, 2019
+
 """
 
 # System imports
@@ -37,11 +43,6 @@ import geomag
 import base64					   # = encodes an image in b64 Strings (and decodes)
 import hashlib					  # = generates hashes
 
-# # Library for using SSH
-# import paramiko
-# from paramiko import client
-# from paramiko.client import *
-
 # Imports from files
 from ui_trackermain import Ui_MainWindow        # UI file import
 from ServoController import *			# Module for controlling Mini Maestro
@@ -59,20 +60,8 @@ from UbiquitiSignalScraper import * # Module for scraping the signal strength fr
 from VLCStreamer import *           # Module for streaming via VLC
 
 # Matplotlib setup
-#matplotlib.use('Qt5Agg')
-#from matplotlib.backends.backend_qt4agg import (
-#        FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
-
-
-###to be removed (andy)
-#from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-#matplotlib.use('Qt4Agg')
-#matplotlib.rcParams['backend.qt5'] = 'Pyside'
-#matplotlib.rcParams['Qt5Agg'] = 'PyQt5'
-##matplotlib.rcParams['backend.qt4'] = 'PyQt4'
-###
 
 # https://developers.google.com/maps/documentation/javascript/get-api-key
 googleMapsApiKey = ''
@@ -2154,21 +2143,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
-            panTo = int((panTo * 2.778 + 1000) * 4)
+            panTo = int((panTo * 3.244 + 916) * 4)
 
         elif panTo < 0:
             print("S2")
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
-            panTo = int((panTo * 2.8 + 996) * 4)
+            panTo = int((panTo * 3.256 + 914) * 4)
 
         else:
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
             print("Default Mapping")
-            panTo = int((panTo * 2.789 + 1000) * 4)
+            panTo = int((panTo * 3.244 + 916) * 4)
 
         if panTo > 7900:
             panTo = 7900
@@ -2186,7 +2175,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             tiltTo = tiltTo + 360
 
         # Update the tilt mapping values here#
-        tiltTo = int((tiltTo * 4.656 + 668) * 4)
+        tiltTo = int((tiltTo * 4.856 + 626) * 4)
 
         if tiltTo > 6300:
             tiltTo = 6300		# Don't go over the max

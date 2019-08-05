@@ -8,6 +8,9 @@ from BalloonUpdate import *			# Class to hold balloon info
 
 import SignalScraper as scraper
 
+"""
+    NOT YET IMPLEMENTED. Must add logic to make decisions based on the signal strength.
+"""
 
 class UbiquitiSignalTracker(QtCore.QObject):
 

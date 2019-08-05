@@ -11,7 +11,10 @@ import paramiko
 from paramiko import client
 from paramiko.client import *
 
-
+""" VLC STREAMER
+        A class meant to start VLC Streaming from the payload pi. Executes in its own thread to avoid hangups in the 
+        main GUI
+"""
 class VLCStreamer(QtCore.QObject):
 
     # Received Signals
