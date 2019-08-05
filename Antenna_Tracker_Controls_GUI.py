@@ -2143,21 +2143,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
-            panTo = int((panTo * 3.244 + 916) * 4)
+            #panTo = int((panTo * 2.778 + 1000) * 4) # CHAD STATION NUMBERS
+            panTo = int((panTo * 3.244 + 916) * 4) # VLAD STATION NUMBERS
 
         elif panTo < 0:
             print("S2")
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
-            panTo = int((panTo * 3.256 + 914) * 4)
+            #panTo = int((panTo * 2.8 + 996) * 4) # CHAD STATION NUMBERS
+            panTo = int((panTo * 3.256 + 914) * 4) # VLAD STATION NUMBERS
 
         else:
             panTo = 180 - panTo
             if panTo < 0:
                 panTo = panTo + 360
             print("Default Mapping")
-            panTo = int((panTo * 3.244 + 916) * 4)
+            #panTo = int((panTo * 2.789 + 1000) * 4) # CHAD STATION NUMBERS
+            panTo = int((panTo * 3.244 + 916) * 4) # VLAD STATION NUMBERS
 
         if panTo > 7900:
             panTo = 7900
@@ -2175,7 +2178,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             tiltTo = tiltTo + 360
 
         # Update the tilt mapping values here#
-        tiltTo = int((tiltTo * 4.856 + 626) * 4)
+        #tiltTo = int((tiltTo * 4.656 + 668) * 4) # CHAD STATION NUMBERS
+        tiltTo = int((tiltTo * 4.856 + 626) * 4) # VLAD STATION NUMBERS
 
         if tiltTo > 6300:
             tiltTo = 6300		# Don't go over the max
