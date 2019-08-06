@@ -52,15 +52,67 @@ void useInterrupt(boolean v) {                              //turns the interrup
 void setup() {
         // put your setup code here, to run once:
         lcd.begin(16,2);
-        Serial.begin(115200);                               //Launches a serial connection with a 115200 baud rate
+        Serial.begin(115200);  //Launches a serial connection with a 115200 baud rate
+        
+        GPS.begin(9600);                                    //Launches a software serial connection to the GPS at a baud rate of 9600
+        delay(500);                                         //Wait for 0.5s
+        GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);       //String formatting on the GPS
+        GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);          //GPS packet dump rate
+        GPS.sendCommand(PGCMD_ANTENNA);
+        useInterrupt(usingInterrupt);                       //Set to use or not use the interrupt for GPS parcing
 
+        //============================================================================================================================
+        //================================================== LAUNCH IMU ==============================================================
+        //============================================================================================================================
+        // Attempts to launch the IMU. If this fails, it will send serial messages to the computer which contain the GPS values with
+        // all other fields as 0
+        
         if(!bno.begin())                                    //Launches the IMU. It returns a true value if it successfully launches.
         {
                 /* There was a problem detecting the BNO055 ... check your connections */
-                //Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
-                while(1) ;
+                //Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");   
+                while(1) {
+                  //Still print the GPS values even if IMU is not in use
+                  Serial.print("~");
+                  Serial.print(",");
+                  Serial.print(GPS.latitudeDegrees,7);
+                  Serial.print(",");
+                  Serial.print(GPS.longitudeDegrees,7);
+                  Serial.print(",");
+                  Serial.print(GPS.altitude *3.2808);
+                  Serial.print(",");
+                  Serial.print(0,2);
+                  Serial.print(",");
+                  Serial.print(0,2);
+                  Serial.print(",");
+                  Serial.print(0,2);
+                  Serial.print(",");
+                  Serial.print(0);
+                  Serial.print(",");
+                  Serial.print(0);
+                  Serial.print(",");
+                  Serial.print(0);
+                  Serial.print(",");
+                  Serial.println(0);
+                  delay(BNO055_SAMPLERATE_DELAY_MS);
+
+                  if (!usingInterrupt)
+                  {                                //If interrupt is not being used, the GPS data needs to be checked for parse here.
+                          char c = GPS.read();
+                          if (GPSECHO)
+                                  if (c) Serial.print(c);
+                  }
+                  if (GPS.newNMEAreceived()) {                          //If data is new, parse it!
+          
+                          if (!GPS.parse(GPS.lastNMEA()))
+                                  return;
+                  }
+               }
         }
 
+        //============================================================================================================================
+        //================================================== INIT IMU FIELDS =========================================================
+        //============================================================================================================================
         int eeAddress = 0;                                                 //Initialize EEPROM address and calibration state
         long bnoID;                                                        //Initialize variable for BNO055
         bool foundCalib = false;                                           //Initialize variable to check if calibration data exists
@@ -70,26 +122,33 @@ void setup() {
         uint8_t system,gyro,accel,mag;                      //Create local variables gyro, accel, mag
         system = gyro = accel = mag = 0;                    //Initialize them to zeros
 
+        // CHECK FOR PREVIOUS CALIBRATION DATA
+        // Currently commented/disabled to check for calibration accuracy
         bno.getSensor(&sensor);                                            //Check for previous calibration data
-        if(bnoID != sensor.sensor_id)
-        {
-                //Serial.println("\nNo Calibration Data for this sensor exists in EEPROM");
-                delay(500);
-        }
-        else                                                               //If it does, load calibration data and store in sensor from $50-$6A
-        {
-                //Serial.println("\nFound Calibration for this sensor in EEPROM.");
-                eeAddress += sizeof(long);
-                EEPROM.get(eeAddress,calibrationData);
-                //displaySensorOffsets(calibrationData);
-                //Serial.println("\n\nRestoring Calibration data to the BNO055...");
-                bno.setSensorOffsets(calibrationData);
-                //Serial.println("\n\nCalibration data loaded into BNO055");
-                foundCalib = true;
-        }
+//        if(bnoID != sensor.sensor_id)
+//        {
+//                //Serial.println("\nNo Calibration Data for this sensor exists in EEPROM");
+//                delay(500);
+//        }
+//        else                                                               //If it does, load calibration data and store in sensor from $50-$6A
+//        {
+//                //Serial.println("\nFound Calibration for this sensor in EEPROM.");
+//                eeAddress += sizeof(long);
+//                EEPROM.get(eeAddress,calibrationData);
+//                //displaySensorOffsets(calibrationData);
+//                //Serial.println("\n\nRestoring Calibration data to the BNO055...");
+//                bno.setSensorOffsets(calibrationData);
+//                //Serial.println("\n\nCalibration data loaded into BNO055");
+//                foundCalib = true;
+//        }
 
         delay(1000);                                                       //Short delay after
         bno.setExtCrystalUse(true);
+        //============================================================================================================================
+        //================================================== IMU CALIBRATION =========================================================
+        //============================================================================================================================
+        // Attempts to launch the IMU. If this fails, it will send serial messages to the computer which contain the GPS values with
+        // all other fields as 0
         sensors_event_t event;
         bno.getEvent(&event);
         bno.getCalibration(&system,&gyro,&accel,&mag);
@@ -148,7 +207,6 @@ void setup() {
                         //Serial.print(event.orientation.y, 4);
                         //Serial.print("\tZ: ");
                         //Serial.print(event.orientation.z, 4);
-
                         Serial.print("~");
                         Serial.print(",");
                         Serial.print(GPS.latitudeDegrees,7);
@@ -182,6 +240,18 @@ void setup() {
                         lcd.print(" M:");
                         lcd.print(mag,DEC);
 
+                        if (!usingInterrupt)
+                        {                                //If interrupt is not being used, the GPS data needs to be checked for parse here.
+                                char c = GPS.read();
+                                if (GPSECHO)
+                                        if (c) Serial.print(c);
+                        }
+                        if (GPS.newNMEAreceived()) {                          //If data is new, parse it!
+                
+                                if (!GPS.parse(GPS.lastNMEA()))
+                                        return;
+                        }
+
                         delay(BNO055_SAMPLERATE_DELAY_MS);
                 }
         }
@@ -208,20 +278,17 @@ void setup() {
         delay(500);
 
         bno.setMode(bno.OPERATION_MODE_NDOF);
-
-        GPS.begin(9600);                                    //Launches a software serial connection to the GPS at a baud rate of 9600
-        delay(500);                                         //Wait for 0.5s
         bno.setExtCrystalUse(true);                          //Use the external clock in the IMU (true for better accuracy)
-        GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);       //String formatting on the GPS
-        GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);          //GPS packet dump rate
-        GPS.sendCommand(PGCMD_ANTENNA);
-        useInterrupt(usingInterrupt);                       //Set to use or not use the interrupt for GPS parcing
         delay(100);                                         //Wait for 0.1s
         lcd.clear();
 }
 
+//============================================================================================================================
+//================================================== OPERATION ===============================================================
+//============================================================================================================================
+// Continously sends updated GPS and IMU info, updating LCD display to match
 void loop() {
-//  lcd.setCursor(0,1);                                               //Main code, loops continuously
+        //  lcd.setCursor(0,1);                                               //Main code, loops continuously
         float x,y,z;
         imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
         x = euler.x();                                                //Creates Euler Vectors for the x, y, and z axis
@@ -267,7 +334,7 @@ void loop() {
                 lcd.print(x);
                 lcd.setCursor(0,1);
                 lcd.print("Y:");
-                lcd.setCursor(3,1);
+                lcd.setCursor(2,1);//3,1
                 lcd.print(y);
                 lcd.setCursor(8,1);
                 lcd.print(" Z:");

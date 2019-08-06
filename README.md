@@ -3,7 +3,7 @@ By Austin Langford and Trevor Gahl, based on work from MSU-BOREALIS
 
 
 This software allows you to control the antenna tracker designed by MSU-Borealis using the [Mini Maestro Servo Controller](https://www.pololu.com/product/1354).
-It uses an Arduino Uno with a GPS shield and a [BNO055 9-Axis IMU](https://learn.adafruit.com/adafruit-bno055-absolute-orientation-sensor/overview) to calibrate itself.
+It uses an Arduino Uno with a GPS shield and a [BNO055 9-Axis IMU](https://learn.adafruit.com/adafruit-bno055-absolute-orientation-sensor/overview) to calibrate itself, or you can manually point using a sun telescope.
 RFD controls are added as well, allowing communication with a raspberry Pi running code designed by MSU-Borealis and MnSGC.
 
 
@@ -26,6 +26,6 @@ Select your methods of autotrack, they can all be run simultaneously. Select if 
 
 -If you're using the RFD, go into the RFD tab and turn on RFD Listen by clicking the listen button. Press the launch antenna tracker button to begin tracking the most recent received balloon position.
 
--In order to use the still image system, you need to disable both the RFD commands, and the RFD Listen. 
+-In order to use the still image system, you need to disable both the RFD commands, and the RFD Listen.
 
 -Manual controls will require that your autotrack method is set to disabled.

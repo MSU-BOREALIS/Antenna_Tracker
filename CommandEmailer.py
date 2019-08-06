@@ -1,7 +1,17 @@
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEText import MIMEText
-from email.MIMEBase import MIMEBase
-from email import Encoders
+#from email.MIMEMultipart import MIMEMultipart
+#from email.MIMEText import MIMEText
+#from email.MIMEBase import MIMEBase
+
+
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+
+from email import encoders
+#from email import Encoders
+#from email.encoders import Encoders
+
+
 import time
 import os
 import smtplib
@@ -13,22 +23,22 @@ class CommandEmailer():
     # Initialization of IMEI number
     def __init__(self, IMEI):
         # Pull from IMEI outlined in main window
-        print "Function called"
+        print("Function called")
         self.IMEI = IMEI
-        print IMEI
+        print(IMEI)
 
     def sendCut(self):
 
         command = 'cutdown'
         self.send(command)
-        print "Cutdown command sent"
+        print("Cutdown command sent")
 
         # print "Problem sending cutdown"
 
     def sendIdle(self):
 
         self.send('idle')
-        print "Idle command sent"
+        print("Idle command sent")
     # Method used to send an email.
 
     def send(self, command):
@@ -50,7 +60,7 @@ class CommandEmailer():
         msg['Subject'] = self.IMEI
         part = MIMEBase('application', "octet-stream")
         part.set_payload(open(command, "rb").read())
-        Encoders.encode_base64(part)
+        encoders.encode_base64(part)
         part.add_header('Content-Disposition',
                         'attachment; filename=%s' % command)
         body = ""

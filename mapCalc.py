@@ -17,8 +17,9 @@ def mapCalc(angleOne, pwmOne, angleTwo, pwmTwo):
     b = numpy.array([pwmOne, pwmTwo])
     x = numpy.linalg.solve(a, b)
 
-    print x
+    print(x)
 
 
 # input values in the order degreesOne, pwmOne, degreesTwo, pwmTwo
-mapCalc(90, 4350, 270, 7050)
+# mapCalc(0, 6000, 90, 5000)
+mapCalc(0, 6000, 90, 5000)

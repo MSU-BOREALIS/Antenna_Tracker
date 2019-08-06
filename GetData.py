@@ -1,7 +1,7 @@
-from PyQt4 import *
-from PyQt4 import QtCore
-from PyQt4 import QtGui
-from PyQt4.QtCore import *
+from PySide2 import *
+from PySide2 import QtCore, QtGui
+from PySide2.QtCore import *
+from PySide2.QtCore import Signal as pyqtSignal
 from BalloonUpdate import *
 from time import sleep
 import MySQLdb
@@ -85,7 +85,7 @@ class GetIridium(QtCore.QObject):
                 try:
                     # Notify the main GUI of the new location
                     self.mainWindow.iridiumNewLocation.emit(newLocation)
-                except Exception, e:
+                except(Exception, e):
                     print(str(e))
 
             else:
@@ -150,7 +150,7 @@ class GetIridium(QtCore.QObject):
                                 # Notify the main GUI of the new location
                                 self.mainWindow.iridiumNewLocation.emit(
                                     newLocation)
-                            except Exception, e:
+                            except(Exception, e):
                                 print(str(e))
                     except:
                         print(
@@ -232,7 +232,7 @@ class GetAPRS(QtCore.QObject):
                     try:
                         # Notify the main GUI of the new location
                         self.aprsNewLocation.emit(newLocation)
-                    except Exception, e:
+                    except(Exception, e):
                         print(str(e))
             except:
                 print("Error retrieving APRS Data")

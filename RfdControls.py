@@ -1,10 +1,17 @@
 import serial
 import time
 import datetime
-from PyQt4 import *
-from PyQt4 import QtCore
-from PyQt4 import QtGui
-from PyQt4.QtCore import *
+#from PyQt5 import *
+#from PyQt5 import QtCore
+#from PyQt5 import QtGui
+#from PyQt5.QtCore import *
+
+from PySide2 import *
+from PySide2 import QtCore
+from PySide2 import QtGui
+from PySide2.QtCore import *
+from PySide2.QtCore import Signal as pyqtSignal
+
 from BalloonUpdate import *
 import threading
 
@@ -56,7 +63,7 @@ class RfdListen(QtCore.QObject):
                     alt = stringToFloat(lineLst[5])
                     # Number of Satellites
                     sat = stringToFloat(lineLst[6][:-1])
-                except Exception, e:
+                except(Exception, e):
                     print(str(e))
 
                 ### Do some calculations, get some values ###
@@ -69,13 +76,13 @@ class RfdListen(QtCore.QObject):
                 try:
                     newLocation = BalloonUpdate(gpsTime, rfdSeconds, lat, lon, alt, "RFD",
                                                 self.mainWindow.groundLat, self.mainWindow.groundLon, self.mainWindow.groundAlt)
-                except Exception, e:
+                except(Exception, e):
                     print(str(e))
 
                 try:
                     # Notify the main GUI of the new position
                     self.mainWindow.rfdNewLocation.emit(newLocation)
-                except Exception, e:
+                except(Exception, e):
                     print(str(e))
 
                 #self.mainWindow.rfdListenNewText.emit(datetime.datetime.today().strftime('%H:%M:%S') + " || "+line)
@@ -181,14 +188,14 @@ class RfdCommand(QtCore.QObject):
         # time has passed ###
         termtime = time.time() + 10
         timeCheck = time.time() + 1
-        self.rfdSer.write('7!')
+        self.rfdSer.write('IMAGE;7!')
         while self.rfdSer.read() != 'A':
             if(timeCheck < time.time()):
                 print("Waiting for Acknowledge")
                 self.mainWindow.rfdCommandNewText.emit(
                     "Waiting for Acknowledge")
                 timeCheck = time.time() + 1
-            #self.rfdSer.write('IMAGE;7!')
+            self.rfdSer.write('IMAGE;7!')
             if(termtime < time.time()):
                 print("No Acknowldeg Received, Connection Error")
                 self.mainWindow.rfdCommandNewText.emit(
@@ -201,7 +208,7 @@ class RfdCommand(QtCore.QObject):
         try:
             f = open("piruntimedata.txt", "w")
         except:
-            print "Error opening file"
+            print("Error opening file")
             self.mainWindow.rfdCommandNewText.emit("Error opening file")
             self.mainWindow.piruntimeFinished.emit()
             return
@@ -212,7 +219,7 @@ class RfdCommand(QtCore.QObject):
             f.write(temp)
             temp = self.rfdSer.read()
             if (termtime < time.time()):
-                print "Error receiving piruntimedata.txt"
+                print("Error receiving piruntimedata.txt")
                 self.mainWindow.rfdCommandNewText.emit(
                     "Error receiving piruntimedata.txt")
                 f.close()
@@ -220,9 +227,9 @@ class RfdCommand(QtCore.QObject):
                 return
         f.close()
 
-        print "piruntimedata.txt saved to local folder"
+        print("piruntimedata.txt saved to local folder")
         self.mainWindow.rfdCommandNewText.emit("piruntimedata.txt saved")
-        print "Receive Time =", (time.time() - timecheck)
+        print("Receive Time =", (time.time() - timecheck))
         self.mainWindow.rfdCommandNewText.emit(
             "Receive Time =" + str((time.time() - timecheck)))
 
@@ -243,7 +250,7 @@ class RfdCommand(QtCore.QObject):
 
     def getDeviceStatus(self):
         """ Retrieve the status of the serial devices connected to the Pi """
-        self.rfdSer.write('-!')
+        self.rfdSer.write('IMAGE;-!')
 
     def setAcknowledged(self, arg):
         self.acknowledged = arg
